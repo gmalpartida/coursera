@@ -12,22 +12,25 @@
 # Add your Source files to this variable
 
 SRCS =\
-src/main.c \
-src/memory.c
+	src/main.c \
+	src/memory.c \
+	src/course1.c \
+	src/data.c \
+	src/stats.c
 ifeq ($(PLATFORM), MSP432)
 SRCS +=\
-src/system_msp432p401r.c\
-src/startup_msp432p401r_gcc.c\
-src/interrupts_msp432p401r_gcc.c
+	src/system_msp432p401r.c\
+	src/startup_msp432p401r_gcc.c\
+	src/interrupts_msp432p401r_gcc.c
 endif
 
 # Add your include paths to this variable
 
 INCLUDES =\
--Iinclude/common
+	-Iinclude/common
 ifeq ($(PLATFORM), MSP432)
 INCLUDES +=\
--Iinclude/msp432\
--Iinclude/CMSIS
+	-Iinclude/msp432\
+	-Iinclude/CMSIS
 endif
 

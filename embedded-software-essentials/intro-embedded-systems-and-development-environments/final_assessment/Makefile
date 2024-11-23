@@ -27,7 +27,7 @@ include sources.mk
 PLATFORM = HOST
 
 # Architectures Specific Flags
-LINKER_FILE = ../msp432p401r.lds
+LINKER_FILE = msp432p401r.lds
 CPU = cortex-m4
 ARCH = armv7e-m
 SPECS = nosys.specs
@@ -58,7 +58,7 @@ else
 LDFLAGS = -T$(LINKER_FILE) -Xlinker -Map=$(TARGET).map
 endif
 
-CFLAGS = $(INCLUDES) -D$(PLATFORM) -Wall -Werror -g -O0 -std=c99
+CFLAGS = $(INCLUDES) -D$(PLATFORM) -Wall -Werror -g -O0 -std=c99 -DVERBOSE -DCOURSE1
 ifeq ($(PLATFORM), MSP432)
 CFLAGS += -mcpu=$(CPU) -mthumb -march=$(ARCH) -mfloat-abi=hard -mfpu=fpv4-sp-d16 --specs=$(SPECS)
 endif
@@ -66,7 +66,6 @@ endif
 CPPFLAGS = 
 
 OBJS = $(SRCS:.c=.o)
-
 %.o : %.c
 	$(CC) -c $< $(CFLAGS) -o $@
 
@@ -91,5 +90,5 @@ $(TARGET).out: $(OBJS)
 
 .PHONY: clean
 clean: 
-	rm -f *.o $(TARGET).out $(TARGET).map *.i *.asm
+	rm -f src/*.o $(TARGET).out $(TARGET).map *.i *.asm
 

@@ -21,6 +21,7 @@
  *
  */
 #include "memory.h"
+#include <stdlib.h>
 
 /***********************************************************
  Function Definitions
@@ -47,4 +48,79 @@ void set_all(char * ptr, char value, unsigned int size){
 void clear_all(char * ptr, unsigned int size){
   set_all(ptr, 0, size);
 }
+
+uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length)
+{
+    if (dst > src){
+        uint8_t * end_src = src + length;
+        uint8_t * end_dst = dst + length;
+
+        while (end_src != src){
+            *end_dst = *end_src;
+            end_dst--;
+            end_src--;
+            
+        }
+    }
+
+    else{
+        my_memcopy(src, dst, length);
+    }
+   return dst; 
+}
+
+uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length)
+{
+    uint8_t * tmp_dst = dst;
+    while (src < src+length){
+        *dst = *src;
+        src++;
+        tmp_dst++;
+    }
+    return dst;
+}
+
+uint8_t * my_memset(uint8_t * src, size_t length, uint8_t value)
+{
+    uint8_t * tmp_src = src;
+    while (length > 0)
+    {
+        *tmp_src = value;
+        tmp_src++;
+    }
+    return src;
+}
+
+uint8_t * my_memzero(uint8_t * src, size_t length)
+{
+    return my_memset(src, length, 0);
+}
+
+uint8_t * my_reverse(uint8_t * src, size_t length)
+{
+    uint8_t * tmp_src = src;
+    uint8_t * end = src + length;
+
+    while (tmp_src < end)
+    {
+        uint8_t tmp = *src;
+        *src = *end;
+        *end = tmp;
+        tmp_src++;
+        end--;
+    }
+    return src;
+}
+
+int32_t * reserve_words(size_t length)
+{
+    return malloc(sizeof(uint32_t) * length);
+}
+
+void free_words(uint32_t * src)
+{
+    free(src);
+}
+
+
 
