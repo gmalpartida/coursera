@@ -22,6 +22,7 @@
  */
 #include "memory.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 /***********************************************************
  Function Definitions
@@ -52,17 +53,16 @@ void clear_all(char * ptr, unsigned int size){
 uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length)
 {
     if (dst > src){
-        uint8_t * end_src = src + length;
-        uint8_t * end_dst = dst + length;
+        uint8_t * end_src = src + length - 1;
+        uint8_t * end_dst = dst + length - 1;
 
-        while (end_src != src){
+        while (end_src >= src){
             *end_dst = *end_src;
             end_dst--;
             end_src--;
             
         }
     }
-
     else{
         my_memcopy(src, dst, length);
     }
@@ -72,10 +72,11 @@ uint8_t * my_memmove(uint8_t * src, uint8_t * dst, size_t length)
 uint8_t * my_memcopy(uint8_t * src, uint8_t * dst, size_t length)
 {
     uint8_t * tmp_dst = dst;
-    while (src < src+length){
-        *dst = *src;
+    while (length>0){
+        *tmp_dst = *src;
         src++;
         tmp_dst++;
+        length--;
     }
     return dst;
 }
@@ -87,6 +88,7 @@ uint8_t * my_memset(uint8_t * src, size_t length, uint8_t value)
     {
         *tmp_src = value;
         tmp_src++;
+        length--;
     }
     return src;
 }
@@ -99,12 +101,12 @@ uint8_t * my_memzero(uint8_t * src, size_t length)
 uint8_t * my_reverse(uint8_t * src, size_t length)
 {
     uint8_t * tmp_src = src;
-    uint8_t * end = src + length;
+    uint8_t * end = src + length - 1;
 
     while (tmp_src < end)
     {
-        uint8_t tmp = *src;
-        *src = *end;
+        uint8_t tmp = *tmp_src;
+        *tmp_src = *end;
         *end = tmp;
         tmp_src++;
         end--;

@@ -37,19 +37,19 @@ SPECS = nosys.specs
 ifeq ($(PLATFORM), HOST)
 SIZE = size
 else
-SIZE = /opt/arm-none-eabi/bin/arm-none-eabi-size
+SIZE = arm-none-eabi-size
 endif
 
 ifeq ($(PLATFORM), HOST)
 CC = gcc
 else
-CC = /opt/arm-none-eabi/bin/arm-none-eabi-gcc
+CC = arm-none-eabi-gcc
 endif
 
 ifeq ($(PLATFORM), HOST)
 LD = ld
 else
-LD = /opt/arm-none-eabi/bin/arm-none-eabi-ld 
+LD = arm-none-eabi-ld 
 endif
 TARGET = c1m2
 ifeq ($(PLATFORM), HOST)
