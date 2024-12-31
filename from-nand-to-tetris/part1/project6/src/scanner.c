@@ -3,11 +3,9 @@
 #include <assert.h>
 #include "scanner.h"
 
-PSCANNER scanner;
-
-int scanner_create(char * filename)
+PSCANNER scanner_create(char * filename)
 {
-    scanner = (PSCANNER)malloc(sizeof(SCANNER));
+    PSCANNER scanner = (PSCANNER)malloc(sizeof(SCANNER));
     
     if (NULL != scanner)
     {
@@ -38,22 +36,35 @@ int scanner_create(char * filename)
             scanner = NULL;
         }
     }
-    return NULL != scanner;
+    return scanner;
 }
 
-char scanner_get_next()
+char scanner_get_next(PSCANNER scanner)
 {
     return *(scanner->tmp_buffer)++;
 }
 
-int scanner_at_end()
+int scanner_at_end(PSCANNER scanner)
 {
     int chars_read = scanner->tmp_buffer - scanner->buffer;
     return chars_read >= 0 && chars_read >= scanner->buffer_size;
 }
 
-void scanner_print()
+void scanner_print(PSCANNER scanner)
 {
     assert(scanner);
     printf("%s", scanner->buffer);
 }
+
+void scanner_destroy(PSCANNER scanner)
+{
+    free(scanner->buffer);
+    free(scanner);
+    scanner = NULL;
+}
+
+int scanner_position(PSCANNER scanner)
+{
+    return (scanner->tmp_buffer - scanner->buffer);
+}
+
