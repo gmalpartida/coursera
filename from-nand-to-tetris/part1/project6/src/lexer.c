@@ -14,8 +14,9 @@ PTOKEN lexer_read(PLEXER lexer)
     while (!scanner_at_end(lexer->scanner))
     {
         char c = scanner_get_next(lexer->scanner);
-        if (c <= ' ')   // ignore whitespace
+        if (c <= ' ')                   // ignore whitespace
             continue;
+        
     }
     return token;
 }
