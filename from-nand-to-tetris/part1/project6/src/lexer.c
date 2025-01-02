@@ -149,6 +149,10 @@ PTOKEN lexer_read(PLEXER lexer)
             text[1] = '\0';
             token = token_create(text, scanner_position(lexer->scanner), IDENTIFIER);
         }
+        else
+        {
+            token = token_create("ERROR", scanner_position(lexer->scanner), ERROR);
+        }
     }
     else
         token = token_create("EOE", -1, EOE);

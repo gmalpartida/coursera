@@ -19,18 +19,6 @@ PTOKEN token_create(char * text, int position, TOKEN_TYPE type)
     return token;
 }
 
-void token_destroy(PTOKEN token)
-{
-    free(token->text);
-    free(token);
-    token = NULL;
-}
-
-void token_print(PTOKEN token)
-{
-    printf("{text: %s, position: %d, type: %d}", token->text, token->position, token->type);
-}
-
 char * token_map_type_to_text(TOKEN_TYPE type)
 {
     char * text = NULL;
@@ -56,5 +44,19 @@ TOKEN_TYPE token_map_text_to_type(char * text)
     }
     return type;    
 }
+
+void token_destroy(PTOKEN token)
+{
+    free(token->text);
+    free(token);
+    token = NULL;
+}
+
+void token_print(PTOKEN token)
+{
+    printf("{text: %s, position: %d, type: %s}", token->text, token->position, token_map_type_to_text( token->type));
+}
+
+
 
 

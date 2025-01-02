@@ -22,6 +22,8 @@ int main(int argc, char * argv[])
         {
             token_print(token);
             printf("\n");
+            if (token->type == ERROR)
+                break;
         }
 
         scanner_destroy(scanner);
