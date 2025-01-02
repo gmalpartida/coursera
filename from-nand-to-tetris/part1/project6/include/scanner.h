@@ -16,5 +16,6 @@ int scanner_at_end(PSCANNER scanner);
 void scanner_print(PSCANNER scanner);
 void scanner_destroy(PSCANNER scanner);
 int scanner_position(PSCANNER scanner);
+char scanner_peek_next(PSCANNER scanner);
 
 #endif

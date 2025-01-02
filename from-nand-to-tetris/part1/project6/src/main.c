@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "scanner.h"
+#include "token.h"
+#include "lexer.h"
 
 int main(int argc, char * argv[])
 {
@@ -9,12 +11,19 @@ int main(int argc, char * argv[])
     {
         char * filename = argv[1];
         PSCANNER scanner =  scanner_create(filename);
-        scanner_print(scanner);
 
-        while (!scanner_at_end(scanner)){
-            char c = scanner_get_next(scanner);
-            printf("%c", c);
+        PLEXER lexer = lexer_create(scanner);
+        PTOKEN token = NULL;
+        
+        lexer_print(lexer);
+        printf("\n");
+
+        while (EOE != (token = lexer_read(lexer))->type)
+        {
+            token_print(token);
+            printf("\n");
         }
+
         scanner_destroy(scanner);
     }
     else

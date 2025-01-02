@@ -68,3 +68,8 @@ int scanner_position(PSCANNER scanner)
     return (scanner->tmp_buffer - scanner->buffer);
 }
 
+char scanner_peek_next(PSCANNER scanner)
+{
+    return *(scanner->tmp_buffer);
+}
+
