@@ -3,6 +3,8 @@
 #include "scanner.h"
 #include "token.h"
 #include "lexer.h"
+#include "parser.h"
+
 
 int main(int argc, char * argv[])
 {
@@ -12,21 +14,23 @@ int main(int argc, char * argv[])
         char * filename = argv[1];
         PSCANNER scanner =  scanner_create(filename);
 
-        PLEXER lexer = lexer_create(scanner);
-        PTOKEN token = NULL;
-        
-        lexer_print(lexer);
-        printf("\n");
-
-        while (EOE != (token = lexer_read(lexer))->type)
+        if (NULL != scanner)
         {
-            token_print(token);
-            printf("\n");
-            if (token->type == ERROR)
-                break;
-        }
+            PLEXER lexer = lexer_create(scanner);
+            if (NULL != lexer)
+            {
+                lexer_print(lexer);
+                PPARSER parser = parser_create(lexer);
 
-        scanner_destroy(scanner);
+                if (NULL != parser)
+                {
+        
+                    parser_destroy(parser);
+                }
+                
+            }
+            scanner_destroy(scanner);
+        }
     }
     else
     {

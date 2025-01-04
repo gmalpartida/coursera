@@ -57,13 +57,13 @@ PTOKEN lexer_read(PLEXER lexer)
     {
         char c = scanner_get_next(lexer->scanner);
         char d = scanner_peek_next(lexer->scanner);
-        if (isalpha(c) && isalpha(d))
+        if (isalpha(c) && (isalpha(d) || '_' == d))
         {
             char text[256];
             int i = 0;
             text[i] = c;
             i++;
-            while (isalpha(d))
+            while (isalpha(d) || '_' == d || isdigit(d))
             {
                 text[i] = d;
                 d = scanner_get_next(lexer->scanner);
@@ -102,7 +102,7 @@ PTOKEN lexer_read(PLEXER lexer)
                     c = scanner_peek_next(lexer->scanner);
                 }
                 text[i] = '\0';
-                token = token_create(text, scanner_position(lexer->scanner), ADDRESS);
+                token = token_create(text, scanner_position(lexer->scanner), REGISTER);
             }
         }
         else if ('@' == c)
@@ -136,7 +136,7 @@ PTOKEN lexer_read(PLEXER lexer)
                 i++;
             }
             text[i] = '\0';
-            token = token_create(text, scanner_position(lexer->scanner), ADDRESS);
+            token = token_create(text, scanner_position(lexer->scanner), VALUE);
         }
         else if (';' == c)
         {
@@ -148,6 +148,14 @@ PTOKEN lexer_read(PLEXER lexer)
             text[0] = c;
             text[1] = '\0';
             token = token_create(text, scanner_position(lexer->scanner), IDENTIFIER);
+        }
+        else if ('-' == c)
+        {
+            token = token_create("-", scanner_position(lexer->scanner), MINUS);
+        }
+        else if ('!' == c)
+        {
+            token = token_create("!", scanner_position(lexer->scanner), NOT);
         }
         else
         {
