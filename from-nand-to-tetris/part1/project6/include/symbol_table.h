@@ -19,5 +19,7 @@ void symbol_table_print(PSYMBOL_TABLE symbol_table);
 void symbol_table_add(PSYMBOL_TABLE symbol_table, PSYMBOL symbol);
 int symbol_table_find(PSYMBOL_TABLE symbol_table, char * symbol_text);
 PSYMBOL symbol_table_get(PSYMBOL_TABLE symbol_table, char * text);
+PSYMBOL symbol_duplicate(PSYMBOL symbol);
+PSYMBOL symbol_copy(PSYMBOL dest_symbol, PSYMBOL src_symbol);
 
 #endif

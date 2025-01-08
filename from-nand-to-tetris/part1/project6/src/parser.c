@@ -211,7 +211,7 @@ PASTNODE parser_parse_C_instruction(PPARSER parser)
     astnode->C_instruction->comp = NULL;
     astnode->C_instruction->jump = NULL;
 
-    PTOKEN token = lexer_peek(parser->lexer);
+    PTOKEN token = lexer_read(parser->lexer);
 
     if (VALUE == token->type)
     {
@@ -232,9 +232,14 @@ PASTNODE parser_parse_C_instruction(PPARSER parser)
     else if (token->type == A || token->type == D || token->type == M)
     {
         // process C instruction
-        token = lexer_peek(parser->lexer);
-        if (token->type == EQUAL)
+        token2 = lexer_peek(parser->lexer);
+        if (token2->type == EQUAL)
         {
+            //process Dest
+            astnode->C_instruction->dest = (char*)malloc(sizeof(char) * strlen(token->text) + 1);
+            strcpy(astnode->C_instruction->dest, token->text);
+
+            //consume the = 
             lexer_read(parser->lexer);
             // M = 0
             token = lexer_peek(parser->lexer);
@@ -245,15 +250,23 @@ PASTNODE parser_parse_C_instruction(PPARSER parser)
             else if (token->type == A || token->type == M || token->type == D)
             {
                 // M = D
-                lexer_read(parser->lexer);
-                token = lexer_peek(parser->lexer);
-                if (token->type == PLUS || token->type == MINUS)
+
+                token = lexer_read(parser->lexer);
+                token2 = lexer_peek(parser->lexer);
+                if (token2->type == PLUS || token2->type == MINUS)
                 {
+                    // consume plus or minus
                     token = lexer_read(parser->lexer);
-                    token = lexer_read(parser->lexer);
+
+                    token2 = lexer_read(parser->lexer);
+
+                    
                 }
-
-
+                else
+                {
+                    astnode->C_instruction->comp = (char*)malloc(sizeof(char) * strlen(token->text) + 1);
+                    strcpy(astnode->C_instruction->comp, token->text);
+                }
             }
             else if (token->type == MINUS)
             {

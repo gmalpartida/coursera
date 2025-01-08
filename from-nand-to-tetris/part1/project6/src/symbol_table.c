@@ -48,10 +48,33 @@ PSYMBOL  symbol_table_get(PSYMBOL_TABLE symbol_table, char * text)
     {
         if (strcmp(symbol_table->symbol_table[i].symbol, text) == 0)
         {
-            *symbol = symbol_table->symbol_table[i];
+            symbol = symbol_duplicate(&(symbol_table->symbol_table[i]));
             break;
         }
     }
     return symbol;
 }
+
+PSYMBOL symbol_copy(PSYMBOL dest_symbol, PSYMBOL src_symbol)
+{
+    size_t len = strlen(src_symbol->symbol) + 1;
+    dest_symbol->symbol = (char*)malloc(sizeof(char) * len);
+    
+    strcpy(dest_symbol->symbol, src_symbol->symbol);
+    dest_symbol->value = src_symbol->value;
+
+    return dest_symbol;
+}
+
+PSYMBOL symbol_duplicate(PSYMBOL symbol)
+{
+    PSYMBOL new_symbol = (PSYMBOL)malloc(sizeof(SYMBOL));
+
+    symbol_copy(new_symbol, symbol);
+
+    return new_symbol;
+}
+
+
+
 
