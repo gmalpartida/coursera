@@ -73,3 +73,14 @@ char scanner_peek_next(PSCANNER scanner)
     return *(scanner->tmp_buffer);
 }
 
+void scanner_reset(PSCANNER scanner)
+{
+    scanner->tmp_buffer = scanner->buffer;
+}
+
+void scanner_set_position(PSCANNER scanner, int position)
+{
+    scanner->tmp_buffer = scanner->buffer + position;
+}
+
+

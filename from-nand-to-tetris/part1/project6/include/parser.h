@@ -2,23 +2,46 @@
 #define PARSER_H
 
 #include "lexer.h"
+#include "symbol_table.h"
+#include <stdint.h>
 
-typedef struct Symbol
+typedef struct AInstruction
 {
-    char * symbol;
-    int value;
-} SYMBOL, *PSYMBOL;
+    uint16_t value;
+} AINSTRUCTION, *PAINSTRUCTION;
 
+typedef struct CInstruction
+{
+  char * dest;
+  char * comp;
+  char * jump;
+} CINSTRUCTION, *PCINSTRUCTION;
+
+typedef struct ASTNode
+{
+    PAINSTRUCTION A_instruction;
+    PCINSTRUCTION C_instruction;
+} ASTNODE, *PASTNODE;
+
+typedef struct Ast
+{
+    PASTNODE ast_node;
+    uint8_t size;
+} AST, *PAST;
 
 typedef struct Parser
 {
     PLEXER lexer;
-    SYMBOL symbol_table[256];
+    PSYMBOL_TABLE symbol_table;
+    PAST ast;
 } PARSER, *PPARSER;
-
 
 PPARSER parser_create(PLEXER lexer);
 void parser_destroy(PPARSER parser);
 void parser_build_symbol_table(PPARSER parser);
+PASTNODE parser_parse_A_instruction(PPARSER parser);
+PASTNODE parser_parse_C_instruction(PPARSER parser);
+void parser_print(PPARSER parser);
+void parser_parse_label(PPARSER parser);
 
 #endif

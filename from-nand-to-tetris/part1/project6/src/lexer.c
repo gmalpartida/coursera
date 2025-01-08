@@ -129,10 +129,14 @@ PTOKEN lexer_read(PLEXER lexer)
         {
             char text[256];
             int i = 0;
+            text[i] = c;
+            c = scanner_peek_next(lexer->scanner);
+            i++;
             while (isdigit(c))
             {
                 text[i] = c;
                 c = scanner_get_next(lexer->scanner);
+                c = scanner_peek_next(lexer->scanner);
                 i++;
             }
             text[i] = '\0';
@@ -165,6 +169,14 @@ PTOKEN lexer_read(PLEXER lexer)
     else
         token = token_create("EOE", -1, EOE);
 
+    return token;
+}
+
+PTOKEN lexer_peek(PLEXER lexer)
+{
+    int position = scanner_position(lexer->scanner);
+    PTOKEN token = lexer_read(lexer);
+    scanner_set_position(lexer->scanner, position);
     return token;
 }
 

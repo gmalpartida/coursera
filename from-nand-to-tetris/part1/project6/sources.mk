@@ -16,7 +16,8 @@ SRCS =\
 	src/scanner.c \
 	src/token.c \
 	src/lexer.c \
-    src/parser.c
+    src/parser.c \
+    src/symbol_table.c
 
 # Add your include paths to this variable
 
