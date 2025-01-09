@@ -232,7 +232,7 @@ PASTNODE parser_parse_C_instruction(PPARSER parser)
     else if (token->type == A || token->type == D || token->type == M)
     {
         // process C instruction
-        token2 = lexer_peek(parser->lexer);
+        PTOKEN token2 = lexer_peek(parser->lexer);
         if (token2->type == EQUAL)
         {
             //process Dest
