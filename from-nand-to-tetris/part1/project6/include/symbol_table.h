@@ -12,6 +12,7 @@ typedef struct SYMBOL_TABLE
 {
     PSYMBOL symbol_table;
     int size;
+    int next_variable_index;
 } SYMBOL_TABLE, *PSYMBOL_TABLE;
 
 PSYMBOL_TABLE symbol_table_create();
@@ -21,5 +22,6 @@ int symbol_table_find(PSYMBOL_TABLE symbol_table, char * symbol_text);
 PSYMBOL symbol_table_get(PSYMBOL_TABLE symbol_table, char * text);
 PSYMBOL symbol_duplicate(PSYMBOL symbol);
 PSYMBOL symbol_copy(PSYMBOL dest_symbol, PSYMBOL src_symbol);
+void symbol_table_add_variable(PSYMBOL_TABLE symbol_table, char * text);
 
 #endif

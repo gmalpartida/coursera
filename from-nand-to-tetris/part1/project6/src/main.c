@@ -5,6 +5,7 @@
 #include "lexer.h"
 #include "parser.h"
 #include "token.h"
+#include "interpreter.h"
 
 int main(int argc, char * argv[])
 {
@@ -21,26 +22,17 @@ int main(int argc, char * argv[])
             {
                 PPARSER parser = parser_create(lexer);
 
-                parser_print(parser);
                 if (NULL != parser)
                 {
-                    PTOKEN token = NULL;
-                    while (EOE != (token = lexer_peek(parser->lexer))->type)
-                    {
-                        token_print(token);
-                        if (AMPERSAND == token->type)
-                        {
-                            parser_parse_A_instruction(parser);
-                        }
-                        else if (OPEN_PAREN == token->type)
-                        {
-                            parser_parse_label(parser);
-                        }
-                        else
-                        {
-                            parser_parse_C_instruction(parser);
-                        }
-                    }
+                    parser_parse(parser);
+                    parser_print(parser);
+
+                    PINTERPRETER interpreter = interpreter_create(parser);
+
+                    interpreter_interpret(interpreter);
+
+                    interpreter_save_to_file(interpreter, "Rect.hex");
+
                     parser_destroy(parser);
                 }
                 

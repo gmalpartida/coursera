@@ -20,6 +20,12 @@ PPARSER parser_create(PLEXER lexer)
     
     scanner_reset(lexer->scanner);
 
+    parser->ast = (PAST)malloc(sizeof(AST));
+
+    parser->ast->size = 0;
+
+    parser->ast->ast_node = (PASTNODE*)malloc(sizeof(ASTNODE) * 256);
+
     return parser;
 }
 
@@ -189,7 +195,14 @@ PASTNODE parser_parse_A_instruction(PPARSER parser)
         // consume token
         token = lexer_read(parser->lexer);
         PSYMBOL symbol = symbol_table_get(parser->symbol_table, token->text);
+        if (NULL == symbol)
+        {
+            // add variable
+            symbol_table_add_variable(parser->symbol_table, token->text);
+            symbol = symbol_table_get(parser->symbol_table, token->text);
+        }
         astnode->A_instruction->value = symbol->value;
+
     }
     else if (token->type == REGISTER)
     {
@@ -216,20 +229,25 @@ PASTNODE parser_parse_C_instruction(PPARSER parser)
     if (VALUE == token->type)
     {
         // 0; jmp
-        // read semi colon
-        token = lexer_read(parser->lexer);
-        astnode->C_instruction->comp = (char*)malloc(sizeof(strlen(token->text)+1));
+        PTOKEN token2 = lexer_peek(parser->lexer);
+        astnode->C_instruction->comp = (char*)malloc(sizeof(char) * strlen(token->text) + 1);
         strcpy(astnode->C_instruction->comp, token->text);
 
-        if (SEMI_COLON == token->type)
+        if (SEMI_COLON == token2->type)
         {
-            // read identifier
-            token = lexer_read(parser->lexer);
-            astnode->C_instruction->jump = (char*)malloc(sizeof(strlen(token->text)+1));
-            strcpy(astnode->C_instruction->jump, token->text);   
+            // read semicolon
+            lexer_read(parser->lexer);
+            // read jump
+            //
+            token2 = lexer_read(parser->lexer);
+
+            astnode->C_instruction->jump = (char*)malloc(sizeof(char) * strlen(token2->text) + 1);
+            strcpy(astnode->C_instruction->jump, token2->text);   
         }
     }
-    else if (token->type == A || token->type == D || token->type == M)
+    else if (token->type == A || token->type == D || token->type == M || (0 == strcmp(token->text, "MD"))
+            || (0 == strcmp(token->text, "AM")) || (0 == strcmp(token->text, "AD")) ||
+                (0 == strcmp(token->text, "AMD")))
     {
         // process C instruction
         PTOKEN token2 = lexer_peek(parser->lexer);
@@ -246,6 +264,8 @@ PASTNODE parser_parse_C_instruction(PPARSER parser)
             if (token->type == VALUE)
             {
                 lexer_read(parser->lexer);
+                astnode->C_instruction->comp = (char*)malloc(sizeof(char) * strlen(token->text) + 1);
+                strcpy(astnode->C_instruction->comp, token->text);
             }
             else if (token->type == A || token->type == M || token->type == D)
             {
@@ -256,10 +276,12 @@ PASTNODE parser_parse_C_instruction(PPARSER parser)
                 if (token2->type == PLUS || token2->type == MINUS)
                 {
                     // consume plus or minus
-                    token = lexer_read(parser->lexer);
-
                     token2 = lexer_read(parser->lexer);
 
+                    PTOKEN token3 = lexer_read(parser->lexer);
+                    
+                    astnode->C_instruction->comp = (char*)malloc(sizeof(char) * 10);
+                    sprintf(astnode->C_instruction->comp, "%s%s%s", token->text, token2->text, token3->text);
                     
                 }
                 else
@@ -270,17 +292,26 @@ PASTNODE parser_parse_C_instruction(PPARSER parser)
             }
             else if (token->type == MINUS)
             {
+                // consume -
                 token = lexer_read(parser->lexer);
+                // read value
                 token = lexer_read(parser->lexer);
+                astnode->C_instruction->comp = (char*)malloc(sizeof(char) * strlen(token->text) + 2);
+                sprintf(astnode->C_instruction->comp, "-%s",token->text );
+
             }
             
         }
         else
         {
+            astnode->C_instruction->comp = (char*)malloc(sizeof(char) * strlen(token->text) + 1);
+            strcpy(astnode->C_instruction->comp, token->text);
             // read semi-colon
             token = lexer_read(parser->lexer);
             // read jump
             token = lexer_read(parser->lexer);
+            astnode->C_instruction->jump = (char*)malloc(sizeof(char) * strlen(token->text) + 1);
+            strcpy(astnode->C_instruction->jump, token->text);
         }
     }
 
@@ -303,11 +334,64 @@ void parser_parse_label(PPARSER parser)
 
 }
 
+void parser_ast_add(PPARSER parser, PASTNODE astnode)
+{
+    parser->ast->ast_node[parser->ast->size] = astnode;
+    parser->ast->size++;
+}
+
+void parser_print_astnode(PASTNODE astnode)
+{
+    if (NULL != astnode->A_instruction)
+    {
+        printf("@%d\n", astnode->A_instruction->value);
+    }
+    else
+    {
+        if (NULL != astnode->C_instruction->dest)
+            printf("%s=", astnode->C_instruction->dest);
+        printf("%s", astnode->C_instruction->comp);
+        if (NULL != astnode->C_instruction->jump)
+            printf(";%s", astnode->C_instruction->jump);
+        printf("\n");
+    }
+}
+
+void parser_print_ast(PPARSER parser)
+{
+    for (int i = 0; i < parser->ast->size; i++)
+    {
+        parser_print_astnode(parser->ast->ast_node[i]);
+        
+    }
+}
+
 void parser_print(PPARSER parser)
 {
     symbol_table_print(parser->symbol_table);
+    parser_print_ast(parser);
 }
 
+void parser_parse(PPARSER parser)
+{
+    PTOKEN token = NULL;
+    while (EOE != (token = lexer_peek(parser->lexer))->type)
+    {
+        if (AMPERSAND == token->type)
+        {
+            PASTNODE astnode = parser_parse_A_instruction(parser);
+            parser_ast_add(parser, astnode);
+        }
+        else if (OPEN_PAREN == token->type)
+        {
+            parser_parse_label(parser);
+        }
+        else
+        {
+            PASTNODE astnode = parser_parse_C_instruction(parser);
+            parser_ast_add(parser, astnode);
+        }
+    }
 
-
+}
 

@@ -9,6 +9,7 @@ PSYMBOL_TABLE symbol_table_create()
     PSYMBOL_TABLE symbol_table = (PSYMBOL_TABLE)malloc(sizeof(SYMBOL_TABLE));
     symbol_table->symbol_table = (PSYMBOL)malloc(sizeof(SYMBOL)*256);
     symbol_table->size = 0;
+    symbol_table->next_variable_index = 16;
     return symbol_table;
 }
 
@@ -24,6 +25,15 @@ void symbol_table_add(PSYMBOL_TABLE symbol_table,  PSYMBOL symbol)
 {
     symbol_table->symbol_table[(symbol_table->size)++] = *symbol;
 
+}
+
+void symbol_table_add_variable(PSYMBOL_TABLE symbol_table, char * text)
+{
+    PSYMBOL symbol = (PSYMBOL)malloc(sizeof(SYMBOL));
+    symbol->symbol = (char*)malloc(sizeof(char)*strlen(text)+1);
+    strcpy(symbol->symbol, text);
+    symbol->value = symbol_table->next_variable_index++;
+    symbol_table_add(symbol_table, symbol);
 }
 
 int symbol_table_find(PSYMBOL_TABLE symbol_table, char * symbol_text)

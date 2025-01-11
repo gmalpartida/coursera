@@ -25,7 +25,7 @@ typedef struct ASTNode
 
 typedef struct Ast
 {
-    PASTNODE ast_node;
+    PASTNODE * ast_node;
     uint8_t size;
 } AST, *PAST;
 
@@ -43,5 +43,8 @@ PASTNODE parser_parse_A_instruction(PPARSER parser);
 PASTNODE parser_parse_C_instruction(PPARSER parser);
 void parser_print(PPARSER parser);
 void parser_parse_label(PPARSER parser);
+void parser_ast_add(PPARSER parser, PASTNODE astnode);
+void parser_print_astnode(PASTNODE astnode);
+void parser_parse(PPARSER parser);
 
 #endif
