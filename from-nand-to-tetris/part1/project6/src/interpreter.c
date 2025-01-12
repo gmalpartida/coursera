@@ -10,7 +10,7 @@ PINTERPRETER interpreter_create(PPARSER parser)
 
     interpreter->parser = parser;
 
-    interpreter->op_codes = (char**)malloc(sizeof(char*) * 256);
+    interpreter->op_codes = (char**)malloc(sizeof(char*) * 32 * 1024);
     interpreter->size = 0;
     return interpreter;
 }
@@ -80,11 +80,13 @@ void interpreter_interpret(PINTERPRETER interpreter)
     {
         PASTNODE astnode = interpreter->parser->ast->ast_node[i];
 
-        char op_code[17] = {0};
+        char op_code[17] = "0000000000000000";
+        char temp[17];
         if (astnode->A_instruction)
         {
-            interpreter_itoa(astnode->A_instruction->value, op_code, 2);
-            op_code[16] = '\0';
+            interpreter_itoa(astnode->A_instruction->value, temp, 2);
+
+            strcpy(op_code + 16 - strlen(temp), temp);
 
             interpreter->op_codes[interpreter->size]= (char*)malloc(sizeof(char) * 17);
             strcpy(interpreter->op_codes[interpreter->size], op_code);
@@ -114,7 +116,7 @@ void interpreter_interpret(PINTERPRETER interpreter)
                 else if (!strcmp(astnode->C_instruction->dest, "AMD"))
                     strcpy(dest, "111");
             }
-            else if (astnode->C_instruction->comp)
+            if (astnode->C_instruction->comp)
             {
                 if (!strcmp(astnode->C_instruction->comp, "0"))
                 {
@@ -258,7 +260,7 @@ void interpreter_interpret(PINTERPRETER interpreter)
                 }
                     
             }
-            else if (astnode->C_instruction->jump)
+            if (astnode->C_instruction->jump)
             {
                 if (!strcmp(astnode->C_instruction->jump, "JGT"))
                     strcpy(jump, "001");
@@ -276,7 +278,7 @@ void interpreter_interpret(PINTERPRETER interpreter)
                     strcpy(jump, "111");
             }
             interpreter->op_codes[interpreter->size] = (char*)malloc(sizeof(char)*17);
-            sprintf(interpreter->op_codes[interpreter->size], "%s%c%s%s%s", prefix, a, dest, comp, jump);
+            sprintf(interpreter->op_codes[interpreter->size], "%s%c%s%s%s", prefix, a, comp, dest, jump);
             interpreter->size++;
         }
     }

@@ -4,6 +4,7 @@
 #include "lexer.h"
 #include "symbol_table.h"
 #include <stdint.h>
+#include <stdbool.h>
 
 typedef struct AInstruction
 {
@@ -26,7 +27,7 @@ typedef struct ASTNode
 typedef struct Ast
 {
     PASTNODE * ast_node;
-    uint8_t size;
+    uint32_t size;
 } AST, *PAST;
 
 typedef struct Parser
@@ -39,7 +40,7 @@ typedef struct Parser
 PPARSER parser_create(PLEXER lexer);
 void parser_destroy(PPARSER parser);
 void parser_build_symbol_table(PPARSER parser);
-PASTNODE parser_parse_A_instruction(PPARSER parser);
+PASTNODE parser_parse_A_instruction(PPARSER parser, bool process_variables);
 PASTNODE parser_parse_C_instruction(PPARSER parser);
 void parser_print(PPARSER parser);
 void parser_parse_label(PPARSER parser);

@@ -24,7 +24,7 @@ PPARSER parser_create(PLEXER lexer)
 
     parser->ast->size = 0;
 
-    parser->ast->ast_node = (PASTNODE*)malloc(sizeof(ASTNODE) * 256);
+    parser->ast->ast_node = (PASTNODE*)malloc(sizeof(ASTNODE) * 32 * 1024);
 
     return parser;
 }
@@ -80,98 +80,54 @@ void parser_build_symbol_table(PPARSER parser)
 
 
     PTOKEN token = NULL;
-
     int instruction_index = -1;
-    token = lexer_read(parser->lexer);
-    while (EOE != token->type)
+
+    while (EOE != (token = lexer_peek(parser->lexer))->type)
     {
-        if (token->type == AMPERSAND)
-        {   // @Value or @IDENTIFIER
-            // process A instruction
-            instruction_index++;
-            token = lexer_read(parser->lexer);
-        }
-        else if (token->type == A || token->type == D || token->type == M)
-        {
-            // process C instruction
-            instruction_index++;
-            token = lexer_peek(parser->lexer);
-            if (token->type == EQUAL)
-            {
-                lexer_read(parser->lexer);
-                // M = 0
-                token = lexer_peek(parser->lexer);
-                if (token->type == VALUE)
-                {
-                    lexer_read(parser->lexer);
-                }
-                else if (token->type == A || token->type == M || token->type == D)
-                {
-                    // M = D
-                    lexer_read(parser->lexer);
-                    token = lexer_peek(parser->lexer);
-                    if (token->type == PLUS || token->type == MINUS)
-                    {
-                        token = lexer_read(parser->lexer);
-                        token = lexer_read(parser->lexer);
-                    }
-
-
-                }
-                else if (token->type == MINUS)
-                {
-                    token = lexer_read(parser->lexer);
-                    token = lexer_read(parser->lexer);
-                }
-                
-            }
-            else
-            {
-                // read semi-colon
-                token = lexer_read(parser->lexer);
-                // read jump
-                token = lexer_read(parser->lexer);
-            }
-        }
-        else if (token->type == VALUE)
-        {   // 0; JUMP
-            instruction_index++;
-            token = lexer_read(parser->lexer);
-            token = lexer_read(parser->lexer);
-        }
-        else if (token->type == OPEN_PAREN)
-        {
-            token = lexer_read(parser->lexer);
-            
-            if (token->type == IDENTIFIER)
-            {
-                // process label
-
-                token_print(token);
-
-                printf("\n");
-
-                if (false == symbol_table_find(parser->symbol_table, token->text))
-                {
-                    PSYMBOL symbol = (PSYMBOL)malloc(sizeof(SYMBOL));
-                    symbol->symbol = (char*)malloc(strlen(token->text+1));
-                    strcpy(symbol->symbol, token->text);
-                    symbol->value = instruction_index+1;
-                    symbol_table_add(parser->symbol_table, symbol);
-                }
-
-            }
-            token_destroy(token);
-        }
         if (token->type == ERROR)
-            break;
-        token = lexer_read(parser->lexer);
-    }
+        {
+            printf("Error building symbol table.\n");
+            token_print(token);
+            printf("\n");
+            exit(EXIT_FAILURE);
+        }
+       else if (OPEN_PAREN == token->type)
+        {
+            // read open parenthesis
+            lexer_read(parser->lexer);
 
+            token = lexer_read(parser->lexer);
+            if (false == symbol_table_find(parser->symbol_table, token->text))
+            {
+                PSYMBOL symbol = (PSYMBOL)malloc(sizeof(SYMBOL));
+                symbol->symbol = (char*)malloc(sizeof(char) * (strlen(token->text) + 1));
+                strcpy(symbol->symbol, token->text);
+                symbol->value = instruction_index+1;
+                symbol_table_add(parser->symbol_table, symbol);
+            }
+
+            // read close parenthesis
+            lexer_read(parser->lexer);
+        }
+        else if (AMPERSAND == token->type)
+        {
+            PASTNODE astnode = parser_parse_A_instruction(parser, false);
+            //parser_print_astnode(astnode);
+            free(astnode);
+            instruction_index++;
+        }
+        else
+        {
+            PASTNODE astnode = parser_parse_C_instruction(parser);
+            //parser_print_astnode(astnode);
+            free(astnode);
+            instruction_index++;
+        }
+    }
 
 }
 
-PASTNODE parser_parse_A_instruction(PPARSER parser)
+PASTNODE parser_parse_A_instruction(PPARSER parser, bool process_variables)
 {
     PASTNODE astnode = (PASTNODE)malloc(sizeof(ASTNODE));
 
@@ -194,15 +150,17 @@ PASTNODE parser_parse_A_instruction(PPARSER parser)
     {
         // consume token
         token = lexer_read(parser->lexer);
-        PSYMBOL symbol = symbol_table_get(parser->symbol_table, token->text);
-        if (NULL == symbol)
+        if (process_variables)
         {
-            // add variable
-            symbol_table_add_variable(parser->symbol_table, token->text);
-            symbol = symbol_table_get(parser->symbol_table, token->text);
+            PSYMBOL symbol = symbol_table_get(parser->symbol_table, token->text);
+            if (NULL == symbol)
+            {
+                // add variable
+                symbol_table_add_variable(parser->symbol_table, token->text);
+                symbol = symbol_table_get(parser->symbol_table, token->text);
+            }
+            astnode->A_instruction->value = symbol->value;
         }
-        astnode->A_instruction->value = symbol->value;
-
     }
     else if (token->type == REGISTER)
     {
@@ -273,7 +231,7 @@ PASTNODE parser_parse_C_instruction(PPARSER parser)
 
                 token = lexer_read(parser->lexer);
                 token2 = lexer_peek(parser->lexer);
-                if (token2->type == PLUS || token2->type == MINUS)
+                if (token2->type == PLUS || token2->type == MINUS || token2->type == OPERATOR)
                 {
                     // consume plus or minus
                     token2 = lexer_read(parser->lexer);
@@ -299,6 +257,13 @@ PASTNODE parser_parse_C_instruction(PPARSER parser)
                 astnode->C_instruction->comp = (char*)malloc(sizeof(char) * strlen(token->text) + 2);
                 sprintf(astnode->C_instruction->comp, "-%s",token->text );
 
+            }
+            else if (token->type == NOT)
+            {
+                token = lexer_read(parser->lexer);
+                // read value
+                PTOKEN token2 = lexer_read(parser->lexer);
+                astnode->C_instruction->comp = (char*)malloc(sizeof(char) * (strlen(token->text) + strlen(token2->text) + 1));                          sprintf(astnode->C_instruction->comp, "%s%s", token->text, token2->text);
             }
             
         }
@@ -377,10 +342,18 @@ void parser_parse(PPARSER parser)
     PTOKEN token = NULL;
     while (EOE != (token = lexer_peek(parser->lexer))->type)
     {
-        if (AMPERSAND == token->type)
+        if (ERROR == token->type)
         {
-            PASTNODE astnode = parser_parse_A_instruction(parser);
+            printf("Error parsing program.\n");
+            token_print(token);
+            printf("\n");
+            exit(EXIT_FAILURE);
+        }
+        else if (AMPERSAND == token->type)
+        {
+            PASTNODE astnode = parser_parse_A_instruction(parser, true);
             parser_ast_add(parser, astnode);
+            //parser_print_astnode(astnode); 
         }
         else if (OPEN_PAREN == token->type)
         {
@@ -390,6 +363,7 @@ void parser_parse(PPARSER parser)
         {
             PASTNODE astnode = parser_parse_C_instruction(parser);
             parser_ast_add(parser, astnode);
+            //parser_print_astnode(astnode);
         }
     }
 

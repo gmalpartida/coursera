@@ -57,13 +57,13 @@ PTOKEN lexer_read(PLEXER lexer)
     {
         char c = scanner_get_next(lexer->scanner);
         char d = scanner_peek_next(lexer->scanner);
-        if (isalpha(c) && (isalpha(d) || '_' == d))
+        if (isalpha(c) && (isalpha(d) || '_' == d || '.' == d || '$' == d) )
         {
             char text[256];
             int i = 0;
             text[i] = c;
             i++;
-            while (isalpha(d) || '_' == d || isdigit(d))
+            while (isalpha(d) || '_' == d || isdigit(d) || '.' == d || '$' == d)
             {
                 text[i] = d;
                 d = scanner_get_next(lexer->scanner);
@@ -72,6 +72,7 @@ PTOKEN lexer_read(PLEXER lexer)
             }
             text[i] = '\0';
             token = token_create(text, scanner_position(lexer->scanner), IDENTIFIER);
+            
         }
         else if ('A' == c)
         {
@@ -161,9 +162,19 @@ PTOKEN lexer_read(PLEXER lexer)
         {
             token = token_create("!", scanner_position(lexer->scanner), NOT);
         }
+        else if ('&' == c)
+        {
+            token = token_create("&", scanner_position(lexer->scanner), OPERATOR);
+        }
+        else if ('|' == c)
+        {
+            token = token_create("|", scanner_position(lexer->scanner), OPERATOR);
+        }
         else
         {
-            token = token_create("ERROR", scanner_position(lexer->scanner), ERROR);
+            char msg[21];
+            sprintf(msg, "Unknown character: %c", c);
+            token = token_create(msg, scanner_position(lexer->scanner), ERROR);
         }
     }
     else

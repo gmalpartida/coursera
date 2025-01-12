@@ -31,7 +31,7 @@ LD = ld
 TARGET = bin/assembler
 LDFLAGS= -Xlinker -Map=$(TARGET).map
 
-CFLAGS = $(INCLUDES) -Wall -Werror -g -O0 -std=c99 
+CFLAGS = $(INCLUDES) -Wall -Werror -g -O0 -std=c99
 
 CPPFLAGS = 
 

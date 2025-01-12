@@ -7,7 +7,7 @@
 PSYMBOL_TABLE symbol_table_create()
 {
     PSYMBOL_TABLE symbol_table = (PSYMBOL_TABLE)malloc(sizeof(SYMBOL_TABLE));
-    symbol_table->symbol_table = (PSYMBOL)malloc(sizeof(SYMBOL)*256);
+    symbol_table->symbol_table = (PSYMBOL)malloc(sizeof(SYMBOL)*1024);
     symbol_table->size = 0;
     symbol_table->next_variable_index = 16;
     return symbol_table;
@@ -17,7 +17,7 @@ void symbol_table_print(PSYMBOL_TABLE symbol_table)
 {
     for (int i = 0; i < symbol_table->size; i++)
     {
-        printf("(symbol: %s, value: %d\n", symbol_table->symbol_table[i].symbol, symbol_table->symbol_table[i].value);
+        symbol_print(&symbol_table->symbol_table[i]);
     }
 }
 
@@ -85,6 +85,9 @@ PSYMBOL symbol_duplicate(PSYMBOL symbol)
     return new_symbol;
 }
 
-
+void symbol_print(PSYMBOL symbol)
+{
+    printf("symbol: %s, value:%d\n", symbol->symbol, symbol->value);
+}
 
 

@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 
-char * token_type_map[] = {"D", "A", "M", "IDENTIFIER", "REGISTER", "EQUAL", "PLUS", "SEMI_COLON", "VALUE", "NOT",
+char * token_type_map[] = {"D", "A", "M", "IDENTIFIER", "REGISTER", "EQUAL", "PLUS", "SEMI_COLON", "VALUE", "NOT", "OPERATOR",
                         "ERROR", "AMPERSAND", "AT", "OPEN_PARENS", "CLOSE_PARENS", "ADDRESS", "MINUS", "EOF"};
 int token_type_map_size = 18;
 

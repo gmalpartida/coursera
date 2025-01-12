@@ -23,5 +23,6 @@ PSYMBOL symbol_table_get(PSYMBOL_TABLE symbol_table, char * text);
 PSYMBOL symbol_duplicate(PSYMBOL symbol);
 PSYMBOL symbol_copy(PSYMBOL dest_symbol, PSYMBOL src_symbol);
 void symbol_table_add_variable(PSYMBOL_TABLE symbol_table, char * text);
+void symbol_print(PSYMBOL symbol);
 
 #endif
