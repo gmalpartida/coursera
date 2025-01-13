@@ -162,7 +162,7 @@ PASTNODE parser_parse_A_instruction(PPARSER parser, bool process_variables)
             astnode->A_instruction->value = symbol->value;
         }
     }
-    else if (token->type == REGISTER)
+    else if (token->type == VREGISTER)
     {
         // consume token
         token = lexer_read(parser->lexer);
@@ -203,7 +203,7 @@ PASTNODE parser_parse_C_instruction(PPARSER parser)
             strcpy(astnode->C_instruction->jump, token2->text);   
         }
     }
-    else if (token->type == A || token->type == D || token->type == M || (0 == strcmp(token->text, "MD"))
+    else if (token->type == REGISTER || (0 == strcmp(token->text, "MD"))
             || (0 == strcmp(token->text, "AM")) || (0 == strcmp(token->text, "AD")) ||
                 (0 == strcmp(token->text, "AMD")))
     {
@@ -225,7 +225,7 @@ PASTNODE parser_parse_C_instruction(PPARSER parser)
                 astnode->C_instruction->comp = (char*)malloc(sizeof(char) * strlen(token->text) + 1);
                 strcpy(astnode->C_instruction->comp, token->text);
             }
-            else if (token->type == A || token->type == M || token->type == D)
+            else if (token->type == REGISTER)
             {
                 // M = D
 

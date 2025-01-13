@@ -76,15 +76,15 @@ PTOKEN lexer_read(PLEXER lexer)
         }
         else if ('A' == c)
         {
-            token = token_create("A", scanner_position(lexer->scanner), A);
+            token = token_create("A", scanner_position(lexer->scanner), REGISTER);
         }
         else if ('D' == c)
         {
-            token = token_create("D", scanner_position(lexer->scanner), D);
+            token = token_create("D", scanner_position(lexer->scanner), REGISTER);
         }
         else if ('M' == c)
         {
-            token = token_create("M", scanner_position(lexer->scanner), M);
+            token = token_create("M", scanner_position(lexer->scanner), REGISTER);
         }
         else if ('R' == c)
         {
@@ -103,7 +103,7 @@ PTOKEN lexer_read(PLEXER lexer)
                     c = scanner_peek_next(lexer->scanner);
                 }
                 text[i] = '\0';
-                token = token_create(text, scanner_position(lexer->scanner), REGISTER);
+                token = token_create(text, scanner_position(lexer->scanner), VREGISTER);
             }
         }
         else if ('@' == c)

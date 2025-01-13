@@ -2,4 +2,4 @@
 
 make clean
 make all
-bin/assembler test/Rect.asm
+bin/assembler test/Pong.asm
