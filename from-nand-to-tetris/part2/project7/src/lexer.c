@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <stdint.h>
+#include <string.h>
 
 PLEXER lexer_create(PSCANNER scanner)
 {
@@ -55,13 +57,59 @@ PTOKEN lexer_read(PLEXER lexer)
 
     if (!scanner_at_end(lexer->scanner))
     {
-        char c = scanner_get_next(lexer->scanner);
-        char d = scanner_peek_next(lexer->scanner);
-        if (isalpha(c) && (isalpha(d) || '_' == d))
+        char c = scanner_peek_next(lexer->scanner);
+        if (isalpha(c))
         {
-            char text[256];
-            int i = 0;
-            text[i] = c;
+            char text[20];
+            uint8_t i = 0;
+            uint16_t pos = scanner_position(lexer->scanner);
+            while (isalpha(c))
+            {
+                //consume the character
+                c = scanner_get_next(lexer->scanner);
+
+                text[i] = c;
+                i++;
+
+                // peek at next character
+                c = scanner_peek_next(lexer->scanner);
+            }
+            text[i] = '\0';
+            TOKEN_TYPE type = ERROR;
+            
+            if (0 == strcmp(text, "push") || 0 == strcmp(text, "pop"))
+                type = STACK_OP;
+            else if (0 == strcmp(text, "add") || 0 == strcmp(text, "sub") || 0 == strcmp(text, "neg"))
+                type = ARITHMETIC_OP;
+            else if (0 == strcmp(text, "eq") || 0 == strcmp(text, "gt") || 0 == strcmp(text, "lt") ||
+                    0 == strcmp(text, "and") || 0 == strcmp(text, "or") || 0 == strcmp(text, "not"))
+                type = LOGICAL_OP;
+            else if (0 == strcmp(text, "local") || 0 == strcmp(text, "argument") || 0 == strcmp(text, "static") ||
+                    0 == strcmp(text, "constant") || 0 == strcmp(text, "this") || 0 == strcmp(text, "that") ||
+                    0 == strcmp(text, "temp") || 0 == strcmp(text, "pointer"))
+                type = MEMORY_SEGMENT;
+
+            token = token_create(text, pos, type);
+        }
+        else if (isdigit(c))
+        {
+            char text[20];
+            uint8_t i = 0;
+            uint16_t pos = scanner_position(lexer->scanner);
+            while (isdigit(c))
+            {
+                // consume character
+                c = scanner_get_next(lexer->scanner);
+
+                text[i] = c;
+                i++;
+
+                // peek at next character
+                c = scanner_peek_next(lexer->scanner);
+            }
+            text[i] = '\0';
+
+            token = token_create(text, pos, NUMBER);
         }
         else
         {

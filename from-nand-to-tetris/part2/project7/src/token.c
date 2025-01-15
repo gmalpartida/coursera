@@ -4,9 +4,8 @@
 #include <stdio.h>
 
 
-char * token_type_map[] = {"D", "A", "M", "IDENTIFIER", "REGISTER", "EQUAL", "PLUS", "SEMI_COLON", "VALUE", "NOT",
-                        "ERROR", "AMPERSAND", "AT", "OPEN_PARENS", "CLOSE_PARENS", "ADDRESS", "MINUS", "EOF"};
-int token_type_map_size = 18;
+char * token_type_map[] = {"STACK_OP", "ARITHMETIC_OP", "LOGICAL_OP", "MEMORY_SEGMENT", "NUMBER", "ERROR", "EOF"};
+int token_type_map_size = 5;
 
 PTOKEN token_create(char * text, int position, TOKEN_TYPE type)
 {
@@ -29,7 +28,7 @@ void token_destroy(PTOKEN token)
 char * token_map_type_to_text(TOKEN_TYPE type)
 {
     char * text = NULL;
-    if (type >= D && type <= EOE)
+    if (type >= STACK_OP && type <= EOE)
     {
         text = (char*)malloc(sizeof(token_type_map[type])+1);
         strcpy(text, token_type_map[type]);
@@ -41,7 +40,7 @@ char * token_map_type_to_text(TOKEN_TYPE type)
 TOKEN_TYPE token_map_text_to_type(char * text)
 {
     TOKEN_TYPE type = ERROR;
-    for (int i = D; i < EOE; i++)
+    for (int i = STACK_OP; i < EOE; i++)
     {
         if (0 == strcmp(token_type_map[i], text) )
         {

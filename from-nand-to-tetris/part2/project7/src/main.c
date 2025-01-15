@@ -14,17 +14,23 @@ int main(int argc, char * argv[])
 
         if (NULL != scanner)
         {
+            scanner_print(scanner);
             PLEXER lexer = lexer_create(scanner);
             if (NULL != lexer)
             {
-               
+                PTOKEN token = NULL;
+                while (EOE != (token = lexer_read(lexer))->type)
+                {
+                    token_print(token);
+                    printf("\n");
+                }
             }
             scanner_destroy(scanner);
         }
     }
     else
     {
-        printf("usage: assembler filename\n");
+        printf("usage: VMTranslator filename\n");
     }
     return EXIT_SUCCESS;
 }

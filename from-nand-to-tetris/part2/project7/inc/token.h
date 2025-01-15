@@ -1,9 +1,7 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
-typedef enum {D, A, M, IDENTIFIER,             
-                REGISTER, EQUAL, PLUS,SEMI_COLON, VALUE, NOT,
-                ERROR, AMPERSAND, AT, OPEN_PAREN, CLOSE_PAREN, ADDRESS, MINUS, EOE} TOKEN_TYPE;
+typedef enum {STACK_OP, ARITHMETIC_OP, LOGICAL_OP, MEMORY_SEGMENT, NUMBER, ERROR, EOE} TOKEN_TYPE;
 
 typedef struct Token
 {
