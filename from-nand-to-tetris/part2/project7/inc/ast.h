@@ -1,34 +1,29 @@
-#ifndef PARSER_H
-#define PARSER_H
+#ifndef AST_H
+#define AST_H
 
 #include <stdint.h>
 #include <stdbool.h>
+#include "token.h"
 
 typedef struct ASTNode
 {
-    PTOKEN  token;
+    PTOKEN op;
+    PTOKEN operand1;
+    PTOKEN operand2;
+  
 } ASTNODE, *PASTNODE;
-
-typedef struct ASTNodeNumber
-{
-    PASTNODE astnode;
-};
-
-typedef struct ASTNodeStackOp
-{
-    PASTNODE astnode;
-};
-
 
 typedef struct Ast
 {
-    PASTNODE * ast_node;
+    PASTNODE * astnode;
     uint32_t size;
 } AST, *PAST;
 
-
-void parser_ast_add(PPARSER parser, PASTNODE astnode);
-void parser_print_astnode(PASTNODE astnode);
-void parser_parse(PPARSER parser);
+PAST ast_create();
+void ast_destroy(PAST ast);
+void ast_print(PAST ast);
+void ast_add(PAST ast, PASTNODE astnode);
+void astnode_print(PASTNODE astnode);
+PASTNODE astnode_create(PTOKEN op);
 
 #endif

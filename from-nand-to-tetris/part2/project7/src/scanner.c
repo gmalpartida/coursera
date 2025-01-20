@@ -9,6 +9,7 @@ PSCANNER scanner_create(char * filename)
     
     if (NULL != scanner)
     {
+        scanner->filename = filename;
         scanner->buffer = scanner->tmp_buffer = NULL;
         scanner->buffer_size = 0;
         char * file_content = NULL;

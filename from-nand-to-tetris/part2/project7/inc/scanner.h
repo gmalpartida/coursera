@@ -7,6 +7,7 @@ typedef struct Scanner{
     char * buffer;
     char * tmp_buffer;
     size_t buffer_size;
+    char * filename;
 } SCANNER, *PSCANNER;
 
 
