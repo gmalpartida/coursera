@@ -7,7 +7,7 @@ M=D
 @SP
 M=M+1
 // pop segment i
-@local
+@LCL
 D=M
 @0
 A=D+A
@@ -37,7 +37,7 @@ M=D
 @SP
 M=M+1
 // pop segment i
-@argument
+@ARG
 D=M
 @2
 A=D+A
@@ -51,7 +51,7 @@ D=M
 A=M
 M=D
 // pop segment i
-@argument
+@ARG
 D=M
 @1
 A=D+A
@@ -73,7 +73,7 @@ M=D
 @SP
 M=M+1
 // pop segment i
-@this
+@THIS
 D=M
 @6
 A=D+A
@@ -103,7 +103,7 @@ M=D
 @SP
 M=M+1
 // pop segment i
-@that
+@THAT
 D=M
 @5
 A=D+A
@@ -117,7 +117,7 @@ D=M
 A=M
 M=D
 // pop segment i
-@that
+@THAT
 D=M
 @2
 A=D+A
@@ -154,7 +154,7 @@ M=D
 // push segment i
 @0        //@i
 D=A        // #D=i
-@local        // @segment
+@LCL        // @segment
 A=D+M      // A=LCL+i jump to that memory
 D=M        // D=LCL[i]
 @SP
@@ -165,7 +165,7 @@ M=M+1      // SP++
 // push segment i
 @5        //@i
 D=A        // #D=i
-@that        // @segment
+@THAT        // @segment
 A=D+M      // A=LCL+i jump to that memory
 D=M        // D=LCL[i]
 @SP
@@ -182,7 +182,7 @@ M=M+D
 // push segment i
 @1        //@i
 D=A        // #D=i
-@argument        // @segment
+@ARG        // @segment
 A=D+M      // A=LCL+i jump to that memory
 D=M        // D=LCL[i]
 @SP
@@ -199,7 +199,7 @@ M=M-D
 // push segment i
 @6        //@i
 D=A        // #D=i
-@this        // @segment
+@THIS        // @segment
 A=D+M      // A=LCL+i jump to that memory
 D=M        // D=LCL[i]
 @SP
@@ -210,7 +210,7 @@ M=M+1      // SP++
 // push segment i
 @6        //@i
 D=A        // #D=i
-@this        // @segment
+@THIS        // @segment
 A=D+M      // A=LCL+i jump to that memory
 D=M        // D=LCL[i]
 @SP
