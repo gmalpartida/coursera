@@ -1,56 +1,4 @@
-@256
-D=A
-@SP
-M=D
-@BasicTest.RET_0
-D=A
-@SP
-A=M
-M=D
-@SP
-M=M+1
-@LCL
-D=M
-@SP
-A=M
-M=D
-@SP
-M=M+1
-@ARG
-D=M
-@SP
-A=M
-M=D
-@SP
-M=M+1
-@THIS
-D=M
-@SP
-A=M
-M=D
-@SP
-M=M+1
-@THAT
-D=M
-@SP
-A=M
-M=D
-@SP
-M=M+1
-@SP
-D=M
-@LCL
-M=D
-@5
-D=D-A
-@ARG
-M=D
-@Sys.init
-0;JMP
-(BasicTest.RET_0)
-
-
-// push constant 10
+// push constant i
 @10
 D=A
 @SP
@@ -58,9 +6,8 @@ A=M
 M=D
 @SP
 M=M+1
-
-
-@LCL
+// pop segment i
+@local
 D=M
 @0
 A=D+A
@@ -73,8 +20,7 @@ D=M
 @R13
 A=M
 M=D
-
-
+// push constant i
 @21
 D=A
 @SP
@@ -82,7 +28,7 @@ A=M
 M=D
 @SP
 M=M+1
-
+// push constant i
 @22
 D=A
 @SP
@@ -90,9 +36,9 @@ A=M
 M=D
 @SP
 M=M+1
-@ARG
+// pop segment i
+@argument
 D=M
-
 @2
 A=D+A
 D=A
@@ -104,9 +50,9 @@ D=M
 @R13
 A=M
 M=D
-@ARG
-DM
-
+// pop segment i
+@argument
+D=M
 @1
 A=D+A
 D=A
@@ -118,7 +64,7 @@ D=M
 @R13
 A=M
 M=D
-
+// push constant i
 @36
 D=A
 @SP
@@ -126,9 +72,9 @@ A=M
 M=D
 @SP
 M=M+1
-@THIS
+// pop segment i
+@this
 D=M
-
 @6
 A=D+A
 D=A
@@ -140,7 +86,7 @@ D=M
 @R13
 A=M
 M=D
-
+// push constant i
 @42
 D=A
 @SP
@@ -148,7 +94,7 @@ A=M
 M=D
 @SP
 M=M+1
-
+// push constant i
 @45
 D=A
 @SP
@@ -156,9 +102,9 @@ A=M
 M=D
 @SP
 M=M+1
-@THAT
+// pop segment i
+@that
 D=M
-
 @5
 A=D+A
 D=A
@@ -170,9 +116,9 @@ D=M
 @R13
 A=M
 M=D
-@THAT
+// pop segment i
+@that
 D=M
-
 @2
 A=D+A
 D=A
@@ -184,7 +130,7 @@ D=M
 @R13
 A=M
 M=D
-
+// push constant i
 @510
 D=A
 @SP
@@ -192,30 +138,101 @@ A=M
 M=D
 @SP
 M=M+1
-@R11
+// pop temp i
+@5
 D=A
-@R13
+@6
+D=D+A
+@R15
 M=D
 @SP
 AM=M-1
 D=M
-@R13
+@R15
 A=M
 M=D
-
-@LCL
-D=M
-@0
-A=D+A
-D=M
+// push segment i
+@0        //@i
+D=A        // #D=i
+@local        // @segment
+A=D+M      // A=LCL+i jump to that memory
+D=M        // D=LCL[i]
 @SP
-A=M
-M=D
+A=M        // jump to location of SP
+M=D        // RAM[*SP] = D
 @SP
-M=M+1
-@THAT
+M=M+1      // SP++
+// push segment i
+@5        //@i
+D=A        // #D=i
+@that        // @segment
+A=D+M      // A=LCL+i jump to that memory
+D=M        // D=LCL[i]
+@SP
+A=M        // jump to location of SP
+M=D        // RAM[*SP] = D
+@SP
+M=M+1      // SP++
+// add
+@SP
+AM=M-1
 D=M
-
+A=A-1
+M=M+D
+// push segment i
+@1        //@i
+D=A        // #D=i
+@argument        // @segment
+A=D+M      // A=LCL+i jump to that memory
+D=M        // D=LCL[i]
+@SP
+A=M        // jump to location of SP
+M=D        // RAM[*SP] = D
+@SP
+M=M+1      // SP++
+// sub
+@SP
+AM=M-1
+D=M
+A=A-1
+M=M-D
+// push segment i
+@6        //@i
+D=A        // #D=i
+@this        // @segment
+A=D+M      // A=LCL+i jump to that memory
+D=M        // D=LCL[i]
+@SP
+A=M        // jump to location of SP
+M=D        // RAM[*SP] = D
+@SP
+M=M+1      // SP++
+// push segment i
+@6        //@i
+D=A        // #D=i
+@this        // @segment
+A=D+M      // A=LCL+i jump to that memory
+D=M        // D=LCL[i]
+@SP
+A=M        // jump to location of SP
+M=D        // RAM[*SP] = D
+@SP
+M=M+1      // SP++
+// add
+@SP
+AM=M-1
+D=M
+A=A-1
+M=M+D
+// sub
+@SP
+AM=M-1
+D=M
+A=A-1
+M=M-D
+// push temp i
+@6
+D=A
 @5
 A=D+A
 D=M
@@ -224,70 +241,7 @@ A=M
 M=D
 @SP
 M=M+1
-@SP
-AM=M-1
-D=M
-A=A-1
-M=M+D
-@ARG
-D=M
-
-@1
-A=D+A
-D=M
-@SP
-A=M
-M=D
-@SP
-M=M+1
-@SP
-AM=M-1
-D=M
-A=A-1
-M=M-D
-
-@THIS
-D=M
-@6
-A=D+A
-D=M
-@SP
-A=M
-M=D
-@SP
-M=M+1
-
-@THIS
-D=M
-@6
-A=D+A
-D=M
-@SP
-A=M
-M=D
-@SP
-M=M+1
-
-@SP
-AM=M-1
-D=M
-A=A-1
-M=M+D
-
-@SP
-AM=M-1
-D=M
-A=A-1
-M=M-D
-
-@R11
-D=M
-@SP
-A=M
-M=D
-@SP
-M=M+1
-
+// add
 @SP
 AM=M-1
 D=M
