@@ -178,7 +178,7 @@ M=M+1      // SP++
 AM=M-1
 D=M
 A=A-1
-M=M+D
+M=D+M
 // push segment i
 @1        //@i
 D=A        // #D=i
@@ -223,7 +223,7 @@ M=M+1      // SP++
 AM=M-1
 D=M
 A=A-1
-M=M+D
+M=D+M
 // sub
 @SP
 AM=M-1
@@ -246,4 +246,4 @@ M=M+1
 AM=M-1
 D=M
 A=A-1
-M=M+D
+M=D+M
