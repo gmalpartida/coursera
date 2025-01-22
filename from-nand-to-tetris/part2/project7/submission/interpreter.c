@@ -307,7 +307,7 @@ char * interpreter_logical_op(PASTNODE astnode)
                       "@SP\n"
                       "A=M\n"
                       "M=0\n"
-                      "@END_EQ\n"
+                      "@END_EQUAL\n"
                       "0;JMP\n"
                       "(EQUAL)\n"
                       "@SP\n"

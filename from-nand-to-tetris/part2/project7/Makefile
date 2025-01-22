@@ -23,14 +23,14 @@ OBJS = $(SRCS:.c=.o)
 %.asm : %.c
 	$(CC) -S $< $(CFLAGS) -o $@
 
+.PHONY: all
+all: $(TARGET)
+
 .PHONY: compile-all
 compile-all : $(OBJS) 
 
 .PHONY: build
 build: all
-
-.PHONY: all
-all: $(TARGET)
 
 $(TARGET): $(OBJS)
 	$(CC) $(OBJS) $(CFLAGS) $(LDFLAGS) -o $@
