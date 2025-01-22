@@ -145,7 +145,7 @@ char * interpreter_stack_op(PASTNODE astnode, char * filename)
             char * format_str = "// push pointer 0/1\n"
                                 "@%s\n"
                                 "A=M\n"
-                                "D=M\n"
+                                "D=A\n"
                                 "@SP\n"
                                 "A=M\n"
                                 "M=D\n"
@@ -249,7 +249,7 @@ char * interpreter_arithmetic_op(PASTNODE astnode)
                             "AM=M-1\n"
                             "D=M\n"
                             "A=A-1\n"
-                            "M=M+D\n";
+                            "M=D+M\n";
         char * assembly_code = (char*)malloc(sizeof(char) * strlen(format_str) + 1);
 
         strcpy(assembly_code, format_str);

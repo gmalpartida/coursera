@@ -75,7 +75,7 @@ M=D
 // push pointer 0/1
 @THIS
 A=M
-D=M
+D=A
 @SP
 A=M
 M=D
@@ -84,7 +84,7 @@ M=M+1
 // push pointer 0/1
 @THAT
 A=M
-D=M
+D=A
 @SP
 A=M
 M=D

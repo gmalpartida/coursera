@@ -1,10 +1,11 @@
 CURRENT_DIR = $(shell pwd)
 INCLUDES = 
+
 CC = gcc
 CFLAGS = -g -Wall
 SRC = *.c
 BIN = VMTranslator
-LIBS =
+LIBS = 
 
 all: $(BIN)
 
