@@ -272,7 +272,7 @@ char * interpreter_arithmetic_op(PASTNODE astnode)
     {
         char * format_str = "// neg\n"
                             "@SP\n"
-                            "AM=M-1\n"
+                            "A=M-1\n"
                             "D=M\n"
                             "D=-D\n"
                             "M=D\n";
@@ -287,7 +287,7 @@ char * interpreter_arithmetic_op(PASTNODE astnode)
     }
 }
 
-char * interpreter_logical_op(PASTNODE astnode)
+char * interpreter_logical_op(PASTNODE astnode, uint16_t index)
 {
     char * assembly_code = (char*)malloc(sizeof(char) * 256);
 
@@ -299,37 +299,37 @@ char * interpreter_logical_op(PASTNODE astnode)
                       "A=M\n"
                       "D=M\n"
                       "A=A-1\n"
-                      "D=D-M\n"
+                      "D=M-D\n"
                       "@SP\n"
                       "M=M-1\n"
-                      "@EQUAL\n"
+                      "@EQUAL%d\n"
                       "D;%s\n"
                       "@SP\n"
                       "A=M\n"
-                      "M=0\n"
-                      "@END_EQUAL\n"
+                      "M=-1\n"
+                      "@END_EQUAL%d\n"
                       "0;JMP\n"
-                      "(EQUAL)\n"
+                      "(EQUAL%d)\n"
                       "@SP\n"
                       "A=M\n"
-                      "M=1\n"
-                      "(END_EQUAL)\n"
+                      "M=0\n"
+                      "(END_EQUAL%d)\n"
                       "@SP\n"
                       "M=M+1\n";
 
         char eq_gt_lt[4];
         if (!strcmp(astnode->op->text, "eq"))
-            strcpy(eq_gt_lt, "JEQ");
+            strcpy(eq_gt_lt, "JNE");
         else if (!strcmp(astnode->op->text, "gt"))
-            strcpy(eq_gt_lt, "JGT");
+            strcpy(eq_gt_lt, "JLE");
         else if (!strcmp(astnode->op->text, "lt"))
-            strcpy(eq_gt_lt, "JLT");
+            strcpy(eq_gt_lt, "JGE");
         else
         {
             free(assembly_code);
             exit(EXIT_FAILURE);
         }
-        sprintf(assembly_code, format_str, eq_gt_lt);
+        sprintf(assembly_code, format_str, index, eq_gt_lt, index, index, index);
     }
     else if (!strcmp(astnode->op->text, "and") || !strcmp(astnode->op->text, "or"))
     {
@@ -402,7 +402,7 @@ void interpreter_interpret(PINTERPRETER interpreter)
         }
         else if (astnode->op->type == LOGICAL_OP)
         {
-            interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_logical_op(astnode);
+            interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_logical_op(astnode, i);
         }
     }
 }
