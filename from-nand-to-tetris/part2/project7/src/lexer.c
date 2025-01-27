@@ -63,7 +63,7 @@ PTOKEN lexer_read(PLEXER lexer)
             char text[20];
             uint8_t i = 0;
             uint16_t pos = scanner_position(lexer->scanner);
-            while (isalpha(c))
+            while (isalpha(c) || isdigit(c) || '.' == c || '-' == c || '_' == c)
             {
                 //consume the character
                 c = scanner_get_next(lexer->scanner);
@@ -88,6 +88,8 @@ PTOKEN lexer_read(PLEXER lexer)
                     0 == strcmp(text, "constant") || 0 == strcmp(text, "this") || 0 == strcmp(text, "that") ||
                     0 == strcmp(text, "temp") || 0 == strcmp(text, "pointer"))
                 type = MEMORY_SEGMENT;
+            else if (0 == strcmp(text, "label") || 0 == strcmp(text, "goto") || 0 == strcmp(text, "if-goto"))
+                type = BRANCH_OP;
 
             token = token_create(text, pos, type);
         }
