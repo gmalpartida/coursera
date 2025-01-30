@@ -67,6 +67,12 @@ void parser_parse(PPARSER parser)
                 
                 ast_add(parser->ast, astnode);
             }
+            else if (token->type == BRANCH_OP)
+            {
+                PASTNODE astnode = astnode_create(token);
+                astnode->operand1 = lexer_read(parser->lexer);
+                ast_add(parser->ast, astnode);
+            }
         }
    }
 

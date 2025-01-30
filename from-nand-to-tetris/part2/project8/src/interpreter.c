@@ -386,6 +386,41 @@ char * interpreter_logical_op(PASTNODE astnode, uint16_t index)
     return assembly_code;
 }
 
+char * interpreter_branch_op(PASTNODE astnode)
+{
+    char * assembly_code = (char*)malloc(sizeof(char) * 256);
+    if (!strcmp(astnode->op->text, "label"))
+    {
+        char * format_str = "// %s %s\n"
+                            "(%s)\n";
+        sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand1->text);
+    }
+    else if (!strcmp(astnode->op->text, "goto"))
+    {
+        char * format_str = "// %s %s\n"
+                            "@%s\n"
+                            "0;JMP\n";
+        sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand1->text);
+    }
+    else if (!strcmp(astnode->op->text, "if-goto"))
+    {
+        char * format_str = "// %s %s\n"
+                            "@SP\n"
+                            "AM=M-1\n"
+                            "D=M\n"
+                            "@%s\n"
+                            "D;JNE\n";
+        sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand1->text);
+    }
+    else
+    {
+        free(assembly_code);
+        astnode_print(astnode);
+        exit(EXIT_FAILURE);
+    }
+    return assembly_code;
+}
+
 void interpreter_interpret(PINTERPRETER interpreter)
 {
     parser_parse(interpreter->parser);
@@ -405,8 +440,13 @@ void interpreter_interpret(PINTERPRETER interpreter)
         {
             interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_logical_op(astnode, i);
         }
-   }
+        else if (astnode->op->type == BRANCH_OP)
+        {
+            interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_branch_op(astnode);
+        }
+    }
 }
+
 
 void interpreter_save_to_file(PINTERPRETER interpreter, char * filename)
 {

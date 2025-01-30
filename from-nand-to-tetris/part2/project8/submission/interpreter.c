@@ -77,7 +77,7 @@ char * interpreter_stack_op(PASTNODE astnode, char * filename)
     {
         if (!strcmp(astnode->operand1->text, "constant"))
         {
-            char * format_str = "// %s %s %s\n"
+            char * format_str = "// push constant i\n"
                                 "@%s\n"
                                 "D=A\n"
                                 "@SP\n"
@@ -86,13 +86,13 @@ char * interpreter_stack_op(PASTNODE astnode, char * filename)
                                 "@SP\n"
                                 "M=M+1\n";
 
-            sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand2->text, astnode->operand2->text);
+            sprintf(assembly_code, format_str, astnode->operand2->text);
         }
         else if (!strcmp(astnode->operand1->text, "local") || !strcmp(astnode->operand1->text, "argument") ||
                 !strcmp(astnode->operand1->text, "this") || !strcmp(astnode->operand1->text, "that"))
         {
             // push segment i
-             char * format_str = "// %s %s %s\n"
+             char * format_str = "// push segment i\n"
                                  "@%d        //@i\n"
                                  "D=A        // #D=i\n"
                                  "@%s        // @segment\n"
@@ -104,12 +104,12 @@ char * interpreter_stack_op(PASTNODE astnode, char * filename)
                                  "@SP\n"
                                  "M=M+1      // SP++\n";
 
-            sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand2->text, atoi(astnode->operand2->text), interpreter_translate_segment(astnode->operand1->text));
+            sprintf(assembly_code, format_str, atoi(astnode->operand2->text), interpreter_translate_segment(astnode->operand1->text));
         }
         else if (!strcmp(astnode->operand1->text, "static"))
         {
 
-            char * format_str =  "// %s %s %s\n"
+            char * format_str =  "// push static i\n"
                                  "@%s        //@file.i\n"
                                  "D=M        // D=RAM[var_name]\n"
                                  "@SP\n"
@@ -119,13 +119,13 @@ char * interpreter_stack_op(PASTNODE astnode, char * filename)
                                  "M=M+1      // SP++\n";
 
             char * static_var_name = interpreter_get_static_variable_name(filename, astnode->operand2->text);
-            sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand2->text, static_var_name);
+            sprintf(assembly_code, format_str, static_var_name);
  
             free(static_var_name);
         }
         else if (!strcmp(astnode->operand1->text, "temp"))
         {
-            char * format_str = "// %s %s %s\n"
+            char * format_str = "// push temp i\n"
                                 "@%s\n"
                                 "D=A\n"
                                 "@5\n"
@@ -137,12 +137,12 @@ char * interpreter_stack_op(PASTNODE astnode, char * filename)
                                 "@SP\n"
                                 "M=M+1\n";
 
-            sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand2->text, astnode->operand2->text);
+            sprintf(assembly_code, format_str, astnode->operand2->text);
  
         }
         else if (!strcmp(astnode->operand1->text, "pointer"))
         {
-            char * format_str = "// %s %s %s\n"
+            char * format_str = "// push pointer 0/1\n"
                                 "@%s\n"
                                 "A=M\n"
                                 "D=A\n"
@@ -151,7 +151,7 @@ char * interpreter_stack_op(PASTNODE astnode, char * filename)
                                 "M=D\n"
                                 "@SP\n"
                                 "M=M+1\n";
-            sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand2->text, interpreter_translate_segment(astnode->operand2->text));
+            sprintf(assembly_code, format_str, interpreter_translate_segment(astnode->operand2->text));
         }
         else
         {
@@ -165,7 +165,7 @@ char * interpreter_stack_op(PASTNODE astnode, char * filename)
                 !strcmp(astnode->operand1->text, "this") || !strcmp(astnode->operand1->text, "that"))
         {
             // pop segment i
-            char * format_str = "// %s %s %s\n"
+            char * format_str = "// pop segment i\n"
                                 "@%s\n"
                                 "D=M\n"
                                 "@%d\n"
@@ -180,11 +180,11 @@ char * interpreter_stack_op(PASTNODE astnode, char * filename)
                                 "A=M\n"
                                 "M=D\n";
 
-            sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand2->text, interpreter_translate_segment(astnode->operand1->text), atoi(astnode->operand2->text));
+            sprintf(assembly_code, format_str, interpreter_translate_segment(astnode->operand1->text), atoi(astnode->operand2->text));
         }
         else if (!strcmp(astnode->operand1->text, "static"))
         {
-            char * format_str = "// %s %s %s\n"
+            char * format_str = "// pop static i\n"
                                 "@SP\n"
                                 "AM=M-1\n"
                                 "D=M\n"
@@ -192,14 +192,13 @@ char * interpreter_stack_op(PASTNODE astnode, char * filename)
                                 "M=D\n";
 
             char * static_var_name = interpreter_get_static_variable_name(filename, astnode->operand2->text);
-            sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, 
-                                                                astnode->operand2->text, static_var_name);
+            sprintf(assembly_code, format_str, static_var_name);
             
             free(static_var_name);
         }
         else if (!strcmp(astnode->operand1->text, "temp"))
         {
-            char * format_str = "// %s %s %s\n"
+            char * format_str = "// pop temp i\n"
                                 "@5\n"
                                 "D=A\n"
                                 "@%s\n"
@@ -213,18 +212,18 @@ char * interpreter_stack_op(PASTNODE astnode, char * filename)
                                 "A=M\n"
                                 "M=D\n";
 
-            sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand2->text, astnode->operand2->text );
+            sprintf(assembly_code, format_str, astnode->operand2->text );
         }
         else if (!strcmp(astnode->operand1->text, "pointer"))
         {
-            char * format_str = "// %s %s %s\n"
+            char * format_str = "// pop pointer 0/1\n"
                                 "@SP\n"
                                 "M=M-1\n"
                                 "A=M\n"
                                 "D=M\n"
                                 "@%s\n"
                                 "M=D\n";
-            sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand2->text, interpreter_translate_segment(astnode->operand2->text));
+            sprintf(assembly_code, format_str, interpreter_translate_segment(astnode->operand2->text));
         }
         else 
         {
@@ -405,8 +404,9 @@ void interpreter_interpret(PINTERPRETER interpreter)
         {
             interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_logical_op(astnode, i);
         }
-   }
+    }
 }
+
 
 void interpreter_save_to_file(PINTERPRETER interpreter, char * filename)
 {

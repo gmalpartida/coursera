@@ -88,6 +88,9 @@ PTOKEN lexer_read(PLEXER lexer)
                     0 == strcmp(text, "constant") || 0 == strcmp(text, "this") || 0 == strcmp(text, "that") ||
                     0 == strcmp(text, "temp") || 0 == strcmp(text, "pointer"))
                 type = MEMORY_SEGMENT;
+            else if (0 == strcmp(text, "label") || 0 == strcmp(text, "goto") || 0 == strcmp(text, "if-goto"))
+                type = BRANCH_OP;
+
             token = token_create(text, pos, type);
         }
         else if (isdigit(c))

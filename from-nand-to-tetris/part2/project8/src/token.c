@@ -4,8 +4,8 @@
 #include <stdio.h>
 
 
-char * token_type_map[] = {"STACK_OP", "ARITHMETIC_OP", "LOGICAL_OP", "MEMORY_SEGMENT", "NUMBER", "ERROR", "EOE"};
-int token_type_map_size = 7;
+char * token_type_map[] = {"STACK_OP", "ARITHMETIC_OP", "LOGICAL_OP", "MEMORY_SEGMENT", "NUMBER", "BRANCH_OP", "ERROR", "EOE"};
+int token_type_map_size = 8;
 
 PTOKEN token_create(char * text, int position, TOKEN_TYPE type)
 {
