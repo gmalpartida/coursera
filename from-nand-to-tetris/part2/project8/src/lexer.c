@@ -90,6 +90,8 @@ PTOKEN lexer_read(PLEXER lexer)
                 type = MEMORY_SEGMENT;
             else if (0 == strcmp(text, "label") || 0 == strcmp(text, "goto") || 0 == strcmp(text, "if-goto"))
                 type = BRANCH_OP;
+            else if (0 == strcmp(text, "function") || 0 == strcmp(text, "call") || 0 == strcmp(text, "return"))
+                type = FUNCTION_OP;
 
             token = token_create(text, pos, type);
         }

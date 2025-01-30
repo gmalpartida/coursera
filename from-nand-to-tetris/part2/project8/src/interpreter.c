@@ -421,6 +421,29 @@ char * interpreter_branch_op(PASTNODE astnode)
     return assembly_code;
 }
 
+char * interpreter_function_op(PASTNODE astnode)
+{
+    char * assembly_code = (char*)malloc(sizeof(char) * 256);
+
+    if (!strcmp(astnode->op->text, "function"))
+    {
+    }
+    else if (!strcmp(astnode->op->text, "call"))
+    {
+    }
+    else if (!strcmp(astnode->op->text, "return"))
+    {
+    }
+    else
+    {
+        free(assembly_code);
+        astnode_print(astnode);
+        exit(EXIT_FAILURE);
+    }
+
+    return assembly_code;
+}
+
 void interpreter_interpret(PINTERPRETER interpreter)
 {
     parser_parse(interpreter->parser);
@@ -443,6 +466,10 @@ void interpreter_interpret(PINTERPRETER interpreter)
         else if (astnode->op->type == BRANCH_OP)
         {
             interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_branch_op(astnode);
+        }
+        else if (astnode->op->type == FUNCTION_OP)
+        {
+            interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_function_op(astnode);
         }
     }
 }

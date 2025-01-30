@@ -73,6 +73,16 @@ void parser_parse(PPARSER parser)
                 astnode->operand1 = lexer_read(parser->lexer);
                 ast_add(parser->ast, astnode);
             }
+            else if (token->type == FUNCTION_OP)
+            {
+                PASTNODE astnode = astnode_create(token);
+                if (strcmp(token->text, "return"))
+                {
+                    astnode->operand1 = lexer_read(parser->lexer);
+                
+                    astnode->operand2 = lexer_read(parser->lexer);
+                }
+            }
         }
    }
 
