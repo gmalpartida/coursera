@@ -430,6 +430,50 @@ char * interpreter_function_op(PASTNODE astnode)
     }
     else if (!strcmp(astnode->op->text, "call"))
     {
+		char * format_str = "// %s %s %s\n"
+							"(%s)"
+							"D=A\n"
+							"@SP\n"
+							"A=M\n"
+							"M=D\n"
+							"@SP\n"
+							"M=M+1\n"
+							"@LCL\n"
+							"D=M\n"
+							"@SP\n"
+							"A=M\n"
+							"M=D\n"
+							"@ARG\n"
+							"D=M\n"
+							"@SP\n"
+							"A=M\n"
+							"M=D\n"
+							"@THIS\n"
+							"D=M\n"
+							"@SP\n"
+							"A=M\n"
+							"M=D\n"
+							"@THAT\n"
+							"D=M\n"
+							"@SP\n"
+							"A=M\n"
+							"M=D\n"
+							"@SP\n"
+							"D=M\n"
+							"@5\n"
+							"D=D-A\n"
+							"@%s\n"
+							"D=D-A\n"
+							"@ARG\n"
+							"M=D\n"
+							"@SP\n"
+							"D=M\n"
+							"@LCL\n"
+							"M=D\n"
+							"@%s\n"
+							"0;JMP\n";
+	sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand2->text,
+				astnode->operand1->text, astnode->operand1->text);
     }
     else if (!strcmp(astnode->op->text, "return"))
     {

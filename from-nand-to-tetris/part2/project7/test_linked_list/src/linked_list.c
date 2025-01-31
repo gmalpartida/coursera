@@ -99,4 +99,37 @@ bool linked_list_is_empty(PLINKEDLIST linked_list)
     return linked_list->head == NULL;
 }
 
+bool linked_list_delete(PLINKEDLIST linked_list, PNODEDATA node_data)
+{
+	PLINKEDLISTNODE prev = NULL;
+	PLINKEDLISTNODE cur = linked_list->head;
+	bool result = false;
+
+	while (cur)
+	{
+		if (node_data_is_equal(cur->data, node_data))
+		{
+			if (NULL == prev)
+			{
+				linked_list->head = cur->next;
+			}
+			else
+			{
+				prev->next = cur->next;
+			}
+			
+			linked_list_node_destroy(cur);
+			
+			result = true;
+			break;
+		}
+		prev = cur;
+		cur = cur->next;
+	}
+
+	return result;
+}
+
+
+
 

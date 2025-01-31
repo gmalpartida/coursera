@@ -19,5 +19,6 @@ void linked_list_add(PLINKEDLIST linked_list, PLINKEDLISTNODE linked_list_node);
 bool linked_list_find(PLINKEDLIST linked_list, PNODEDATA node_data);
 PLINKEDLISTNODE linked_list_get(PLINKEDLIST linked_list, PNODEDATA node_data);
 bool linked_list_is_empty(PLINKEDLIST linked_list);
+bool linked_list_delete(PLINKEDLIST linked_list, PNODEDATA node_data);
 
 #endif

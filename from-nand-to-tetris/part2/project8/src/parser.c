@@ -82,6 +82,7 @@ void parser_parse(PPARSER parser)
                 
                     astnode->operand2 = lexer_read(parser->lexer);
                 }
+				astnode_print(astnode);
             }
         }
    }
