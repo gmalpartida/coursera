@@ -75,7 +75,7 @@ PTOKEN lexer_read(PLEXER lexer)
                 c = scanner_peek_next(lexer->scanner);
             }
             text[i] = '\0';
-            TOKEN_TYPE type = ERROR;
+            TOKEN_TYPE type = IDENTIFIER;
             
             if (0 == strcmp(text, "push") || 0 == strcmp(text, "pop"))
                 type = STACK_OP;
