@@ -1,3 +1,19 @@
+// function Main.fibonacci 0
+(Main.fibonacci)
+@0
+D=A
+(loop_0)
+@loop_end_0
+D;JEQ
+@SP
+A=M
+M=0
+@SP
+M=M+1
+D=D-1
+@loop
+0;JMP
+(loop_end_0)
 // push argument 0
 @0        //@i
 D=A        // #D=i
@@ -26,18 +42,18 @@ A=A-1
 D=M-D
 @SP
 M=M-1
-@EQUAL3
+@EQUAL1
 D;JGE
 @SP
 A=M
 M=-1
-@END_EQUAL3
+@END_EQUAL1
 0;JMP
-(EQUAL3)
+(EQUAL1)
 @SP
 A=M
 M=0
-(END_EQUAL3)
+(END_EQUAL1)
 @SP
 M=M+1
 // if-goto N_LT_2
@@ -62,6 +78,7 @@ A=M        // jump to location of SP
 M=D        // RAM[*SP] = D
 @SP
 M=M+1      // SP++
+// return
 // label N_GE_2
 (N_GE_2)
 // push argument 0
@@ -90,7 +107,7 @@ D=M
 A=A-1
 M=M-D
 // call Main.fibonacci 1
-(Main.fibonacci)
+@Main.fibonacci$ret.0
 D=A
 @SP
 A=M
@@ -121,7 +138,7 @@ M=D
 D=M
 @5
 D=D-A
-@1
+@Main.fibonacci
 D=D-A
 @ARG
 M=D
@@ -129,8 +146,9 @@ M=D
 D=M
 @LCL
 M=D
-@Main.fibonacci
+@1
 0;JMP
+(Main.fibonacci$ret.0)
 // push argument 0
 @0        //@i
 D=A        // #D=i
@@ -157,7 +175,7 @@ D=M
 A=A-1
 M=M-D
 // call Main.fibonacci 1
-(Main.fibonacci)
+@Main.fibonacci$ret.1
 D=A
 @SP
 A=M
@@ -188,7 +206,7 @@ M=D
 D=M
 @5
 D=D-A
-@1
+@Main.fibonacci
 D=D-A
 @ARG
 M=D
@@ -196,11 +214,13 @@ M=D
 D=M
 @LCL
 M=D
-@Main.fibonacci
+@1
 0;JMP
+(Main.fibonacci$ret.1)
 // add
 @SP
 AM=M-1
 D=M
 A=A-1
 M=D+M
+// return

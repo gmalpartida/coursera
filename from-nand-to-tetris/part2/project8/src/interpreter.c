@@ -288,12 +288,14 @@ char * interpreter_arithmetic_op(PASTNODE astnode)
     }
 }
 
-char * interpreter_logical_op(PASTNODE astnode, uint16_t index)
+char * interpreter_logical_op(PASTNODE astnode)
 {
+	static uint16_t label_index = 0;
     char * assembly_code = (char*)malloc(sizeof(char) * 256);
 
     if (!strcmp(astnode->op->text, "eq") || !strcmp(astnode->op->text, "gt") || !strcmp(astnode->op->text, "lt")) 
     {
+		label_index++;
         char * format_str = "// eq | gt | lt\n"
                       "@SP\n"
                       "M=M-1\n"
@@ -330,7 +332,7 @@ char * interpreter_logical_op(PASTNODE astnode, uint16_t index)
             free(assembly_code);
             exit(EXIT_FAILURE);
         }
-        sprintf(assembly_code, format_str, index, eq_gt_lt, index, index, index);
+        sprintf(assembly_code, format_str, label_index, eq_gt_lt, label_index, label_index, label_index);
     }
     else if (!strcmp(astnode->op->text, "and") || !strcmp(astnode->op->text, "or"))
     {
@@ -423,15 +425,38 @@ char * interpreter_branch_op(PASTNODE astnode)
 
 char * interpreter_function_op(PASTNODE astnode)
 {
+	static uint16_t return_index = 0;
+	static uint16_t function_label_index = 0;
     char * assembly_code = (char*)malloc(sizeof(char) * 256);
 
     if (!strcmp(astnode->op->text, "function"))
     {
+		char * format_str = "// %s %s %s\n"
+							"(%s)\n"
+							"@%s\n"
+							"D=A\n"
+							"(loop_%d)\n"
+							"@loop_end_%d\n"
+							"D;JEQ\n"
+							"@SP\n"
+							"A=M\n"
+							"M=0\n"
+							"@SP\n"
+							"M=M+1\n"
+							"D=D-1\n"
+							"@loop\n"
+							"0;JMP\n"
+							"(loop_end_%d)\n";
+
+		sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand2->text,
+				astnode->operand1->text, astnode->operand2->text, function_label_index, function_label_index,
+				function_label_index);
     }
     else if (!strcmp(astnode->op->text, "call"))
     {
+		return_index++;
 		char * format_str = "// %s %s %s\n"
-							"(%s)\n"
+							"@%s$ret.%d\n"
 							"D=A\n"
 							"@SP\n"
 							"A=M\n"
@@ -471,12 +496,17 @@ char * interpreter_function_op(PASTNODE astnode)
 							"@LCL\n"
 							"M=D\n"
 							"@%s\n"
-							"0;JMP\n";
+							"0;JMP\n"
+							"(%s$ret.%d)\n";
 	sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand2->text,
-				astnode->operand1->text, astnode->operand2->text, astnode->operand1->text);
+				astnode->operand1->text, return_index, astnode->operand1->text, astnode->operand2->text, astnode->operand1->text, return_index);
     }
     else if (!strcmp(astnode->op->text, "return"))
     {
+		char * format_str = "// %s\n";
+
+		sprintf(assembly_code, format_str, astnode->op->text);
+		return_index--;
     }
     else
     {
@@ -505,7 +535,7 @@ void interpreter_interpret(PINTERPRETER interpreter)
         }
         else if (astnode->op->type == LOGICAL_OP)
         {
-            interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_logical_op(astnode, i);
+            interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_logical_op(astnode);
         }
         else if (astnode->op->type == BRANCH_OP)
         {

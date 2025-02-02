@@ -288,12 +288,14 @@ char * interpreter_arithmetic_op(PASTNODE astnode)
     }
 }
 
-char * interpreter_logical_op(PASTNODE astnode, uint16_t index)
+char * interpreter_logical_op(PASTNODE astnode)
 {
+	static uint16_t label_index = 0;
     char * assembly_code = (char*)malloc(sizeof(char) * 256);
 
     if (!strcmp(astnode->op->text, "eq") || !strcmp(astnode->op->text, "gt") || !strcmp(astnode->op->text, "lt")) 
     {
+		label_index++;
         char * format_str = "// eq | gt | lt\n"
                       "@SP\n"
                       "M=M-1\n"
@@ -330,7 +332,7 @@ char * interpreter_logical_op(PASTNODE astnode, uint16_t index)
             free(assembly_code);
             exit(EXIT_FAILURE);
         }
-        sprintf(assembly_code, format_str, index, eq_gt_lt, index, index, index);
+        sprintf(assembly_code, format_str, label_index, eq_gt_lt, label_index, label_index, label_index);
     }
     else if (!strcmp(astnode->op->text, "and") || !strcmp(astnode->op->text, "or"))
     {
@@ -403,7 +405,7 @@ void interpreter_interpret(PINTERPRETER interpreter)
         }
         else if (astnode->op->type == LOGICAL_OP)
         {
-            interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_logical_op(astnode, i);
+            interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_logical_op(astnode);
         }
    }
 }
