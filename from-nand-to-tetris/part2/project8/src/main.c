@@ -8,17 +8,16 @@
 #include "interpreter.h"
 #include <string.h>
 
+char * generate_output_filename(char * filename);
+
 int main(int argc, char * argv[])
 {
     if (2 == argc)
     {
         char * filename = argv[1];
-        PSCANNER scanner =  scanner_create(filename);
+        char * out_filename = generate_output_filename(filename);
 
-        char * out_filename = (char*)malloc(sizeof(char) * strlen(filename) + 1);
-        strcpy(out_filename, filename);
-        char *p = strrchr(out_filename, '.');
-        strcpy(p, ".asm");
+        PSCANNER scanner =  scanner_create(filename);
 
         if (NULL != scanner)
         {
@@ -48,5 +47,29 @@ int main(int argc, char * argv[])
     }
     return EXIT_SUCCESS;
 }
+
+char * generate_output_filename(char * filename)
+{
+	char * out_filename = (char*)malloc(sizeof(char) * strlen(filename) + 5);
+	strcpy(out_filename, filename);
+	char *p = strrchr(out_filename, '.');
+	if (p)
+		strcpy(p, ".asm");
+	else
+	{
+		if (out_filename[strlen(out_filename)-1] == '/')
+			strcpy(out_filename + strlen(out_filename) - 1, ".asm");
+		else
+			strcat(out_filename, ".asm");
+	}
+	return out_filename;
+}
+
+
+
+
+
+
+
 
 

@@ -444,13 +444,13 @@ char * interpreter_function_op(PASTNODE astnode)
 							"@SP\n"
 							"M=M+1\n"
 							"D=D-1\n"
-							"@loop\n"
+							"@loop_%d\n"
 							"0;JMP\n"
 							"(loop_end_%d)\n";
 
 		sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand2->text,
 				astnode->operand1->text, astnode->operand2->text, function_label_index, function_label_index,
-				function_label_index);
+				function_label_index, function_label_index);
     }
     else if (!strcmp(astnode->op->text, "call"))
     {
@@ -511,7 +511,7 @@ char * interpreter_function_op(PASTNODE astnode)
                             "D=M\n"
                             "@5\n"
                             "D=D-A\n"
-                            "retAddr\n"
+                            "@retAddr\n"
                             "M=D\n"
                             "@SP\n"
                             "AM=M-1\n"
