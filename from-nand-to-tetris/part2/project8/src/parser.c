@@ -22,7 +22,7 @@ PPARSER parser_create(PLEXER lexer)
 
 void parser_destroy(PPARSER parser)
 {
-    free(parser->lexer);\
+    ast_destroy(parser->ast);
     free(parser);
     parser = NULL;
 }
