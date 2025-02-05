@@ -13,6 +13,11 @@ PLEXER lexer_create(PSCANNER scanner)
     return lexer;
 }
 
+void lexer_destroy(PLEXER lexer)
+{
+    free(lexer);
+}
+
 void lexer_ignore_whitespace(PLEXER lexer)
 {
     char c = scanner_peek_next(lexer->scanner);

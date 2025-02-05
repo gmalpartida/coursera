@@ -21,7 +21,10 @@ int main(int argc, char * argv[])
         char * filename = argv[1];
         if (is_directory(filename))
         {
-            printf("file %s is a directory.\n", filename);
+            char * out_filename = (char*)malloc(sizeof(char) * strlen(filename) + 5);
+            strcpy(out_filename, filename);
+            strcpy(out_filename + strlen(out_filename), ".asm");
+
             DIR * dir = opendir(filename);
             struct dirent* dir_entry;
 
@@ -31,8 +34,28 @@ int main(int argc, char * argv[])
                         (NULL != strstr(dir_entry->d_name, ".vm")) )
                 {
                     printf("processing file %s\n", dir_entry->d_name);
-//                    PSCANNER scanner = scanner_create(dir_entry->d_name);
-//                    scanner_destroy(scanner);
+                    PSCANNER scanner = scanner_create(dir_entry->d_name);
+                    if (scanner)
+                    {
+                        PLEXER lexer = lexer_create(scanner);
+                        if (lexer)
+                        {
+                            PPARSER parser = parser_create(lexer);
+                            if (parser)
+                            {
+                                PINTERPRETER interpreter = interpreter_create(parser);
+                                if (interpreter)
+                                {
+                                    interpreter_interpret(interpreter);
+                                    interpreter_save_to_file(interpreter, out_filename);
+                                    interpreter_destroy(interpreter);
+                                }
+                                parser_destroy(parser);
+                            }
+                            lexer_destroy(lexer);
+                        }
+                        scanner_destroy(scanner);
+                    }
                 }
             }
         }

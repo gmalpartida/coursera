@@ -423,7 +423,7 @@ char * interpreter_branch_op(PASTNODE astnode)
     return assembly_code;
 }
 
-char * interpreter_function_op(PASTNODE astnode)
+char * interpreter_function_op(char * filename, PASTNODE astnode)
 {
 	static uint16_t return_index = 0;
 	static uint16_t function_label_index = 0;
@@ -432,7 +432,7 @@ char * interpreter_function_op(PASTNODE astnode)
     if (!strcmp(astnode->op->text, "function"))
     {
 		char * format_str = "// %s %s %s\n"
-							"(%s)\n"
+							"(%s.%s)\n"
 							"@%s\n"
 							"D=A\n"
 							"(loop_%d)\n"
@@ -449,7 +449,7 @@ char * interpreter_function_op(PASTNODE astnode)
 							"(loop_end_%d)\n";
 
 		sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand2->text,
-				astnode->operand1->text, astnode->operand2->text, function_label_index, function_label_index,
+				filename, astnode->operand1->text, astnode->operand2->text, function_label_index, function_label_index,
 				function_label_index, function_label_index);
     }
     else if (!strcmp(astnode->op->text, "call"))
@@ -554,7 +554,11 @@ char * interpreter_function_op(PASTNODE astnode)
 
 void interpreter_interpret(PINTERPRETER interpreter)
 {
+    char * filename = (char*)malloc(sizeof(char) * strlen(interpreter->parser->lexer->scanner->filename) + 1);
+    strcpy(filename, interpreter->parser->lexer->scanner->filename);
+
     parser_parse(interpreter->parser);
+    
     for (uint16_t i = 0; i < interpreter->parser->ast->size; i++)
     {
         PASTNODE astnode = interpreter->parser->ast->astnode[i];
@@ -577,7 +581,7 @@ void interpreter_interpret(PINTERPRETER interpreter)
         }
         else if (astnode->op->type == FUNCTION_OP)
         {
-            interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_function_op(astnode);
+            interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_function_op(interpreter->parser->lexer->scanner->filename, astnode);
         }
     }
 }
@@ -585,7 +589,7 @@ void interpreter_interpret(PINTERPRETER interpreter)
 
 void interpreter_save_to_file(PINTERPRETER interpreter, char * filename)
 {
-    FILE *fptr = fopen(filename, "w");
+    FILE *fptr = fopen(filename, "a");
 
     if (fptr)
     {
