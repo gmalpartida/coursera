@@ -13,7 +13,7 @@ typedef struct Interpreter
 PINTERPRETER interpreter_create(PPARSER parser);
 void interpreter_destroy(PINTERPRETER interpreter);
 void interpreter_print(PINTERPRETER interpreter);
-void interpreter_interpret(PINTERPRETER interpreter);
+void interpreter_interpret(PINTERPRETER interpreter, bool do_bootstrap);
 void interpreter_save_to_file(PINTERPRETER interpreter, char * filename);
 
 #endif

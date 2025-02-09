@@ -12,7 +12,9 @@
 
 bool is_directory(char * filename);
 
-char * generate_output_filename(char * filename);
+char * generate_output_filename(char * filename, bool is_dir);
+
+char * generate_input_filename(char * dir_name, char * file_name);
 
 int main(int argc, char * argv[])
 {
@@ -21,20 +23,18 @@ int main(int argc, char * argv[])
         char * filename = argv[1];
         if (is_directory(filename))
         {
-            char * out_filename = (char*)malloc(sizeof(char) * strlen(filename) + 5);
-            strcpy(out_filename, filename);
-            strcpy(out_filename + strlen(out_filename), ".asm");
-
+            char * out_filename = generate_output_filename(filename, true);
             DIR * dir = opendir(filename);
             struct dirent* dir_entry;
-
+			bool do_bootstrap = true;
             while((dir_entry = readdir(dir)))
             {
                 if (strcmp(dir_entry->d_name, ".") && strcmp(dir_entry->d_name, "..") &&
                         (NULL != strstr(dir_entry->d_name, ".vm")) )
                 {
-                    printf("processing file %s\n", dir_entry->d_name);
-                    PSCANNER scanner = scanner_create(dir_entry->d_name);
+					char * input_filename = generate_input_filename(filename, dir_entry->d_name);
+
+                    PSCANNER scanner = scanner_create(input_filename);
                     if (scanner)
                     {
                         PLEXER lexer = lexer_create(scanner);
@@ -46,7 +46,7 @@ int main(int argc, char * argv[])
                                 PINTERPRETER interpreter = interpreter_create(parser);
                                 if (interpreter)
                                 {
-                                    interpreter_interpret(interpreter);
+                                    interpreter_interpret(interpreter, do_bootstrap); do_bootstrap = false;
                                     interpreter_save_to_file(interpreter, out_filename);
                                     interpreter_destroy(interpreter);
                                 }
@@ -63,10 +63,7 @@ int main(int argc, char * argv[])
         {
             PSCANNER scanner =  scanner_create(filename);
 
-            char * out_filename = (char*)malloc(sizeof(char) * strlen(filename) + 1);
-            strcpy(out_filename, filename);
-            char *p = strrchr(out_filename, '.');
-            strcpy(p, ".asm");
+			char * out_filename = generate_output_filename(filename, false);
 
             if (NULL != scanner)
             {
@@ -79,7 +76,7 @@ int main(int argc, char * argv[])
                         PINTERPRETER interpreter = interpreter_create(parser);
                         if (NULL != interpreter)
                         {
-                            interpreter_interpret(interpreter);
+                            interpreter_interpret(interpreter, false);
                             interpreter_save_to_file(interpreter, out_filename);
                             interpreter_destroy(interpreter);
                         }
@@ -98,19 +95,41 @@ int main(int argc, char * argv[])
     return EXIT_SUCCESS;
 }
 
-char * generate_output_filename(char * filename)
+char * generate_output_filename(char * filename, bool is_dir)
 {
-	char * out_filename = (char*)malloc(sizeof(char) * strlen(filename) + 5);
-	strcpy(out_filename, filename);
-	char *p = strrchr(out_filename, '.');
-	if (p)
-		strcpy(p, ".asm");
+	char * out_filename = NULL;
+	if (is_dir)
+	{
+		char * p = filename + strlen(filename) - 1;
+		if (*p == '/')
+		{
+			*p = '\0';
+		}
+		p = strrchr(filename, '/');
+		if (p)
+		{
+			out_filename = (char*)malloc(sizeof(char) * (strlen(filename) + strlen(p) + 5));
+			strcpy(out_filename, filename);
+			strcat(out_filename, "/");
+			strcpy(out_filename + strlen(out_filename), p + 1);
+			strcat(out_filename, ".asm");
+		}
+		else
+		{
+			out_filename = (char*)malloc(sizeof(char) * 2 * strlen(filename) + 6);
+			strcpy(out_filename, filename);
+			strcat(out_filename, "/");
+			strcat(out_filename, filename);
+			strcat(out_filename, ".asm");
+		}
+	}
 	else
 	{
-		if (out_filename[strlen(out_filename)-1] == '/')
-			strcpy(out_filename + strlen(out_filename) - 1, ".asm");
-		else
-			strcat(out_filename, ".asm");
+		out_filename = (char*)malloc(sizeof(char) * strlen(filename) + 1);
+		strcpy(out_filename, filename);
+		char *p = strrchr(out_filename, '.');
+		strcpy(p, ".asm");
+
 	}
 	return out_filename;
 }
@@ -126,3 +145,23 @@ bool is_directory(char * filename)
     }
     return result;
 }
+
+char * generate_input_filename(char * dir_name, char * file_name)
+{
+	uint16_t file_size = strlen(dir_name) + strlen(file_name) + (dir_name[strlen(dir_name)-1] != '/' ? 2 : 1);
+	
+	char * input_filename = (char*)malloc(sizeof(char) * file_size);
+
+	strcpy(input_filename, dir_name);
+
+	if (dir_name[strlen(dir_name)-1] != '/')
+		strcat(input_filename, "/");
+
+	strcat(input_filename, file_name);
+
+	return input_filename;
+}
+
+
+
+

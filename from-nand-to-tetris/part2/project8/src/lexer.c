@@ -39,7 +39,7 @@ void lexer_ignore_comment(PLEXER lexer)
        {    // this is a comment
            c = scanner_get_next(lexer->scanner);
            c = scanner_peek_next(lexer->scanner);
-           while ('\n' != c)
+           while ('\n' != c && '\0' != c)
            {
                c = scanner_get_next(lexer->scanner);
                c = scanner_peek_next(lexer->scanner);

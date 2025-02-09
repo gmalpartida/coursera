@@ -388,21 +388,21 @@ char * interpreter_logical_op(PASTNODE astnode)
     return assembly_code;
 }
 
-char * interpreter_branch_op(PASTNODE astnode)
+char * interpreter_branch_op(PASTNODE astnode, char * filename)
 {
     char * assembly_code = (char*)malloc(sizeof(char) * 256);
     if (!strcmp(astnode->op->text, "label"))
     {
         char * format_str = "// %s %s\n"
-                            "(%s)\n";
-        sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand1->text);
+                            "(%s$%s)\n";
+        sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, filename,  astnode->operand1->text);
     }
     else if (!strcmp(astnode->op->text, "goto"))
     {
         char * format_str = "// %s %s\n"
-                            "@%s\n"
+                            "@%s$%s\n"
                             "0;JMP\n";
-        sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand1->text);
+        sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, filename, astnode->operand1->text);
     }
     else if (!strcmp(astnode->op->text, "if-goto"))
     {
@@ -410,9 +410,9 @@ char * interpreter_branch_op(PASTNODE astnode)
                             "@SP\n"
                             "AM=M-1\n"
                             "D=M\n"
-                            "@%s\n"
+                            "@%s$%s\n"
                             "D;JNE\n";
-        sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand1->text);
+        sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, filename, astnode->operand1->text);
     }
     else
     {
@@ -423,16 +423,64 @@ char * interpreter_branch_op(PASTNODE astnode)
     return assembly_code;
 }
 
-char * interpreter_function_op(char * filename, PASTNODE astnode)
+void interpreter_call_command(char * assembly_code, PASTNODE astnode, uint16_t return_index)
 {
-	static uint16_t return_index = 0;
-	static uint16_t function_label_index = 0;
-    char * assembly_code = (char*)malloc(sizeof(char) * 256);
+	char * format_str = "// %s %s %s\n"
+							"@%s$ret.%d\n"
+							"D=A\n"
+							"@SP\n"
+							"A=M\n"
+							"M=D\n"
+							"@SP\n"
+							"M=M+1\n"
+							"@LCL\n"
+							"D=M\n"
+							"@SP\n"
+							"A=M\n"
+							"M=D\n"
+							"@SP\n"
+							"M=M+1\n"
+							"@ARG\n"
+							"D=M\n"
+							"@SP\n"
+							"A=M\n"
+							"M=D\n"
+							"@SP\n"
+							"M=M+1\n"
+							"@THIS\n"
+							"D=M\n"
+							"@SP\n"
+							"A=M\n"
+							"M=D\n"
+							"@SP\n"
+							"M=M+1\n"
+							"@THAT\n"
+							"D=M\n"
+							"@SP\n"
+							"A=M\n"
+							"M=D\n"
+							"@SP\n"
+							"M=M+1\n"
+							"@SP\n"
+							"D=M\n"
+							"@LCL\n"
+							"M=D\n"
+							"@%d\n"
+							"D=D-A\n"
+							"@ARG\n"
+							"M=D\n"
+							"@%s\n"
+							"0;JMP\n"
+							"(%s$ret.%d)\n";
+	sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand2->text,
+				astnode->operand1->text, return_index, atoi(astnode->operand2->text) + 5, astnode->operand1->text, astnode->operand1->text, return_index);
+ 
+}
 
-    if (!strcmp(astnode->op->text, "function"))
-    {
-		char * format_str = "// %s %s %s\n"
-							"(%s.%s)\n"
+void interpreter_function_command(char * assembly_code, PASTNODE astnode, uint16_t function_label_index, char * filename)
+{
+	char * format_str = "// %s %s %s\n"
+							"(%s)\n"
 							"@%s\n"
 							"D=A\n"
 							"(loop_%d)\n"
@@ -448,98 +496,92 @@ char * interpreter_function_op(char * filename, PASTNODE astnode)
 							"0;JMP\n"
 							"(loop_end_%d)\n";
 
-		sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand2->text,
-				filename, astnode->operand1->text, astnode->operand2->text, function_label_index, function_label_index,
-				function_label_index, function_label_index);
-    }
-    else if (!strcmp(astnode->op->text, "call"))
-    {
-		return_index++;
-		char * format_str = "// %s %s %s\n"
-							"@%s$ret.%d\n"
-							"D=A\n"
-							"@SP\n"
-							"A=M\n"
-							"M=D\n"
-							"@SP\n"
-							"M=M+1\n"
-							"@LCL\n"
-							"D=M\n"
-							"@SP\n"
-							"A=M\n"
-							"M=D\n"
-							"@ARG\n"
-							"D=M\n"
-							"@SP\n"
-							"A=M\n"
-							"M=D\n"
-							"@THIS\n"
-							"D=M\n"
-							"@SP\n"
-							"A=M\n"
-							"M=D\n"
-							"@THAT\n"
-							"D=M\n"
-							"@SP\n"
-							"A=M\n"
-							"M=D\n"
-							"@SP\n"
-							"D=M\n"
-							"@5\n"
-							"D=D-A\n"
-							"@%s\n"
-							"D=D-A\n"
-							"@ARG\n"
-							"M=D\n"
-							"@SP\n"
-							"D=M\n"
-							"@LCL\n"
-							"M=D\n"
-							"@%s\n"
-							"0;JMP\n"
-							"(%s$ret.%d)\n";
 	sprintf(assembly_code, format_str, astnode->op->text, astnode->operand1->text, astnode->operand2->text,
-				astnode->operand1->text, return_index, astnode->operand1->text, astnode->operand2->text, astnode->operand1->text, return_index);
-    }
-    else if (!strcmp(astnode->op->text, "return"))
-    {
-		char * format_str = "// %s\n"
+				astnode->operand1->text, astnode->operand2->text, function_label_index, function_label_index,
+				function_label_index, function_label_index);
+}
+
+void interpreter_return_command(char * assembly_code, PASTNODE astnode)
+{
+	char * format_str = "// %s\n"
                             "@LCL\n"
                             "D=M\n"
-                            "@endFrame\n"
+                            "@R14\n"
                             "M=D\n"
-                            "D=M\n"
                             "@5\n"
-                            "D=D-A\n"
-                            "@retAddr\n"
+                            "A=D-A\n"
+							"D=M\n"
+                            "@R15\n"
                             "M=D\n"
+							"@ARG\n"
+							"D=M\n"
+							"@0\n"
+							"D=D+A\n"
+							"@13\n"
+							"M=D\n"
                             "@SP\n"
                             "AM=M-1\n"
                             "D=M\n"
+							"@13\n"
+							"A=M\n"
+							"M=D\n"
+
                             "@ARG\n"
-                            "M=D\n"
-                            "D=A\n"
-                            "D=D+1\n"
-                            "@SP\n"
-                            "M=D\n"
-                            "@endFrame\n"
-                            "D=A\n"
-                            "D=D-1\n"
-                            "@THAT\n"
-                            "M=D\n"
-                            "D=D-1\n"
-                            "@THIS\n"
-                            "M=D\n"
-                            "D=D-1\n"
-                            "@ARG\n"
-                            "M=D\n"
-                            "D=D-1\n"
-                            "@LCL\n"
-                            "M=D\n"
-                            "@retAddr\n"
+                            "D=M\n"
+							"@SP\n"
+							"M=D+1\n"
+
+							"@R14\n"
+							"AMD=M-1\n"
+							"D=M\n"
+							"@THAT\n"
+							"M=D\n"
+
+							"@R14\n"
+							"AMD=M-1\n"
+							"D=M\n"
+							"@THIS\n"
+							"M=D\n"
+
+							"@R14\n"
+							"AMD=M-1\n"
+							"D=M\n"
+							"@ARG\n"
+							"M=D\n"
+
+							"@R14\n"
+							"AMD=M-1\n"
+							"D=M\n"
+							"@LCL\n"
+							"M=D\n"
+
+                            "@R15\n"
+							"A=M\n"
                             "0;JMP\n";
 
-		sprintf(assembly_code, format_str, astnode->op->text);
+	sprintf(assembly_code, format_str, astnode->op->text);
+	
+}
+
+char * interpreter_function_op(char * filename, PASTNODE astnode)
+{
+	static uint16_t return_index = 0;
+	static uint16_t function_label_index = 0;
+    char * assembly_code = (char*)calloc(512, sizeof(char));
+
+    if (!strcmp(astnode->op->text, "function"))
+    {
+		interpreter_function_command(assembly_code, astnode, function_label_index, filename);
+		function_label_index++;
+	}
+    else if (!strcmp(astnode->op->text, "call"))
+    {
+		return_index++;
+		interpreter_call_command(assembly_code, astnode, return_index);
+	}
+    else if (!strcmp(astnode->op->text, "return"))
+    {
+		interpreter_return_command(assembly_code, astnode);
 		return_index--;
     }
     else
@@ -552,20 +594,52 @@ char * interpreter_function_op(char * filename, PASTNODE astnode)
     return assembly_code;
 }
 
-void interpreter_interpret(PINTERPRETER interpreter)
+void interpreter_bootstrap(PINTERPRETER interpreter)
 {
-    char * filename = (char*)malloc(sizeof(char) * strlen(interpreter->parser->lexer->scanner->filename) + 1);
-    strcpy(filename, interpreter->parser->lexer->scanner->filename);
+	PTOKEN token = token_create("call", 0, FUNCTION_OP);
+	PASTNODE astnode = astnode_create(token);
+	astnode->operand1 = token_create("Sys.init", 0, FUNCTION_OP);
+	astnode->operand2 = token_create("0", 1, FUNCTION_OP);
+
+	char * init_sp = "@256\nD=A\n@SP\nM=D\n";
+
+	interpreter->assembly_code[interpreter->assembly_code_size] = (char*)malloc(sizeof(char) * strlen(init_sp) + 1);
+
+	strcpy(interpreter->assembly_code[interpreter->assembly_code_size], init_sp);
+	interpreter->assembly_code_size++;
+
+	interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_function_op(interpreter->parser->lexer->scanner->filename,
+																							astnode);
+}
+
+
+void interpreter_interpret(PINTERPRETER interpreter, bool do_bootstrap)
+{
+	char * p = strrchr(interpreter->parser->lexer->scanner->filename, '/');
+	if (!p)
+		p = interpreter->parser->lexer->scanner->filename;
+
+	char * filename = (char*)malloc(sizeof(char) * strlen(p) + 1);
+
+	if (*p == '/')
+		p++;
+
+    strcpy(filename, p);
+	p = strrchr(filename, '.');
+	if (p)
+		*p = '\0';
 
     parser_parse(interpreter->parser);
     
+	if (do_bootstrap)
+		interpreter_bootstrap(interpreter);
+
     for (uint16_t i = 0; i < interpreter->parser->ast->size; i++)
     {
         PASTNODE astnode = interpreter->parser->ast->astnode[i];
         if (astnode->op->type == STACK_OP)
         {
-           interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_stack_op(astnode,
-                                                                                        interpreter->parser->lexer->scanner->filename);
+           interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_stack_op(astnode, filename);
         }
         else if (astnode->op->type == ARITHMETIC_OP)
         {
@@ -577,11 +651,11 @@ void interpreter_interpret(PINTERPRETER interpreter)
         }
         else if (astnode->op->type == BRANCH_OP)
         {
-            interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_branch_op(astnode);
+            interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_branch_op(astnode, filename);
         }
         else if (astnode->op->type == FUNCTION_OP)
         {
-            interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_function_op(interpreter->parser->lexer->scanner->filename, astnode);
+            interpreter->assembly_code[interpreter->assembly_code_size++] = interpreter_function_op(filename, astnode);
         }
     }
 }

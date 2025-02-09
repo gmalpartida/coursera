@@ -82,7 +82,7 @@ def process_arithmetic(command, filename, l_no, state):
     ])
     
     if command in ('add', 'sub', 'and', 'or'):
-        ret.append('M=M{}D'.format(symb.get(command)))
+        ret.append('M=D{}M'.format(symb.get(command)))
     elif command in ('eq', 'gt', 'lt'):
         ret.extend([
             'D=M-D',
@@ -210,11 +210,11 @@ def translate_vm_to_asm(inp, outname=None):
         if not outname:
             if inp.endswith('/'):
                 inp = inp[:-1]
-            outname = '{}.asm'.format(os.path.split(inp)[-1])
+            outname = '{}_2.asm'.format(os.path.split(inp)[-1])
             outname = os.path.join(inp, outname)
     else:
         if not outname:
-            outname = '{}.asm'.format(os.path.splitext(inp)[0])
+            outname = '{}_2.asm'.format(os.path.splitext(inp)[0])
     
     
     #output, bool_count = initialization(), [0]
