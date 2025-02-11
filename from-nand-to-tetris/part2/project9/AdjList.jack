@@ -1,0 +1,33 @@
+class AdjList
+{
+    field Array vertices;
+    field int vertex_count;
+
+    constructor AdjList new(int num_vertices)
+    {
+        let vertices = Array.new(num_vertices);
+
+        let vertex_count = 0;
+
+        
+
+        return this;
+    }
+
+    method void dispose()
+    {
+        do vertices.dispose();
+        return;
+    }
+
+    method void print()
+    {
+        return;
+    }
+
+    method void add_vertex(Data new_data)
+    {
+
+        return;
+    }
+}

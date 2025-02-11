@@ -86,6 +86,7 @@ int main(int argc, char * argv[])
                 scanner_destroy(scanner);
             }
             free(out_filename);
+            
         }
     }
     else

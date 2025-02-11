@@ -2,6 +2,25 @@ class Main
 {
 	function void main()
 	{
+        var LinkedList list;
+        var Data data;
+
+        let data = Data.new(0, "New York");
+        let list = LinkedList.new(data, null);
+
+        let data = Data.new(1, "Los Angeles");
+        let list = LinkedList.new(data, list);
+
+        let data = Data.new(2, "Boston");
+        let list = LinkedList.new(data, list);
+
+        let data = Data.new(3, "Houston");
+        let list = LinkedList.new(data, list);
+
+        do list.print();
+
+        do list.dispose();
+
 		return;
 	}
 }

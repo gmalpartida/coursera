@@ -1,0 +1,142 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ARITHMETIC_OP	inc/token.h	/^typedef enum {STACK_OP, ARITHMETIC_OP, LOGICAL_OP, MEMORY_SEGMENT, NUMBER, BRANCH_OP, FUNCTION_OP, IDENTIFIER, ERROR, EOE} TOKEN_TYPE;$/;"	e	enum:__anon1
+AST	inc/ast.h	/^} AST, *PAST;$/;"	t	typeref:struct:Ast
+ASTNODE	inc/ast.h	/^} ASTNODE, *PASTNODE;$/;"	t	typeref:struct:ASTNode
+ASTNode	inc/ast.h	/^typedef struct ASTNode$/;"	s
+AST_H	inc/ast.h	2;"	d
+Ast	inc/ast.h	/^typedef struct Ast$/;"	s
+BRANCH_OP	inc/token.h	/^typedef enum {STACK_OP, ARITHMETIC_OP, LOGICAL_OP, MEMORY_SEGMENT, NUMBER, BRANCH_OP, FUNCTION_OP, IDENTIFIER, ERROR, EOE} TOKEN_TYPE;$/;"	e	enum:__anon1
+CC	Makefile	/^CC = gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS = $(INCLUDES) -Wall -Werror -g -O0 -std=c99 $/;"	m
+CPPFLAGS	Makefile	/^CPPFLAGS = $/;"	m
+EOE	inc/token.h	/^typedef enum {STACK_OP, ARITHMETIC_OP, LOGICAL_OP, MEMORY_SEGMENT, NUMBER, BRANCH_OP, FUNCTION_OP, IDENTIFIER, ERROR, EOE} TOKEN_TYPE;$/;"	e	enum:__anon1
+ERROR	inc/token.h	/^typedef enum {STACK_OP, ARITHMETIC_OP, LOGICAL_OP, MEMORY_SEGMENT, NUMBER, BRANCH_OP, FUNCTION_OP, IDENTIFIER, ERROR, EOE} TOKEN_TYPE;$/;"	e	enum:__anon1
+FUNCTION_OP	inc/token.h	/^typedef enum {STACK_OP, ARITHMETIC_OP, LOGICAL_OP, MEMORY_SEGMENT, NUMBER, BRANCH_OP, FUNCTION_OP, IDENTIFIER, ERROR, EOE} TOKEN_TYPE;$/;"	e	enum:__anon1
+IDENTIFIER	inc/token.h	/^typedef enum {STACK_OP, ARITHMETIC_OP, LOGICAL_OP, MEMORY_SEGMENT, NUMBER, BRANCH_OP, FUNCTION_OP, IDENTIFIER, ERROR, EOE} TOKEN_TYPE;$/;"	e	enum:__anon1
+INCLUDES	sources.mk	/^INCLUDES =\\$/;"	m
+INTERPRETER	inc/interpreter.h	/^} INTERPRETER, *PINTERPRETER;$/;"	t	typeref:struct:Interpreter
+INTERPRETER_H	inc/interpreter.h	2;"	d
+Interpreter	inc/interpreter.h	/^typedef struct Interpreter$/;"	s
+LD	Makefile	/^LD = ld$/;"	m
+LDFLAGS	Makefile	/^LDFLAGS= -Xlinker -Map=$(TARGET).map$/;"	m
+LEXER	inc/lexer.h	/^} LEXER, *PLEXER;$/;"	t	typeref:struct:Lexer
+LEXER_H	inc/lexer.h	2;"	d
+LOGICAL_OP	inc/token.h	/^typedef enum {STACK_OP, ARITHMETIC_OP, LOGICAL_OP, MEMORY_SEGMENT, NUMBER, BRANCH_OP, FUNCTION_OP, IDENTIFIER, ERROR, EOE} TOKEN_TYPE;$/;"	e	enum:__anon1
+Lexer	inc/lexer.h	/^typedef struct Lexer$/;"	s
+MEMORY_SEGMENT	inc/token.h	/^typedef enum {STACK_OP, ARITHMETIC_OP, LOGICAL_OP, MEMORY_SEGMENT, NUMBER, BRANCH_OP, FUNCTION_OP, IDENTIFIER, ERROR, EOE} TOKEN_TYPE;$/;"	e	enum:__anon1
+NUMBER	inc/token.h	/^typedef enum {STACK_OP, ARITHMETIC_OP, LOGICAL_OP, MEMORY_SEGMENT, NUMBER, BRANCH_OP, FUNCTION_OP, IDENTIFIER, ERROR, EOE} TOKEN_TYPE;$/;"	e	enum:__anon1
+OBJS	Makefile	/^OBJS = $(SRCS:.c=.o)$/;"	m
+PARSER	inc/parser.h	/^} PARSER, *PPARSER;$/;"	t	typeref:struct:Parser
+PARSER_H	inc/parser.h	2;"	d
+PAST	inc/ast.h	/^} AST, *PAST;$/;"	t	typeref:struct:Ast
+PASTNODE	inc/ast.h	/^} ASTNODE, *PASTNODE;$/;"	t	typeref:struct:ASTNode
+PINTERPRETER	inc/interpreter.h	/^} INTERPRETER, *PINTERPRETER;$/;"	t	typeref:struct:Interpreter
+PLEXER	inc/lexer.h	/^} LEXER, *PLEXER;$/;"	t	typeref:struct:Lexer
+PPARSER	inc/parser.h	/^} PARSER, *PPARSER;$/;"	t	typeref:struct:Parser
+PSCANNER	inc/scanner.h	/^} SCANNER, *PSCANNER;$/;"	t	typeref:struct:Scanner
+PTOKEN	inc/token.h	/^} TOKEN, *PTOKEN;$/;"	t	typeref:struct:Token
+Parser	inc/parser.h	/^typedef struct Parser$/;"	s
+SCANNER	inc/scanner.h	/^} SCANNER, *PSCANNER;$/;"	t	typeref:struct:Scanner
+SCANNER_H	inc/scanner.h	2;"	d
+SIZE	Makefile	/^SIZE = size$/;"	m
+SRCS	sources.mk	/^SRCS =\\$/;"	m
+STACK_OP	inc/token.h	/^typedef enum {STACK_OP, ARITHMETIC_OP, LOGICAL_OP, MEMORY_SEGMENT, NUMBER, BRANCH_OP, FUNCTION_OP, IDENTIFIER, ERROR, EOE} TOKEN_TYPE;$/;"	e	enum:__anon1
+Scanner	inc/scanner.h	/^typedef struct Scanner{$/;"	s
+TARGET	Makefile	/^TARGET = bin\/VMTranslator$/;"	m
+TOKEN	inc/token.h	/^} TOKEN, *PTOKEN;$/;"	t	typeref:struct:Token
+TOKEN_H	inc/token.h	2;"	d
+TOKEN_TYPE	inc/token.h	/^typedef enum {STACK_OP, ARITHMETIC_OP, LOGICAL_OP, MEMORY_SEGMENT, NUMBER, BRANCH_OP, FUNCTION_OP, IDENTIFIER, ERROR, EOE} TOKEN_TYPE;$/;"	t	typeref:enum:__anon1
+Token	inc/token.h	/^typedef struct Token$/;"	s
+args	vm_translator.py	/^    args = parser.parse_args()$/;"	v
+assembly_code	inc/interpreter.h	/^    char ** assembly_code;$/;"	m	struct:Interpreter
+assembly_code_size	inc/interpreter.h	/^    uint16_t assembly_code_size;$/;"	m	struct:Interpreter
+ast	inc/parser.h	/^    PAST ast;$/;"	m	struct:Parser
+ast_add	src/ast.c	/^void ast_add(PAST ast, PASTNODE astnode)$/;"	f
+ast_create	src/ast.c	/^PAST ast_create()$/;"	f
+ast_destroy	src/ast.c	/^void ast_destroy(PAST ast)$/;"	f
+ast_print	src/ast.c	/^void ast_print(PAST ast)$/;"	f
+astnode	inc/ast.h	/^    PASTNODE * astnode;$/;"	m	struct:Ast
+astnode_create	src/ast.c	/^PASTNODE astnode_create(PTOKEN op)$/;"	f
+astnode_print	src/ast.c	/^void astnode_print(PASTNODE astnode)$/;"	f
+buffer	inc/scanner.h	/^    char * buffer;$/;"	m	struct:Scanner
+buffer_size	inc/scanner.h	/^    size_t buffer_size;$/;"	m	struct:Scanner
+clean_lines	vm_translator.py	/^def clean_lines(lines):$/;"	f
+description	vm_translator.py	/^        description="Enter path of directory or file to translate")$/;"	v
+filename	inc/scanner.h	/^    char * filename;$/;"	m	struct:Scanner
+fname	vm_translator.py	/^    fname = args.filename$/;"	v
+generate_input_filename	src/main.c	/^char * generate_input_filename(char * dir_name, char * file_name)$/;"	f
+generate_output_filename	src/main.c	/^char * generate_output_filename(char * filename, bool is_dir)$/;"	f
+initialization	vm_translator.py	/^def initialization(filename):$/;"	f
+interpreter_arithmetic_op	src/interpreter.c	/^char * interpreter_arithmetic_op(PASTNODE astnode)$/;"	f
+interpreter_bootstrap	src/interpreter.c	/^void interpreter_bootstrap(PINTERPRETER interpreter)$/;"	f
+interpreter_branch_op	src/interpreter.c	/^char * interpreter_branch_op(PASTNODE astnode, char * filename)$/;"	f
+interpreter_call_command	src/interpreter.c	/^void interpreter_call_command(char * assembly_code, PASTNODE astnode, uint16_t return_index)$/;"	f
+interpreter_create	src/interpreter.c	/^PINTERPRETER interpreter_create(PPARSER parser)$/;"	f
+interpreter_destroy	src/interpreter.c	/^void interpreter_destroy(PINTERPRETER interpreter)$/;"	f
+interpreter_function_command	src/interpreter.c	/^void interpreter_function_command(char * assembly_code, PASTNODE astnode, uint16_t function_label_index, char * filename)$/;"	f
+interpreter_function_op	src/interpreter.c	/^char * interpreter_function_op(char * filename, PASTNODE astnode)$/;"	f
+interpreter_get_static_variable_name	src/interpreter.c	/^char * interpreter_get_static_variable_name(char * filename, char * suffix)$/;"	f
+interpreter_interpret	src/interpreter.c	/^void interpreter_interpret(PINTERPRETER interpreter, bool do_bootstrap)$/;"	f
+interpreter_logical_op	src/interpreter.c	/^char * interpreter_logical_op(PASTNODE astnode)$/;"	f
+interpreter_print	src/interpreter.c	/^void interpreter_print(PINTERPRETER interpreter)$/;"	f
+interpreter_return_command	src/interpreter.c	/^void interpreter_return_command(char * assembly_code, PASTNODE astnode)$/;"	f
+interpreter_save_to_file	src/interpreter.c	/^void interpreter_save_to_file(PINTERPRETER interpreter, char * filename)$/;"	f
+interpreter_stack_op	src/interpreter.c	/^char * interpreter_stack_op(PASTNODE astnode, char * filename)$/;"	f
+interpreter_translate_segment	src/interpreter.c	/^char * interpreter_translate_segment(char * segment)$/;"	f
+is_directory	src/main.c	/^bool is_directory(char * filename)$/;"	f
+lexer	inc/parser.h	/^    PLEXER lexer;$/;"	m	struct:Parser
+lexer_create	src/lexer.c	/^PLEXER lexer_create(PSCANNER scanner)$/;"	f
+lexer_destroy	src/lexer.c	/^void lexer_destroy(PLEXER lexer)$/;"	f
+lexer_ignore_comment	src/lexer.c	/^void lexer_ignore_comment(PLEXER lexer)$/;"	f
+lexer_ignore_whitespace	src/lexer.c	/^void lexer_ignore_whitespace(PLEXER lexer)$/;"	f
+lexer_is_whitespace_or_comment	src/lexer.c	/^int lexer_is_whitespace_or_comment(PLEXER lexer)$/;"	f
+lexer_peek	src/lexer.c	/^PTOKEN lexer_peek(PLEXER lexer)$/;"	f
+lexer_print	src/lexer.c	/^void lexer_print(PLEXER lexer)$/;"	f
+lexer_read	src/lexer.c	/^PTOKEN lexer_read(PLEXER lexer)$/;"	f
+main	src/main.c	/^int main(int argc, char * argv[])$/;"	f
+op	inc/ast.h	/^    PTOKEN op;$/;"	m	struct:ASTNode
+operand1	inc/ast.h	/^    PTOKEN operand1;$/;"	m	struct:ASTNode
+operand2	inc/ast.h	/^    PTOKEN operand2;$/;"	m	struct:ASTNode
+outname	vm_translator.py	/^    outname = args.outname$/;"	v
+parser	inc/interpreter.h	/^    PPARSER parser;$/;"	m	struct:Interpreter
+parser	vm_translator.py	/^    parser = argparse.ArgumentParser($/;"	v
+parser_create	src/parser.c	/^PPARSER parser_create(PLEXER lexer)$/;"	f
+parser_destroy	src/parser.c	/^void parser_destroy(PPARSER parser)$/;"	f
+parser_parse	src/parser.c	/^void parser_parse(PPARSER parser)$/;"	f
+parser_print	src/parser.c	/^void parser_print(PPARSER parser)$/;"	f
+position	inc/token.h	/^    int position;$/;"	m	struct:Token
+process_arithmetic	vm_translator.py	/^def process_arithmetic(command, filename, l_no, state):$/;"	f
+process_call	vm_translator.py	/^def process_call(arg1, arg2, filename, call_count):$/;"	f
+process_file	vm_translator.py	/^def process_file(filename):$/;"	f
+process_function	vm_translator.py	/^def process_function(arg1, arg2):$/;"	f
+process_line	vm_translator.py	/^def process_line(line, filename, l_no, state):$/;"	f
+process_push_pop	vm_translator.py	/^def process_push_pop(command, arg1, arg2, fname, l_no):$/;"	f
+process_return	vm_translator.py	/^def process_return():$/;"	f
+scanner	inc/lexer.h	/^    PSCANNER scanner;$/;"	m	struct:Lexer
+scanner_at_end	src/scanner.c	/^int scanner_at_end(PSCANNER scanner)$/;"	f
+scanner_create	src/scanner.c	/^PSCANNER scanner_create(char * filename)$/;"	f
+scanner_destroy	src/scanner.c	/^void scanner_destroy(PSCANNER scanner)$/;"	f
+scanner_get_next	src/scanner.c	/^char scanner_get_next(PSCANNER scanner)$/;"	f
+scanner_peek_next	src/scanner.c	/^char scanner_peek_next(PSCANNER scanner)$/;"	f
+scanner_position	src/scanner.c	/^int scanner_position(PSCANNER scanner)$/;"	f
+scanner_print	src/scanner.c	/^void scanner_print(PSCANNER scanner)$/;"	f
+scanner_reset	src/scanner.c	/^void scanner_reset(PSCANNER scanner)$/;"	f
+scanner_set_position	src/scanner.c	/^void scanner_set_position(PSCANNER scanner, int position)$/;"	f
+size	inc/ast.h	/^    uint32_t size;$/;"	m	struct:Ast
+text	inc/token.h	/^    char * text;$/;"	m	struct:Token
+tmp_buffer	inc/scanner.h	/^    char * tmp_buffer;$/;"	m	struct:Scanner
+token_create	src/token.c	/^PTOKEN token_create(char * text, int position, TOKEN_TYPE type)$/;"	f
+token_destroy	src/token.c	/^void token_destroy(PTOKEN token)$/;"	f
+token_map_text_to_type	src/token.c	/^TOKEN_TYPE token_map_text_to_type(char * text)$/;"	f
+token_map_type_to_text	src/token.c	/^char * token_map_type_to_text(TOKEN_TYPE type)$/;"	f
+token_print	src/token.c	/^void token_print(PTOKEN token)$/;"	f
+token_type_map	src/token.c	/^char * token_type_map[] = {"STACK_OP", "ARITHMETIC_OP", "LOGICAL_OP", "MEMORY_SEGMENT", "NUMBER", "BRANCH_OP", "FUNCTION_OP", "IDENTIFIER", "ERROR", "EOE"};$/;"	v
+token_type_map_size	src/token.c	/^int token_type_map_size = 10;$/;"	v
+translate_vm_to_asm	vm_translator.py	/^def translate_vm_to_asm(inp, outname=None):$/;"	f
+type	inc/token.h	/^    TOKEN_TYPE type;$/;"	m	struct:Token
+valid	vm_translator.py	/^def valid(line):$/;"	f

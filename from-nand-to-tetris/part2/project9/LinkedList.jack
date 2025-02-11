@@ -1,0 +1,62 @@
+class LinkedList
+{
+    field Data data;
+    field LinkedList next;
+
+    constructor LinkedList new(Data new_data, LinkedList new_next)
+    {
+        let data = new_data;
+        let next = new_next;
+        return this;
+    }
+
+    method void dispose()
+    {
+        var LinkedList prev, cur;
+        let prev = null;
+        let cur = this;
+        while (~(cur = null))
+        {
+            let prev = cur;
+            let cur = cur.getNext();
+            do Memory.deAlloc(prev);
+        }
+        return;
+    }
+
+    method Data getData()
+    {
+        return data;
+    }
+
+    method LinkedList getNext()
+    {
+        return next;
+    }
+
+    method void print()
+    {
+        var Data data;
+        var LinkedList cur;
+        let cur = this;
+        while (~(cur = null))
+        {
+            let data = cur.getData();
+            do data.print();
+            do Output.println();
+            let cur = cur.getNext();
+        }
+        return;
+    }
+    method void setData(Data new_data)
+    {
+        let data = new_data;
+        return;
+    }
+    method void setNext(LinkedList new_next)
+    {
+        let next = new_next;
+        return;
+    }
+}
+

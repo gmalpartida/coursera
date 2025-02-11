@@ -1,0 +1,33 @@
+class Data
+{
+    field int id;
+    field String name;
+    constructor Data new(int new_id, String new_name)
+    {
+        let id = new_id;
+        let name = new_name;
+        return this;
+    }
+    method void dispose()
+    {
+        do name.dispose();
+        return;
+    }
+    method void print()
+    {
+        do Output.printString("id: ");
+        do Output.printInt(id);
+        do Output.printString("     ");
+        do Output.printString("name: ");
+        do Output.printString(name);
+        return;
+    }
+    method int get_id()
+    {
+        return id;
+    }
+    method String get_name()
+    {
+        return name;
+    }
+}
