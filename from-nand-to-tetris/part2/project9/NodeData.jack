@@ -1,16 +1,15 @@
-class Data
+class NodeData
 {
     field int id;
-    field String name;
-    constructor Data new(int new_id, String new_name)
+    field int weight;
+    constructor NodeData new(int new_id, int new_weight)
     {
         let id = new_id;
-        let name = new_name;
+        let weight = new_weight;
         return this;
     }
     method void dispose()
     {
-        do name.dispose();
         return;
     }
     method void print()
@@ -18,16 +17,16 @@ class Data
         do Output.printString("id: ");
         do Output.printInt(id);
         do Output.printString("     ");
-        do Output.printString("name: ");
-        do Output.printString(name);
+        do Output.printInt("weight: ");
+        do Output.printInt(weight);
         return;
     }
     method int get_id()
     {
         return id;
     }
-    method String get_name()
+    method int get_weight()
     {
-        return name;
+        return weight;
     }
 }

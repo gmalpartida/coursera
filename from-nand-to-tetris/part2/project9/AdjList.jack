@@ -5,11 +5,18 @@ class AdjList
 
     constructor AdjList new(int num_vertices)
     {
-        let vertices = Array.new(num_vertices);
-
-        let vertex_count = 0;
-
+        var int index;
         
+        let vertices = Array.new(num_vertices);
+        
+        let index = 0;
+        while (index < num_vertices)
+        {
+            let vertices[index] = null;
+            let index = index + 1;
+        }
+
+        let vertex_count = num_vertices;
 
         return this;
     }
@@ -22,12 +29,41 @@ class AdjList
 
     method void print()
     {
+        var LinkedList cur;
+        var int index;
+        let index = 0;
+        while ((index < vertex_count))
+        {
+            let cur = vertices[index];
+            do cur.print();
+            do Output.println();
+            let index = index + 1;
+        }
+
         return;
     }
 
-    method void add_vertex(Data new_data)
+    method void add_edge(int orig, int dest, NodeData data)
     {
-
+        var LinkedList cur;
+        let cur = vertices[orig];
+        if (null = cur)
+        {
+            let cur = LinkedList.new(data, null);
+        }
+        if (~(null = cur))
+        {
+            let cur = LinkedList.new(data, cur);
+        }
+        let cur = vertices[dest];
+        if (null = cur)
+        {
+            let cur = LinkedList.new(data, null);
+        }
+        if (~(null = cur))
+        {
+            let cur = LinkedList.new(data, cur);
+        }
         return;
     }
 }

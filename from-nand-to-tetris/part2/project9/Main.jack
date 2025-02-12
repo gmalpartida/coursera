@@ -2,26 +2,38 @@ class Main
 {
 	function void main()
 	{
-        var LinkedList list;
-        var Data data;
+        var Array Cities;
+        var int num_cities;
+        var AdjList Graph;
 
-        let data = Data.new(0, "New York");
-        let list = LinkedList.new(data, null);
+        let num_cities = 5;
+              
+        let Cities = Array.new(num_cities);
 
-        let data = Data.new(1, "Los Angeles");
-        let list = LinkedList.new(data, list);
+        let Cities[0] = "New York";
+        let Cities[1] = "Los Angeles";
+        let Cities[2] = "Boston";
+        let Cities[3] = "Houston";
+        let Cities[4] = "Des Moines";
 
-        let data = Data.new(2, "Boston");
-        let list = LinkedList.new(data, list);
+        do print_cities(Cities, num_cities);
+        
+        let Graph = AdjList.new(num_cities);
 
-        let data = Data.new(3, "Houston");
-        let list = LinkedList.new(data, list);
-
-        do list.print();
-
-        do list.dispose();
+        do Graph.print();
 
 		return;
 	}
+    function void print_cities(Array Cities, int num_cities)
+    {
+        var int index;
+        let index = 0;
+        while (index < num_cities)
+        {
+            do Output.printString(Cities[index]);
+            let index = index + 1;
+        }
+        return;
+    }
 }
 

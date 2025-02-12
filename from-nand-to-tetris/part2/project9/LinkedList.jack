@@ -1,9 +1,9 @@
 class LinkedList
 {
-    field Data data;
+    field NodeData data;
     field LinkedList next;
 
-    constructor LinkedList new(Data new_data, LinkedList new_next)
+    constructor LinkedList new(NodeData new_data, LinkedList new_next)
     {
         let data = new_data;
         let next = new_next;
@@ -24,7 +24,7 @@ class LinkedList
         return;
     }
 
-    method Data getData()
+    method NodeData getData()
     {
         return data;
     }
@@ -36,7 +36,7 @@ class LinkedList
 
     method void print()
     {
-        var Data data;
+        var NodeData data;
         var LinkedList cur;
         let cur = this;
         while (~(cur = null))
@@ -48,7 +48,7 @@ class LinkedList
         }
         return;
     }
-    method void setData(Data new_data)
+    method void setData(NodeData new_data)
     {
         let data = new_data;
         return;
