@@ -12,13 +12,12 @@ class NodeData
     {
         return;
     }
-    method void print()
+    method void print(CityMap Cities)
     {
-        do Output.printString("id: ");
-        do Output.printInt(id);
-        do Output.printString("     ");
-        do Output.printInt("weight: ");
+        do Output.printString(Cities.get_name(id));
+        do Output.printString(" ( ");
         do Output.printInt(weight);
+        do Output.printString(" )");
         return;
     }
     method int get_id()

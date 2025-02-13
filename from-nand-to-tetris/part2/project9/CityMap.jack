@@ -1,0 +1,71 @@
+class CityMap
+{
+    field Array Cities;
+    field int num_cities;
+
+    constructor CityMap new(int cnt_cities)
+    {
+        let Cities = Array.new(cnt_cities);
+        let num_cities = 0;
+        return this;
+    }
+
+    method void add(String name)
+    {
+        let Cities[num_cities] = name;
+        let num_cities = num_cities + 1;
+        return;
+    }
+
+    method int get_key(String city_name)
+    {
+        var int index;
+        while ((index < num_cities))
+        {
+            if (Cities[index] = city_name)
+            {
+                return index;
+            }
+            let index = index + 1;
+        }
+
+        return -1;
+    }
+
+    method String get_name(int key)
+    {
+        var String name;
+        let name = "";
+
+        if (key < num_cities)
+        {
+            let name = Cities[key];
+        }
+
+        return name;
+
+    }
+
+    method void dispose()
+    {
+        do Cities.dispose();
+        return;
+    }
+
+    method void print()
+    {
+        var int index;
+        let index = 0;
+        while (index < num_cities)
+        {
+            do Output.printString("id: ");
+            do Output.printInt(index);
+            do Output.printString("    ");
+            do Output.printString("City: ");
+            do Output.printString(Cities[index]);
+            do Output.println();
+            let index = index + 1;
+        }
+        return;
+    }
+}

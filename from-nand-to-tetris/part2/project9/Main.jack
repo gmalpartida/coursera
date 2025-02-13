@@ -2,38 +2,44 @@ class Main
 {
 	function void main()
 	{
-        var Array Cities;
+        var CityMap Cities;
         var int num_cities;
         var AdjList Graph;
-
+        var NodeData data;
+        
         let num_cities = 5;
               
-        let Cities = Array.new(num_cities);
+        let Cities = CityMap.new(num_cities);
 
-        let Cities[0] = "New York";
-        let Cities[1] = "Los Angeles";
-        let Cities[2] = "Boston";
-        let Cities[3] = "Houston";
-        let Cities[4] = "Des Moines";
+        do Cities.add("New York");
+        do Cities.add("Los Angeles");
+        do Cities.add("Boston");
+        do Cities.add("Houston");
+        do Cities.add("Des Moines");
 
-        do print_cities(Cities, num_cities);
+        do Cities.print();
         
         let Graph = AdjList.new(num_cities);
+        
+        let data = NodeData.new(1, 350);
+        do Graph.add_edge(0, 1, data);
 
-        do Graph.print();
+        let data = NodeData.new(2, 200);
+        do Graph.add_edge(0, 2, data);
+
+        let data = NodeData.new(3, 250);
+        do Graph.add_edge(0, 3, data);
+        
+        let data = NodeData.new(4, 400);
+        do Graph.add_edge(0, 4, data);
+
+        let data = NodeData.new(4, 175);
+        do Graph.add_edge(2, 4, data);
+
+        do Graph.print(Cities);
 
 		return;
 	}
-    function void print_cities(Array Cities, int num_cities)
-    {
-        var int index;
-        let index = 0;
-        while (index < num_cities)
-        {
-            do Output.printString(Cities[index]);
-            let index = index + 1;
-        }
-        return;
-    }
+
 }
 

@@ -34,7 +34,7 @@ class LinkedList
         return next;
     }
 
-    method void print()
+    method void print(CityMap Cities)
     {
         var NodeData data;
         var LinkedList cur;
@@ -42,7 +42,7 @@ class LinkedList
         while (~(cur = null))
         {
             let data = cur.getData();
-            do data.print();
+            do data.print(Cities);
             do Output.println();
             let cur = cur.getNext();
         }

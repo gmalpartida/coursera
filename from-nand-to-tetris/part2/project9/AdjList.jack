@@ -27,15 +27,19 @@ class AdjList
         return;
     }
 
-    method void print()
+    method void print(CityMap Cities)
     {
         var LinkedList cur;
         var int index;
         let index = 0;
         while ((index < vertex_count))
         {
+            do Output.printString("from: ");
+            do Output.printString(Cities.get_name(index));
+            do Output.printString(" to:");
+            do Output.println();
             let cur = vertices[index];
-            do cur.print();
+            do cur.print(Cities);
             do Output.println();
             let index = index + 1;
         }
@@ -49,20 +53,20 @@ class AdjList
         let cur = vertices[orig];
         if (null = cur)
         {
-            let cur = LinkedList.new(data, null);
+            let vertices[orig] = LinkedList.new(data, null);
         }
         if (~(null = cur))
         {
-            let cur = LinkedList.new(data, cur);
+            let vertices[orig] = LinkedList.new(data, cur);
         }
         let cur = vertices[dest];
         if (null = cur)
         {
-            let cur = LinkedList.new(data, null);
+            let vertices[dest] = LinkedList.new(NodeData.new(orig, data.get_weight()), null);
         }
         if (~(null = cur))
         {
-            let cur = LinkedList.new(data, cur);
+            let vertices[dest] = LinkedList.new(NodeData.new(orig, data.get_weight()), cur);
         }
         return;
     }
