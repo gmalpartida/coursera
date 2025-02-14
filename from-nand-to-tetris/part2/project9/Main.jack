@@ -3,43 +3,190 @@ class Main
 	function void main()
 	{
         var CityMap Cities;
-        var int num_cities;
         var AdjList Graph;
-        var NodeData data;
         
-        let num_cities = 5;
-              
-        let Cities = CityMap.new(num_cities);
-
-        do Cities.add("New York");
-        do Cities.add("Los Angeles");
-        do Cities.add("Boston");
-        do Cities.add("Houston");
-        do Cities.add("Des Moines");
+        let Cities = Main.BuildCities();
 
         do Cities.print();
         
-        let Graph = AdjList.new(num_cities);
-        
-        let data = NodeData.new(1, 350);
-        do Graph.add_edge(0, 1, data);
+		let Graph = Main.BuildGraph(Cities.get_num_cities());
 
-        let data = NodeData.new(2, 200);
-        do Graph.add_edge(0, 2, data);
+		do Graph.print(Cities);
 
-        let data = NodeData.new(3, 250);
-        do Graph.add_edge(0, 3, data);
-        
-        let data = NodeData.new(4, 400);
-        do Graph.add_edge(0, 4, data);
-
-        let data = NodeData.new(4, 175);
-        do Graph.add_edge(2, 4, data);
-
-        do Graph.print(Cities);
+		do Main.Dijkstra(Graph, Cities, 0);
 
 		return;
 	}
 
+	function boolean is_Q_empty(Array Q, int num_vertices)
+	{
+		var boolean result;
+		var int index;
+
+		let result = true;
+		let index = 0;
+		
+		while (index < num_vertices)
+		{
+			if (~(Q[index] = null))
+			{
+				let result = false;
+				return result;
+			}
+			let index = index + 1;
+		}
+
+		return result;
+	}
+
+	function int vertex_with_minimum_distance(Array Distance, int num_vertices)
+	{
+		var int vertex;
+		var int dist;
+		var int index;
+
+		let vertex = 0;
+		let dist = 999999;
+		let index = 0;
+
+		while (index < num_vertices)
+		{
+			if (Distance[index] < dist)
+			{
+				let dist = Distance[index];
+				let vertex = index;
+			}
+
+			let index = index + 1;
+		}
+		
+		return vertex;
+	}
+
+	function boolean vertex_in_Q(Array Q, int vertex, int num_vertices)
+	{
+		var boolean result;
+		var int index;
+		let index = 0;
+		let result = false;
+
+		while (index < num_vertices)
+		{
+			if (Q[index] = vertex)
+			{
+				let result = true;
+				return result;
+			}
+			let index = index + 1;
+		}
+		return result;
+	}
+
+	function void Dijkstra(AdjList Graph, CityMap Cities, int source)
+	{
+		var Array Distance;
+		var Array Prev;
+		var int vertex;
+		var Array Q;
+		var int num_cities;
+		var int u;
+		var LinkedList edges;
+		var LinkedList cur;
+		var int alt;
+		var int v;
+		var NodeData data;
+
+		let vertex = 0;
+		let num_cities = Cities.get_num_cities();
+		let Distance = Array.new(num_cities);
+		let Prev = Array.new(num_cities);
+		let Q = Array.new(num_cities);
+		let alt = 0;
+
+		while (vertex < num_cities)
+		{
+			let Distance[vertex] = 999999;
+			let Prev[vertex] = null;
+			let vertex = vertex + 1;
+			let Q[vertex] = vertex;
+		}
+		let Distance[source] = 0;
+
+		while (~(Main.is_Q_empty(Q, num_cities) = true))
+		{
+			let u = Main.vertex_with_minimum_distance(Distance, num_cities);
+			let Q[u] = null;
+
+			let edges = Graph.get_edges(u);
+			
+			let cur = edges;
+
+			while (~(cur = null))
+			{
+				let data = cur.getData();
+				let v = data.get_id();
+				if (Main.vertex_in_Q(Q, v, num_cities))
+				{
+					let alt = Distance[u] + data.get_weight(); 
+					
+					if (alt < Distance[v])
+					{
+						let Distance[v] = alt;
+						let Prev[v] = u;
+					}
+				}
+				let cur = cur.getNext();
+			}
+
+		}
+
+        return;
+	}
+
+	function CityMap BuildCities()
+	{
+		var int num_cities;
+		var CityMap Cities;
+
+		let num_cities = 6;
+		let Cities = CityMap.new(num_cities);
+
+	    do Cities.add("New York");
+        do Cities.add("Los Angeles");
+        do Cities.add("Boston");
+        do Cities.add("Houston");
+        do Cities.add("Des Moines");
+		do Cities.add("Chicago");
+
+		return Cities;
+	}
+
+	function AdjList BuildGraph(int num_cities)
+	{
+		var AdjList Graph;
+		var NodeData data;
+
+        let Graph = AdjList.new(num_cities);
+        
+        let data = NodeData.new(1, 2789);
+        do Graph.add_edge(0, 1, data);
+
+        let data = NodeData.new(2, 214);
+        do Graph.add_edge(0, 2, data);
+
+        let data = NodeData.new(3, 1627);
+        do Graph.add_edge(0, 3, data);
+        
+        let data = NodeData.new(4, 1107);
+        do Graph.add_edge(0, 4, data);
+
+        let data = NodeData.new(4, 790);
+        do Graph.add_edge(0, 5, data);
+
+		return Graph;
+	}
 }
+
+
+
 

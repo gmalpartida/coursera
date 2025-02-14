@@ -70,4 +70,14 @@ class AdjList
         }
         return;
     }
+
+	method Array get_edges(int vertex)
+	{
+		return vertices[vertex];
+	}
+
+
+
+
+
 }

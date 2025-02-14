@@ -46,6 +46,11 @@ class CityMap
 
     }
 
+	method int get_num_cities()
+	{
+		return num_cities;
+	}
+
     method void dispose()
     {
         do Cities.dispose();
