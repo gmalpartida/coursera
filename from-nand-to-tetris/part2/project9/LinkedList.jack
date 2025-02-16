@@ -43,7 +43,7 @@ class LinkedList
         {
             let data = cur.getData();
             do data.print(Cities);
-            do Output.println();
+            do Output.printString(" ");
             let cur = cur.getNext();
         }
         return;

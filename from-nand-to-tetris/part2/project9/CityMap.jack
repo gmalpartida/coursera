@@ -60,16 +60,24 @@ class CityMap
     method void print()
     {
         var int index;
+		var int counter;
+
         let index = 0;
+		let counter = 0;
         while (index < num_cities)
         {
-            do Output.printString("id: ");
-            do Output.printInt(index);
-            do Output.printString("    ");
-            do Output.printString("City: ");
+			
+            do Output.printInt(index+1);
+			do Output.printString(". ");
             do Output.printString(Cities[index]);
-            do Output.println();
+			do Output.printString("     ");
             let index = index + 1;
+			let counter = counter + 1;
+			if (3 = counter)
+			{
+				let counter = 0;
+				do Output.println();
+			}
         }
         return;
     }

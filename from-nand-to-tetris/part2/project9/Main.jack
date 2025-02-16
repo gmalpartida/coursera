@@ -4,18 +4,30 @@ class Main
 	{
         var CityMap Cities;
         var AdjList Graph;
+		var Array Prev, Distance;
+		var int source;
+		var Menu menu;
+
+		let source = 5;
         
         let Cities = Main.BuildCities();
 
-        do Cities.print();
-        
 		let Graph = Main.BuildGraph(Cities.get_num_cities());
+/*
+		let Prev = Array.new(Cities.get_num_cities());
+		let Distance = Array.new(Cities.get_num_cities());
 
-		do Graph.print(Cities);
+		do Main.Dijkstra(Graph, Cities, source, Prev, Distance);
 
-		do Main.Dijkstra(Graph, Cities, 0);
+		do Main.printDistances(source, Distance, Cities);
+*/
+
+		let menu = Menu.new(Cities);
+
+		do menu.show();
 
 		return;
+	
 	}
 
 	function boolean is_Q_empty(Array Q, int num_vertices)
@@ -28,7 +40,7 @@ class Main
 		
 		while (index < num_vertices)
 		{
-			if (~(Q[index] = null))
+			if ((Q[index] = true))
 			{
 				let result = false;
 				return result;
@@ -39,19 +51,19 @@ class Main
 		return result;
 	}
 
-	function int vertex_with_minimum_distance(Array Distance, int num_vertices)
+	function int vertex_with_minimum_distance(Array Q, Array Distance, int num_vertices)
 	{
 		var int vertex;
 		var int dist;
 		var int index;
 
 		let vertex = 0;
-		let dist = 999999;
+		let dist = 32767;
 		let index = 0;
 
 		while (index < num_vertices)
 		{
-			if (Distance[index] < dist)
+			if (Q[index] & (Distance[index] < dist))
 			{
 				let dist = Distance[index];
 				let vertex = index;
@@ -63,29 +75,8 @@ class Main
 		return vertex;
 	}
 
-	function boolean vertex_in_Q(Array Q, int vertex, int num_vertices)
+	function void Dijkstra(AdjList Graph, CityMap Cities, int source, Array Prev, Array Distance)
 	{
-		var boolean result;
-		var int index;
-		let index = 0;
-		let result = false;
-
-		while (index < num_vertices)
-		{
-			if (Q[index] = vertex)
-			{
-				let result = true;
-				return result;
-			}
-			let index = index + 1;
-		}
-		return result;
-	}
-
-	function void Dijkstra(AdjList Graph, CityMap Cities, int source)
-	{
-		var Array Distance;
-		var Array Prev;
 		var int vertex;
 		var Array Q;
 		var int num_cities;
@@ -98,49 +89,49 @@ class Main
 
 		let vertex = 0;
 		let num_cities = Cities.get_num_cities();
-		let Distance = Array.new(num_cities);
-		let Prev = Array.new(num_cities);
 		let Q = Array.new(num_cities);
 		let alt = 0;
 
 		while (vertex < num_cities)
 		{
-			let Distance[vertex] = 999999;
+			let Distance[vertex] = 32767;
 			let Prev[vertex] = null;
+		
+			let Q[vertex] = true;
+
 			let vertex = vertex + 1;
-			let Q[vertex] = vertex;
+			
 		}
 		let Distance[source] = 0;
 
 		while (~(Main.is_Q_empty(Q, num_cities) = true))
 		{
-			let u = Main.vertex_with_minimum_distance(Distance, num_cities);
-			let Q[u] = null;
-
-			let edges = Graph.get_edges(u);
-			
+			let u = Main.vertex_with_minimum_distance(Q, Distance, num_cities);
+			let Q[u] = false;
+					let edges = Graph.get_edges(u);
 			let cur = edges;
 
 			while (~(cur = null))
 			{
 				let data = cur.getData();
 				let v = data.get_id();
-				if (Main.vertex_in_Q(Q, v, num_cities))
+				if (Q[v])
 				{
 					let alt = Distance[u] + data.get_weight(); 
 					
 					if (alt < Distance[v])
 					{
+						
 						let Distance[v] = alt;
 						let Prev[v] = u;
 					}
+
 				}
 				let cur = cur.getNext();
 			}
 
 		}
-
-        return;
+       return;
 	}
 
 	function CityMap BuildCities()
@@ -180,10 +171,48 @@ class Main
         let data = NodeData.new(4, 1107);
         do Graph.add_edge(0, 4, data);
 
-        let data = NodeData.new(4, 790);
+        let data = NodeData.new(5, 790);
         do Graph.add_edge(0, 5, data);
 
+		let data = NodeData.new(5, 983);
+		do Graph.add_edge(2, 5, data);
+
+		let data = NodeData.new(5, 332);
+		do Graph.add_edge(4, 5, data);
+
+		let data = NodeData.new(4, 935);
+		do Graph.add_edge(3, 4, data);
+
+
 		return Graph;
+	}
+
+	function void printDistances(int source, Array Distance, CityMap Cities)
+	{
+		var int vertex;
+		var int num_cities;
+
+		let num_cities = Cities.get_num_cities();
+		let vertex = 0;
+
+		do Output.printString("distance from ");
+		do Output.printString(Cities.get_name(source));
+		do Output.printString(": ");
+		do Output.println();
+
+		while (vertex < num_cities)
+		{
+			if (~(source = vertex))
+			{
+				do Output.printString(" to ");
+				do Output.printString(Cities.get_name(vertex));
+				do Output.printString(" (");
+				do Output.printInt(Distance[vertex]);
+				do Output.printString(")");
+			}
+			let vertex = vertex + 1;
+		}
+		return;
 	}
 }
 

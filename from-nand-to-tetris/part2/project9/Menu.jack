@@ -1,0 +1,127 @@
+class Menu
+{
+	field CityMap cities;
+	field int text_screen_width;
+
+	constructor Menu new(CityMap Cities)
+	{
+		let text_screen_width = 64;
+		let cities = Cities;
+		return this;
+	}
+
+	method void show()
+	{
+		var int index, counter;
+		var String title, subtitle;
+		var boolean done;
+
+		while (~done)
+		{
+
+			do Screen.clearScreen();
+			do Output.moveCursor(0, 0);
+		
+			let index = 0;
+			let counter = 0;
+			let title = "Travel Planner";
+			let subtitle = "Available Destinations:";
+
+			do printCenter(title, text_screen_width);
+			do Output.println(); 
+			do Output.println();
+			do Output.printString(subtitle);
+			do Output.println();
+			do Output.println();
+
+			while (index < cities.get_num_cities())
+			{
+				do Output.printInt(index + 1);
+				do Output.printString(". ");
+				do printColumn(cities.get_name(index), 15);
+				let index = index + 1;
+				let counter = counter + 1;
+				if (counter = 3)
+				{
+					let counter = 0;
+					do Output.println();
+				}
+			}
+
+			do press_any_key();
+		}
+
+		return;
+	}
+
+	method void printColumn(String text, int column_size)
+	{
+		var int padding;
+		let padding = column_size - text.length();
+
+		do Output.printString(text);
+
+		do printPadding(padding);
+
+		return;
+	}
+
+	method void printCenter(String text, int column_size)
+	{
+		var int padding;
+
+		let padding = (column_size - text.length()) / 2;
+
+		do printPadding(padding);
+
+		do Output.printString(text);
+
+		do printPadding(padding);
+
+		return;
+	}
+
+	method void printPadding(int width)
+	{
+		while (width > 0)
+		{
+			do Output.printChar(32);
+			let width = width - 1;
+		}
+		return;
+	}
+	
+	method void press_any_key()
+	{
+		var String text;
+		var int len;
+
+		let text = "Press any key to continue...";
+		do Output.printString(text);
+
+		do Keyboard.readChar();
+
+		let len = text.length();
+		while (len > 0)
+		{
+			do Output.backSpace();
+			let len = len - 1;
+		}
+
+		return;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
