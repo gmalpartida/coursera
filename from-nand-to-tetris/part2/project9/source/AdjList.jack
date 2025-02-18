@@ -1,8 +1,22 @@
+/***************************************************************************
+
+Class AdjList
+Data structure used to represent an undirected graph.
+
+Gino Malpartida
+***************************************************************************/
+
+
 class AdjList
 {
     field Array vertices;
     field int vertex_count;
 
+	/**************************************************
+	constructor: creates a new instance of an adjacency
+				 list.
+				 allocates memory to fields.
+	**************************************************/
     constructor AdjList new(int num_vertices)
     {
         var int index;
@@ -21,12 +35,19 @@ class AdjList
         return this;
     }
 
+	/**************************************************
+	dispose: deallocates memory used.
+	**************************************************/
     method void dispose()
     {
         do vertices.dispose();
         return;
     }
 
+	/***************************************************
+	print: prints contents of adjacency list.
+			used for debugging.
+	***************************************************/
     method void print(CityMap Cities)
     {
         var LinkedList cur;
@@ -47,6 +68,10 @@ class AdjList
         return;
     }
 
+	/****************************************************************
+	add_edge: adds an edge between two vertices.
+			  the edge is added in both directions.
+	****************************************************************/
     method void add_edge(int orig, int dest, NodeData data)
     {
         var LinkedList cur;
@@ -71,6 +96,9 @@ class AdjList
         return;
     }
 
+	/******************************************************************
+	get_edges: retrieves the edges for a vertex.
+	******************************************************************/
 	method Array get_edges(int vertex)
 	{
 		return vertices[vertex];

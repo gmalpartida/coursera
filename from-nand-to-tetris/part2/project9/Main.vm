@@ -1,0 +1,71 @@
+function Main.main 7
+    call CityMap.new 0
+    pop local 0
+    push local 0
+    call CityMap.BuildCities 1
+    pop temp 0
+    push local 0
+    call TravelPlanner.new 1
+    pop local 1
+    push local 1
+    call TravelPlanner.buildFligthMap 1
+    pop temp 0
+    push constant 0
+    pop local 5
+    push local 0
+    call Menu.new 1
+    pop local 4
+label Main_0
+    push local 5
+    not
+    not
+    if-goto Main_1
+    push constant 0
+    push constant 0
+    call Output.moveCursor 2
+    pop temp 0
+    push local 4
+    call Menu.show 1
+    pop temp 0
+    push local 4
+    call Menu.get_source 1
+    pop local 2
+    push local 4
+    call Menu.get_dest 1
+    pop local 3
+    push local 1
+    push local 2
+    call TravelPlanner.Execute 2
+    pop temp 0
+    push local 1
+    call TravelPlanner.get_distance 1
+    pop local 6
+    call Output.println 0
+    pop temp 0
+    push local 1
+    push local 2
+    push local 3
+    call TravelPlanner.printDistance 3
+    pop temp 0
+    push local 1
+    push local 2
+    push local 3
+    call TravelPlanner.printPath 3
+    pop temp 0
+    call Output.println 0
+    pop temp 0
+    call Output.println 0
+    pop temp 0
+    push local 4
+    call Menu.press_any_key 1
+    pop temp 0
+    goto Main_0
+label Main_1
+    push local 0
+    call CityMap.dispose 1
+    pop temp 0
+    push local 1
+    call TravelPlanner.dispose 1
+    pop temp 0
+    push constant 0
+    return

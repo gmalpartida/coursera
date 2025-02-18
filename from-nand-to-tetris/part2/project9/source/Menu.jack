@@ -1,0 +1,221 @@
+/*************************************************************************
+Class Menu
+
+implements the menu that is displayed to the user.
+
+Gino Malpartida
+*************************************************************************/
+class Menu
+{
+	field CityMap cities;
+	field int text_screen_width;
+	field int source;
+	field int dest;
+
+	/*********************************************************************
+	constructor: initializes all field members to default values.
+	*********************************************************************/
+	constructor Menu new(CityMap Cities)
+	{
+		let text_screen_width = 64;
+		let cities = Cities;
+		let source = -1;
+		let dest = -1;
+		return this;
+	}
+
+	/*********************************************************************
+	show: displays the menu to the user.
+	*********************************************************************/
+	method void show()
+	{
+		var int index, counter;
+		var String title, subtitle;
+		var boolean done;
+		var String departing_city, arriving_city;
+		var boolean is_valid_city;
+
+		while (~done)
+		{
+
+			do Screen.clearScreen();
+			do Output.moveCursor(0, 0);
+		
+			let index = 0;
+			let counter = 0;
+			let title = "Travel Planner";
+			let subtitle = "Available Destinations:";
+			let is_valid_city = true;
+
+			do printCenter(title, text_screen_width);
+			do Output.println(); 
+			do Output.println();
+			do Output.printString(subtitle);
+			do Output.println();
+			do Output.println();
+
+			while (index < cities.get_num_cities())
+			{
+				do Output.printInt(index + 1);
+				do Output.printString(". ");
+				do printColumn(cities.get_name(index), 15);
+				let index = index + 1;
+				let counter = counter + 1;
+				if (counter = 3)
+				{
+					let counter = 0;
+					do Output.println();
+				}
+			}
+
+			do Output.println();
+			do Output.println();
+
+			let departing_city = Keyboard.readLine("Select departing city: ");
+			if (~(is_valid_city(departing_city)))
+			{
+				do printInvalidCityErrorMsg(departing_city);
+				do press_any_key();
+				let is_valid_city = false;
+			}
+			let arriving_city = Keyboard.readLine("Select destination city: ");	
+			if (~(is_valid_city(arriving_city)))
+			{
+				do printInvalidCityErrorMsg(arriving_city);
+				do press_any_key();
+				let is_valid_city = false;
+			}
+
+			if (is_valid_city)
+			{
+				let source = cities.get_key(departing_city);
+				let dest = cities.get_key(arriving_city);
+				let done = true;
+			}
+		}
+
+		return;
+	}
+
+	/********************************************************************
+	printInvalidCityErrorMsg: displays an error message to the user
+							when an incorrect city name is entered.
+	********************************************************************/
+	method void printInvalidCityErrorMsg(String city_name)
+	{
+		do Output.printString(city_name);
+		do Output.printString(" is not a valid city option.");
+		do Output.println();
+		return;
+	}
+
+	/******************************************************************
+	printColumn: print a string of text in a column format.  pads it 
+				with as many spaces as needed.
+	******************************************************************/
+	method void printColumn(String text, int column_size)
+	{
+		var int padding;
+		let padding = column_size - text.length();
+
+		do Output.printString(text);
+
+		do printPadding(padding);
+
+		return;
+	}
+
+	/*******************************************************************
+	printCenter: prints a string center within a column.
+	*******************************************************************/
+	method void printCenter(String text, int column_size)
+	{
+		var int padding;
+
+		let padding = (column_size - text.length()) / 2;
+
+		do printPadding(padding);
+
+		do Output.printString(text);
+
+		do printPadding(padding);
+
+		return;
+	}
+
+	/*********************************************************************
+	printPadding: prints spaces.  this is used for padding a string when
+					when printing text in columns.
+	*********************************************************************/
+	method void printPadding(int width)
+	{
+		while (width > 0)
+		{
+			do Output.printChar(32);
+			let width = width - 1;
+		}
+		return;
+	}
+	
+	/*********************************************************************
+	press_any_key: prints a message asking the user to press a key.  waits 
+					until a key is pressed.
+	*********************************************************************/
+	method void press_any_key()
+	{
+		var String text;
+		var int len;
+
+		let text = "Press any key to continue...";
+		do Output.printString(text);
+
+		do Keyboard.readChar();
+
+		let len = text.length() + 1;
+		while (len > 0)
+		{
+			do Output.backSpace();
+			let len = len - 1;
+		}
+
+		return;
+	}
+
+	/*********************************************************************
+	is_valid_city: validates that a city name is in the map.
+	*********************************************************************/
+	method boolean is_valid_city(String city_name)
+	{
+		return (cities.get_key(city_name) > -1);
+	}
+	
+	/********************************************************************
+	get_source: retrieves the source field.
+	********************************************************************/
+	method int get_source()
+	{
+		return source;
+	}
+
+	/*********************************************************************
+	get_dest: retrieves the dest field.
+	*********************************************************************/
+	method int get_dest()
+	{
+		return dest;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

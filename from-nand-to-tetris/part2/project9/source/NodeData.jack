@@ -1,0 +1,49 @@
+/*************************************************************************
+Class NodeData
+
+represents the cost of an edge in the graph.
+
+Gino Malpartida
+*************************************************************************/
+class NodeData
+{
+    field int id;
+    field int weight;
+	/*******************************************************************
+	constructor: intializes field members.
+	*******************************************************************/
+    constructor NodeData new(int new_id, int new_weight)
+    {
+        let id = new_id;
+        let weight = new_weight;
+        return this;
+    }
+
+	/*******************************************************************
+	print: prints the contents to the screen.  used for debugging.
+	*******************************************************************/
+   method void print(CityMap Cities)
+    {
+        do Output.printString(Cities.get_name(id));
+        do Output.printString(" ( ");
+        do Output.printInt(weight);
+        do Output.printString(" )");
+        return;
+    }
+
+	/**********************************************************************
+	get_id: retrieves the id field.
+	**********************************************************************/
+    method int get_id()
+    {
+        return id;
+    }
+
+	/*********************************************************************
+	get_weight: retrieves the weight field.
+	*********************************************************************/
+    method int get_weight()
+    {
+        return weight;
+    }
+}

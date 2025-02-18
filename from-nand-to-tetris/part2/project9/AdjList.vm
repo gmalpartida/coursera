@@ -1,0 +1,213 @@
+function AdjList.new 1
+    push constant 2
+    call Memory.alloc 1
+    pop pointer 0
+    push argument 0
+    call Array.new 1
+    pop this 0
+    push constant 0
+    pop local 0
+label AdjList_0
+    push local 0
+    push argument 0
+    lt
+    not
+    if-goto AdjList_1
+    push local 0
+    push this 0
+    add
+    push constant 0
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto AdjList_0
+label AdjList_1
+    push argument 0
+    pop this 1
+    push pointer 0
+    return
+function AdjList.dispose 0
+    push argument 0
+    pop pointer 0
+    push this 0
+    call Array.dispose 1
+    pop temp 0
+    push constant 0
+    return
+function AdjList.print 2
+    push argument 0
+    pop pointer 0
+    push constant 0
+    pop local 1
+label AdjList_2
+    push local 1
+    push this 1
+    lt
+    not
+    if-goto AdjList_3
+    push constant 6
+    call String.new 1
+    push constant 102
+    call String.appendChar 2
+    push constant 114
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 109
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    push constant 32
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push argument 1
+    push local 1
+    call CityMap.get_name 2
+    call Output.printString 1
+    pop temp 0
+    push constant 4
+    call String.new 1
+    push constant 32
+    call String.appendChar 2
+    push constant 116
+    call String.appendChar 2
+    push constant 111
+    call String.appendChar 2
+    push constant 58
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    call Output.println 0
+    pop temp 0
+    push local 1
+    push this 0
+    add
+    pop pointer 1
+    push that 0
+    pop local 0
+    push local 0
+    push argument 1
+    call LinkedList.print 2
+    pop temp 0
+    call Output.println 0
+    pop temp 0
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto AdjList_2
+label AdjList_3
+    push constant 0
+    return
+function AdjList.add_edge 1
+    push argument 0
+    pop pointer 0
+    push argument 1
+    push this 0
+    add
+    pop pointer 1
+    push that 0
+    pop local 0
+    push constant 0
+    push local 0
+    eq
+    not
+    if-goto AdjList_5
+    push argument 1
+    push this 0
+    add
+    push argument 3
+    push constant 0
+    call LinkedList.new 2
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    goto AdjList_4
+label AdjList_5
+label AdjList_4
+    push constant 0
+    push local 0
+    eq
+    not
+    not
+    if-goto AdjList_7
+    push argument 1
+    push this 0
+    add
+    push argument 3
+    push local 0
+    call LinkedList.new 2
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    goto AdjList_6
+label AdjList_7
+label AdjList_6
+    push argument 2
+    push this 0
+    add
+    pop pointer 1
+    push that 0
+    pop local 0
+    push constant 0
+    push local 0
+    eq
+    not
+    if-goto AdjList_9
+    push argument 2
+    push this 0
+    add
+    push argument 1
+    push argument 3
+    call NodeData.get_weight 1
+    call NodeData.new 2
+    push constant 0
+    call LinkedList.new 2
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    goto AdjList_8
+label AdjList_9
+label AdjList_8
+    push constant 0
+    push local 0
+    eq
+    not
+    not
+    if-goto AdjList_11
+    push argument 2
+    push this 0
+    add
+    push argument 1
+    push argument 3
+    call NodeData.get_weight 1
+    call NodeData.new 2
+    push local 0
+    call LinkedList.new 2
+    pop temp 0
+    pop pointer 1
+    push temp 0
+    pop that 0
+    goto AdjList_10
+label AdjList_11
+label AdjList_10
+    push constant 0
+    return
+function AdjList.get_edges 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    push this 0
+    add
+    pop pointer 1
+    push that 0
+    return

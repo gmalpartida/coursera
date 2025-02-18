@@ -1,0 +1,67 @@
+/*************************************************************************
+Class StringUtils
+
+static class containing string utilities.
+*************************************************************************/
+
+class StringUtils
+{
+	/**********************************************************************
+	compare: compares two strings returning true if they contain the same
+			characters, otherwise false.  it is case sensitive.
+	**********************************************************************/
+	function boolean compare(String left, String right)
+	{
+		var int index, len;
+		var boolean result;
+		let result = left.length() = right.length();
+		
+		if (result)
+		{
+			let len = left.length();
+			let index = 0;
+			while (result & (index < len))
+			{
+				if(~ (left.charAt(index) = right.charAt(index)))
+				{
+					let result = false;
+				}
+				let index = index + 1;
+			}
+		}
+
+		return result;
+	}
+
+	/**********************************************************************
+	toLower: returns a lowercase representation of a string.
+	**********************************************************************/
+	function String toLower(String src)
+	{
+		var String temp;
+		var int index, len;
+		var char c;
+
+		let index = 0;
+		let temp = String.new(src.length());
+		let len = src.length();
+
+		while (index < len)
+		{
+			let c = src.charAt(index);
+			if (c > 64 & c < 91)
+			{
+				let c = c + 32;
+			}
+			do temp.appendChar(c);
+
+			let index = index + 1;
+		}
+		
+
+		return temp;
+	}
+}
+
+
+

@@ -1,0 +1,136 @@
+/************************************************************************
+Class CityMap
+
+Represents a map data structure containing the cities to be used.
+
+Gino Malpartida
+************************************************************************/
+
+class CityMap
+{
+    field Array Cities;
+    field int num_cities;
+
+	/*****************************************************************
+	constructor: allocates memory for all field members.
+	*****************************************************************/
+    constructor CityMap new()
+    {
+        let num_cities = 10;
+
+        let Cities = Array.new(num_cities);
+        
+        return this;
+    }
+
+	/*******************************************************************
+	add: adss a new city to the map
+	*******************************************************************/
+    method void add(String name)
+    {
+        let Cities[num_cities] = name;
+        let num_cities = num_cities + 1;
+        return;
+    }
+
+	/******************************************************************
+	get_key: returns the key corresponding to the city name. it is not
+				case sensitive.
+	******************************************************************/
+    method int get_key(String city_name)
+    {
+        var int index;
+		let index = 0;
+        while ((index < num_cities))
+        {
+            if (StringUtils.compare(StringUtils.toLower(Cities[index]), StringUtils.toLower(city_name)))
+            {
+                return index;
+            }
+            let index = index + 1;
+        }
+
+        return -1;
+    }
+
+	/******************************************************************
+	get_name: retrieves the city name corresponding to the key.
+	******************************************************************/
+    method String get_name(int key)
+    {
+        var String name;
+        let name = "";
+
+        if (key < num_cities)
+        {
+            let name = Cities[key];
+        }
+
+        return name;
+
+    }
+
+	/*******************************************************************
+	get_num_cities: returns the number of cities available.
+	*******************************************************************/
+	method int get_num_cities()
+	{
+		return num_cities;
+	}
+
+	/*******************************************************************
+	dispose: deallocates memory used by the field members.
+	*******************************************************************/
+    method void dispose()
+    {
+        do Cities.dispose();
+        return;
+    }
+
+	/********************************************************************
+	BuildCities: creates the map of cities.
+	********************************************************************/
+    method void BuildCities()
+	{
+	    let Cities[0] = "New York";
+        let Cities[1] = "Los Angeles";
+        let Cities[2] = "Boston";
+        let Cities[3] = "Houston";
+        let Cities[4] = "Des Moines";
+		let Cities[5] = "Chicago";
+		let Cities[6] = "Miami";
+		let Cities[7] = "Seattle";
+		let Cities[8] = "Detroit";
+		let Cities[9] = "Kansas City";
+		return ;
+	}
+
+	/*********************************************************************
+	print: prints the contents of the map.  used primarily for debugging.
+	*********************************************************************/
+    method void print()
+    {
+        var int index;
+		var int counter;
+
+        let index = 0;
+		let counter = 0;
+        while (index < num_cities)
+        {
+			
+            do Output.printInt(index+1);
+			do Output.printString(". ");
+            do Output.printString(Cities[index]);
+			do Output.printString("     ");
+            let index = index + 1;
+			let counter = counter + 1;
+			if (3 = counter)
+			{
+				let counter = 0;
+				do Output.println();
+			}
+        }
+        return;
+    }
+
+}

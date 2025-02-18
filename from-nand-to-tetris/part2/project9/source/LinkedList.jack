@@ -1,0 +1,95 @@
+/**************************************************************************
+Class LinkedList
+
+Data structure used to represent the edges of the graph.
+
+Gino Malpartida
+**************************************************************************/
+
+class LinkedList
+{
+    field NodeData data;
+    field LinkedList next;
+
+	/**********************************************************************
+	constructor: creates a new instance of the linked list.
+				 initializes field members.
+	**********************************************************************/
+    constructor LinkedList new(NodeData new_data, LinkedList new_next)
+    {
+        let data = new_data;
+        let next = new_next;
+        return this;
+    }
+
+	/*********************************************************************
+	dispose: deallocates memory used by the linked list.
+	*********************************************************************/
+    method void dispose()
+    {
+        var LinkedList prev, cur;
+        let prev = null;
+        let cur = this;
+        while (~(cur = null))
+        {
+            let prev = cur;
+            let cur = cur.getNext();
+            do Memory.deAlloc(prev);
+        }
+        return;
+    }
+
+	/*********************************************************************
+	getData: retrieves the data field.
+	*********************************************************************/
+    method NodeData getData()
+    {
+        return data;
+    }
+
+	/*********************************************************************
+	getNext: retrieves the next field.
+	*********************************************************************/
+    method LinkedList getNext()
+    {
+        return next;
+    }
+
+	/*********************************************************************
+	print: prints the contents of the linked list.
+			used mostly for debugging.
+	*********************************************************************/
+    method void print(CityMap Cities)
+    {
+        var NodeData data;
+        var LinkedList cur;
+        let cur = this;
+        while (~(cur = null))
+        {
+            let data = cur.getData();
+            do data.print(Cities);
+            do Output.printString(" ");
+            let cur = cur.getNext();
+        }
+        return;
+    }
+
+	/*********************************************************************
+	setData: sets the Data field.
+	*********************************************************************/
+    method void setData(NodeData new_data)
+    {
+        let data = new_data;
+        return;
+    }
+
+	/*********************************************************************
+	setNext: sets the next field.
+	*********************************************************************/
+    method void setNext(LinkedList new_next)
+    {
+        let next = new_next;
+        return;
+    }
+}
+

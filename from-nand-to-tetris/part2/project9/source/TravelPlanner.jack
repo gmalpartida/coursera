@@ -1,0 +1,287 @@
+/**************************************************************************
+Class TravelPlanner
+
+Implementation of the Dijkstra's algorithm for finding the shortest path
+among all vertices in a graph.
+
+Gino Malpartida
+**************************************************************************/
+class TravelPlanner 
+{
+	field Array Distance;
+	field Array Prev;
+	field Array Q;
+	field AdjList Graph;
+	field CityMap Cities;
+	field int num_vertices;
+
+	/**********************************************************************
+	constructor: allocates memory and initializes all field members.
+	**********************************************************************/
+	constructor TravelPlanner new(CityMap new_cities)
+	{
+		let num_vertices = new_cities.get_num_cities();
+		let Cities = new_cities;
+		let Distance = Array.new(num_vertices);
+		let Prev = Array.new(num_vertices);
+		let Q = Array.new(num_vertices);
+		let Graph = AdjList.new(num_vertices);
+		return this;
+	}
+
+	/*********************************************************************
+	is_Q_empty: determines if the list of visited vertices is empty.
+	*********************************************************************/
+	method boolean is_Q_empty()
+	{
+		var boolean result;
+		var int index;
+
+		let result = true;
+		let index = 0;
+		
+		while (index < num_vertices)
+		{
+			if ((Q[index] = true))
+			{
+				let result = false;
+				return result;
+			}
+			let index = index + 1;
+		}
+
+		return result;
+	}
+
+	/*********************************************************************
+	vertex_with_minimum_distance: retrieves the unvisited vertex with minimum
+	distance to the source vertex.
+	*********************************************************************/
+	method int vertex_with_minimum_distance()
+	{
+		var int vertex;
+		var int dist;
+		var int index;
+
+		let vertex = 0;
+		let dist = 32767;
+		let index = 0;
+
+		while (index < num_vertices)
+		{
+			if (Q[index] & (Distance[index] < dist))
+			{
+				let dist = Distance[index];
+				let vertex = index;
+			}
+
+			let index = index + 1;
+		}
+		
+		return vertex;
+	}
+
+	/***********************************************************************
+	Execute: Dijkstra's algorithm implementation.
+	***********************************************************************/
+	method void Execute(int source)
+	{
+		var int vertex;
+		var int u;
+		var LinkedList edges;
+		var LinkedList cur;
+		var int alt;
+		var int v;
+		var NodeData data;
+
+		let vertex = 0;
+		let alt = 0;
+
+		while (vertex < num_vertices)
+		{
+			let Distance[vertex] = 32767;
+			let Prev[vertex] = null;
+		
+			let Q[vertex] = true;
+
+			let vertex = vertex + 1;
+			
+		}
+		let Distance[source] = 0;
+
+		while (~(is_Q_empty() = true))
+		{
+			let u = vertex_with_minimum_distance();
+			let Q[u] = false;
+					let edges = Graph.get_edges(u);
+			let cur = edges;
+
+			while (~(cur = null))
+			{
+				let data = cur.getData();
+				let v = data.get_id();
+				if (Q[v])
+				{
+					let alt = Distance[u] + data.get_weight(); 
+					
+					if (alt < Distance[v])
+					{
+						
+						let Distance[v] = alt;
+						let Prev[v] = u;
+					}
+
+				}
+				let cur = cur.getNext();
+			}
+
+		}
+       return;
+	}
+
+	/***********************************************************************
+	get_prev: retrieves the list of vertices in the path to destination.
+	***********************************************************************/
+	method Array get_prev()
+	{
+		return Prev;
+	}
+
+	/**********************************************************************
+	get_distance: retrieves the list of distances from the source to all
+	other vertices.
+	**********************************************************************/
+	method Array get_distance()
+	{
+		return Distance;
+	}
+
+	/**********************************************************************
+	get_Q: retrieves the list of visited vertices.
+	**********************************************************************/
+	method Array get_Q()
+	{
+		return Q;
+	}
+	
+	/*********************************************************************
+	addFlight: adds a edge between two vertices in the graph.
+	*********************************************************************/
+	method void addFlight(String from_city, String to_city, int cost)
+	{
+		var NodeData data;
+		var int source, dest;
+
+		let source = Cities.get_key(from_city);
+		let dest = Cities.get_key(to_city);
+
+		let data = NodeData.new(dest, cost);
+		do Graph.add_edge(source, dest, data);
+
+		return;
+	}
+
+	/***********************************************************************
+	print: prints the contents of the graph to the screen.
+	***********************************************************************/
+	method void print()
+	{
+		do Graph.print(Cities);
+		return;
+	}
+
+	/***********************************************************************
+	buildFlighMap: builds the graphs containing all the flights available
+	between cities.
+	***********************************************************************/
+	method void buildFligthMap()
+	{
+		do addFlight("New York", "Los Angeles", 2789);
+		do addFlight("New York", "Boston", 214);
+		do addFlight("New York", "Houston", 1627);
+		do addFlight("New York", "Des Moines", 1107);
+		do addFlight("New York", "Chicago", 790);
+		do addFlight("Chicago", "Boston", 983);
+		do addFlight("Chicago", "Des Moines", 332);
+		do addFlight("Des Moines", "Houston", 935);
+		do addFlight("Chicago", "Los Angeles", 2017);
+		do addFlight("Des Moines", "Boston", 1300);
+		do addFlight("Los Angeles", "Des Moines", 1685);
+		do addFlight("Boston", "Houston", 1847);
+		do addFlight("Los Angeles", "Boston", 2984);
+		do addFlight("Houston", "Los Angeles", 1548);
+		do addFlight("Chicago", "Houston", 1083);
+		do addFlight("Miami", "Des Moines", 1557);
+		do addFlight("Seattle", "Miami", 3300);
+		do addFlight("Detroit", "Houston", 1311);
+		do addFlight("Kansas City", "Boston", 1431);
+
+		return;
+	}
+
+	/***********************************************************************
+	printPath: driver function for printing the shortest path between
+				source and destination.
+	***********************************************************************/
+	method void printPath(int source, int dest)
+	{
+		do do_printPath(source, dest, Prev, Cities);
+		return;
+	}
+
+	/************************************************************************
+	do_printPath: recursive function for printing the shortest path between
+				source and destination.
+	************************************************************************/
+	method void do_printPath(int source, int dest, Array Prev, CityMap Cities)
+	{
+
+		if (dest = source)
+		{
+			do Output.printString(Cities.get_name(dest));
+		
+			do Output.printString("  ");
+
+			return;
+		}
+
+		do do_printPath(source, Prev[dest], Prev, Cities);
+
+		do Output.printString(Cities.get_name(dest));
+	
+		do Output.printString("  ");
+
+		return;
+	}
+
+	/*********************************************************************
+	printDistance: prints the distance between source and distance.
+	*********************************************************************/
+	method void printDistance(int source, int dest)
+	{
+		do Output.printString("distance from ");
+		do Output.printString( Cities.get_name(source));
+		do Output.printString(" to ");
+		do Output.printString(Cities.get_name(dest));
+		do Output.printString(" is ");
+		do Output.printInt(Distance[dest]);
+		do Output.printString(" miles.");
+		do Output.println();
+
+		return;
+	}
+
+	/**********************************************************************
+	dispose: deallocates memory used by fields.
+	**********************************************************************/
+	method void dispose()
+	{
+		do Distance.dispose();
+		do Prev.dispose();
+		do Q.dispose();
+		do Graph.dispose();
+
+		return;
+	}
+
+}

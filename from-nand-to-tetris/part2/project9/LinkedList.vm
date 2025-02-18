@@ -1,0 +1,92 @@
+function LinkedList.new 0
+    push constant 2
+    call Memory.alloc 1
+    pop pointer 0
+    push argument 0
+    pop this 0
+    push argument 1
+    pop this 1
+    push pointer 0
+    return
+function LinkedList.dispose 2
+    push argument 0
+    pop pointer 0
+    push constant 0
+    pop local 0
+    push pointer 0
+    pop local 1
+label LinkedList_0
+    push local 1
+    push constant 0
+    eq
+    not
+    not
+    if-goto LinkedList_1
+    push local 1
+    pop local 0
+    push local 1
+    call LinkedList.getNext 1
+    pop local 1
+    push local 0
+    call Memory.deAlloc 1
+    pop temp 0
+    goto LinkedList_0
+label LinkedList_1
+    push constant 0
+    return
+function LinkedList.getData 0
+    push argument 0
+    pop pointer 0
+    push this 0
+    return
+function LinkedList.getNext 0
+    push argument 0
+    pop pointer 0
+    push this 1
+    return
+function LinkedList.print 2
+    push argument 0
+    pop pointer 0
+    push pointer 0
+    pop local 1
+label LinkedList_2
+    push local 1
+    push constant 0
+    eq
+    not
+    not
+    if-goto LinkedList_3
+    push local 1
+    call LinkedList.getData 1
+    pop local 0
+    push local 0
+    push argument 1
+    call NodeData.print 2
+    pop temp 0
+    push constant 1
+    call String.new 1
+    push constant 32
+    call String.appendChar 2
+    call Output.printString 1
+    pop temp 0
+    push local 1
+    call LinkedList.getNext 1
+    pop local 1
+    goto LinkedList_2
+label LinkedList_3
+    push constant 0
+    return
+function LinkedList.setData 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    pop this 0
+    push constant 0
+    return
+function LinkedList.setNext 0
+    push argument 0
+    pop pointer 0
+    push argument 1
+    pop this 1
+    push constant 0
+    return

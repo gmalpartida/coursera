@@ -1,0 +1,97 @@
+function StringUtils.compare 3
+    push argument 0
+    call String.length 1
+    push argument 1
+    call String.length 1
+    eq
+    pop local 2
+    push local 2
+    not
+    if-goto StringUtils_1
+    push argument 0
+    call String.length 1
+    pop local 1
+    push constant 0
+    pop local 0
+label StringUtils_2
+    push local 2
+    push local 0
+    push local 1
+    lt
+    and
+    not
+    if-goto StringUtils_3
+    push argument 0
+    push local 0
+    call String.charAt 2
+    push argument 1
+    push local 0
+    call String.charAt 2
+    eq
+    not
+    not
+    if-goto StringUtils_5
+    push constant 0
+    pop local 2
+    goto StringUtils_4
+label StringUtils_5
+label StringUtils_4
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    goto StringUtils_2
+label StringUtils_3
+    goto StringUtils_0
+label StringUtils_1
+label StringUtils_0
+    push local 2
+    return
+function StringUtils.toLower 4
+    push constant 0
+    pop local 1
+    push argument 0
+    call String.length 1
+    call String.new 1
+    pop local 0
+    push argument 0
+    call String.length 1
+    pop local 2
+label StringUtils_6
+    push local 1
+    push local 2
+    lt
+    not
+    if-goto StringUtils_7
+    push argument 0
+    push local 1
+    call String.charAt 2
+    pop local 3
+    push local 3
+    push constant 64
+    gt
+    push local 3
+    and
+    push constant 91
+    lt
+    not
+    if-goto StringUtils_9
+    push local 3
+    push constant 32
+    add
+    pop local 3
+    goto StringUtils_8
+label StringUtils_9
+label StringUtils_8
+    push local 0
+    push local 3
+    call String.appendChar 2
+    pop temp 0
+    push local 1
+    push constant 1
+    add
+    pop local 1
+    goto StringUtils_6
+label StringUtils_7
+    push local 0
+    return
