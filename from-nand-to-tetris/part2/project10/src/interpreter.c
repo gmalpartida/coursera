@@ -66,6 +66,7 @@ char * interpreter_get_static_variable_name(char * filename, char * suffix)
         strcat(static_variable_name, ".");
         strcat(static_variable_name, suffix);
     }
+   
     return static_variable_name;
 }
 

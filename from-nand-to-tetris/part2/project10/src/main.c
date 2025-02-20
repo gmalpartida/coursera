@@ -26,7 +26,7 @@ int main(int argc, char * argv[])
             char * out_filename = generate_output_filename(filename, true);
             DIR * dir = opendir(filename);
             struct dirent* dir_entry;
-			bool do_bootstrap = true;
+			//bool do_bootstrap = true;
             while((dir_entry = readdir(dir)))
             {
                 if (strcmp(dir_entry->d_name, ".") && strcmp(dir_entry->d_name, "..") &&
@@ -40,6 +40,7 @@ int main(int argc, char * argv[])
                         PLEXER lexer = lexer_create(scanner);
                         if (lexer)
                         {
+							/*
                             PPARSER parser = parser_create(lexer);
                             if (parser)
                             {
@@ -52,12 +53,14 @@ int main(int argc, char * argv[])
                                 }
                                 parser_destroy(parser);
                             }
+							*/
                             lexer_destroy(lexer);
                         }
                         scanner_destroy(scanner);
                     }
                 }
             }
+			free(out_filename);
         }
         else
         {
@@ -70,6 +73,7 @@ int main(int argc, char * argv[])
                 PLEXER lexer = lexer_create(scanner);
                 if (NULL != lexer)
                 {
+					/*
                     PPARSER parser = parser_create(lexer);
                     if (NULL != parser)
                     {
@@ -82,6 +86,7 @@ int main(int argc, char * argv[])
                         }
                         parser_destroy(parser);
                     }
+					*/
                 }
                 scanner_destroy(scanner);
             }
