@@ -37,24 +37,37 @@ void lexer_ignore_whitespace(PLEXER lexer)
 
 void lexer_ignore_comment(PLEXER lexer)
 {
-   char c = scanner_peek_next(lexer->scanner);
-   if ('/' == c)
-   {
-       c = scanner_get_next(lexer->scanner);
-       c = scanner_peek_next(lexer->scanner);
-       if ('/' == c)
-       {    // this is a comment
-           c = scanner_get_next(lexer->scanner);
-           c = scanner_peek_next(lexer->scanner);
-           while ('\n' != c && '\0' != c)
-           {
-               c = scanner_get_next(lexer->scanner);
-               c = scanner_peek_next(lexer->scanner);
-           }
-           // read EOL
-           if ('\n' == c)
-               c = scanner_get_next(lexer->scanner);
-       }
+	char c = scanner_peek_next(lexer->scanner);
+	if ('/' == c)
+	{
+		c = scanner_get_next(lexer->scanner);
+		c = scanner_peek_next(lexer->scanner);
+		if ('/' == c)
+		{    // this is a line comment
+			c = scanner_get_next(lexer->scanner);
+			c = scanner_peek_next(lexer->scanner);
+			while ('\n' != c && '\0' != c)
+			{
+				c = scanner_get_next(lexer->scanner);
+				c = scanner_peek_next(lexer->scanner);
+			}
+			// read EOL
+			if ('\n' == c)
+				c = scanner_get_next(lexer->scanner);
+		}
+		else if ('*' == c)
+		{
+			// this is a block comment
+			c = scanner_get_next(lexer->scanner);
+			c = scanner_peek_next(lexer->scanner);
+			while ('/' != c && '\0' != c)
+			{
+				c = scanner_get_next(lexer->scanner);
+				c = scanner_peek_next(lexer->scanner);
+			}
+			if ('\n' == c)
+				c = scanner_get_next(lexer->scanner);
+		}
    }
 }
 
@@ -162,10 +175,10 @@ PTOKEN lexer_read(PLEXER lexer)
 		{
 			char text[20];
 			uint8_t i = 0;
-			// consumer character
+			// consume character
 			scanner_get_next(lexer->scanner);
 			c = scanner_peek_next(lexer->scanner);
-			while (c != '\n' && c != '"')
+			while (c != '"')
 			{
 				c = scanner_get_next(lexer->scanner);
 				text[i++] = c;
@@ -174,6 +187,7 @@ PTOKEN lexer_read(PLEXER lexer)
 			text[i] = '\0';
 			if (c == '"')
 			{
+				scanner_get_next(lexer->scanner);
 				token = token_create(text, pos, STRCONSTANT);
 			}
 			else

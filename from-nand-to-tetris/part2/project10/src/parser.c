@@ -15,21 +15,21 @@ PPARSER parser_create(PLEXER lexer)
 
     scanner_reset(lexer->scanner);
 
-    parser->ast = ast_create();
+//    parser->ast = ast_create();
 
     return parser;
 }
 
 void parser_destroy(PPARSER parser)
 {
-    ast_destroy(parser->ast);
+  //  ast_destroy(parser->ast);
     free(parser);
     parser = NULL;
 }
 
 void parser_print(PPARSER parser)
 {
-    ast_print(parser->ast);
+    //ast_print(parser->ast);
 }
 
 void parser_parse(PPARSER parser)
@@ -47,42 +47,35 @@ void parser_parse(PPARSER parser)
         else
         {
             token = lexer_read(parser->lexer);
-            if (token->type == STACK_OP)
+            if (token->type == KEYWORD)
             {
-                PASTNODE astnode = astnode_create(token);
-                
-                astnode->operand1 = lexer_read(parser->lexer);
-                astnode->operand2 = lexer_read(parser->lexer);
-                ast_add(parser->ast, astnode);
+				printf("<keyword>");
+				printf("%s", token->text);
+				printf("</keyword>\n");
             }
-            else if (token->type == ARITHMETIC_OP)
+            else if (token->type == SYMBOL)
             {
-                PASTNODE astnode = astnode_create(token);
-                
-                ast_add(parser->ast, astnode);
+				printf("<symbol>");
+				printf("%s", token->text);
+				printf("</symbol>\n");
             }
-            else if (token->type == LOGICAL_OP)
+            else if (token->type == INTCONSTANT)
             {
-                PASTNODE astnode = astnode_create(token);
-                
-                ast_add(parser->ast, astnode);
+				printf("<integerConstant>");
+				printf("%s", token->text);
+				printf("</integerConstant>\n");
             }
-            else if (token->type == BRANCH_OP)
+            else if (token->type == STRCONSTANT)
             {
-                PASTNODE astnode = astnode_create(token);
-                astnode->operand1 = lexer_read(parser->lexer);
-                ast_add(parser->ast, astnode);
+				printf("<stringConstant>");
+				printf("%s", token->text);;
+				printf("</stringConstant>\n");
             }
-            else if (token->type == FUNCTION_OP)
+            else if (token->type == IDENTIFIER)
             {
-                PASTNODE astnode = astnode_create(token);
-                if (strcmp(token->text, "return"))
-                {
-                    astnode->operand1 = lexer_read(parser->lexer);
-                
-                    astnode->operand2 = lexer_read(parser->lexer);
-                }
-				ast_add(parser->ast, astnode);
+				printf("<identifier>");
+				printf("%s", token->text);
+				printf("</identifier>\n");
             }
         }
    }

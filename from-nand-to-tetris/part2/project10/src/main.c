@@ -30,7 +30,7 @@ int main(int argc, char * argv[])
             while((dir_entry = readdir(dir)))
             {
                 if (strcmp(dir_entry->d_name, ".") && strcmp(dir_entry->d_name, "..") &&
-                        (NULL != strstr(dir_entry->d_name, ".vm")) )
+                        (NULL != strstr(dir_entry->d_name, ".jack")) )
                 {
 					char * input_filename = generate_input_filename(filename, dir_entry->d_name);
 
@@ -40,10 +40,11 @@ int main(int argc, char * argv[])
                         PLEXER lexer = lexer_create(scanner);
                         if (lexer)
                         {
-							/*
                             PPARSER parser = parser_create(lexer);
                             if (parser)
                             {
+								parser_parse(parser);
+								/*
                                 PINTERPRETER interpreter = interpreter_create(parser);
                                 if (interpreter)
                                 {
@@ -51,9 +52,9 @@ int main(int argc, char * argv[])
                                     interpreter_save_to_file(interpreter, out_filename);
                                     interpreter_destroy(interpreter);
                                 }
+								*/
                                 parser_destroy(parser);
                             }
-							*/
                             lexer_destroy(lexer);
                         }
                         scanner_destroy(scanner);
@@ -73,10 +74,11 @@ int main(int argc, char * argv[])
                 PLEXER lexer = lexer_create(scanner);
                 if (NULL != lexer)
                 {
-					/*
                     PPARSER parser = parser_create(lexer);
                     if (NULL != parser)
                     {
+						parser_parse(parser);
+						/*
                         PINTERPRETER interpreter = interpreter_create(parser);
                         if (NULL != interpreter)
                         {
@@ -84,9 +86,9 @@ int main(int argc, char * argv[])
                             interpreter_save_to_file(interpreter, out_filename);
                             interpreter_destroy(interpreter);
                         }
+						*/
                         parser_destroy(parser);
                     }
-					*/
                 }
                 scanner_destroy(scanner);
             }

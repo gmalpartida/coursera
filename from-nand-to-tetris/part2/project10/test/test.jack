@@ -1,0 +1,26 @@
+class Test
+{
+	var String name;
+	var int age;
+
+	function print()
+	{
+
+		let name = "gino malpartida";
+
+		let name = name;
+
+		let name = "gino malpartida";
+
+		let age = 56;
+
+		let age = age;
+
+		let age = 92;
+
+		return 12345;
+	}
+
+
+
+}
