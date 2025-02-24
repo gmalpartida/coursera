@@ -53,27 +53,8 @@ TOKEN_TYPE token_map_text_to_type(char * text)
 
 void token_print(PTOKEN token)
 {
-//    printf("{text: %s, position: %d, type: %s}", token->text, token->position, token_map_type_to_text( token->type));
-	if (token->type == KEYWORD)
-	{
-		printf("<keyword>%s</keyword>", token->text);
-	}
-	else if (token->type == SYMBOL)
-	{
-		printf("<symbol>%s</symbol>", token->text);
-	}
-	else if (token->type == INTCONSTANT)
-	{
-		printf("<integerConstant>%s</integerConstant>", token->text);
-	}
-	else if (token->type == STRCONSTANT)
-	{
-		printf("<stringConstant>%s</stringConstant>", token->text);
-	}
-	else if(token->type == IDENTIFIER)
-	{
-		printf("<identifier>%s</identifier>", token->text);
-	}
+    printf("{text: %s, position: %d, type: %s}", token->text, token->position, token_map_type_to_text( token->type));
+
 }
 
 

@@ -146,7 +146,7 @@ PTOKEN lexer_read(PLEXER lexer)
 
             token = token_create(text, pos, INTCONSTANT);
         }
-		else if (isalpha(c))
+		else if (isalpha(c) || ('_' == c))
         {
             char text[20];
             uint8_t i = 0;

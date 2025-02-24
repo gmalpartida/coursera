@@ -43,7 +43,7 @@ int main(int argc, char * argv[])
                             PPARSER parser = parser_create(lexer);
                             if (parser)
                             {
-								parser_parse(parser);
+								parser_execute(parser);
 								/*
                                 PINTERPRETER interpreter = interpreter_create(parser);
                                 if (interpreter)
@@ -77,7 +77,7 @@ int main(int argc, char * argv[])
                     PPARSER parser = parser_create(lexer);
                     if (NULL != parser)
                     {
-						parser_parse(parser);
+						parser_execute(parser);
 						/*
                         PINTERPRETER interpreter = interpreter_create(parser);
                         if (NULL != interpreter)

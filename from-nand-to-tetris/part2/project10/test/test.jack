@@ -1,26 +1,20 @@
 class Test
 {
-	field var String name;
-	static var int age;
-/*
-	function print()
+	field String name, name2, name3;
+	static int age, age2, age3;
+	field char c, c2, _c3;
+	function int print(int id, char d)
 	{
-
 		let name = "gino malpartida";
 
-		let name = name;
 
 		let name = "gino malpartida";
 
 		let age = 56;
 
-		let age = age;
-
 		let age = 92;
-
-		return 12345;
+		return 12345; 
 	}
 
-*/
 
 }
