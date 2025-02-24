@@ -3,7 +3,6 @@
 #include "scanner.h"
 #include "token.h"
 #include "lexer.h"
-#include "token.h"
 #include "parser.h"
 #include "interpreter.h"
 #include <string.h>
@@ -40,6 +39,7 @@ int main(int argc, char * argv[])
                         PLEXER lexer = lexer_create(scanner);
                         if (lexer)
                         {
+						
                             PPARSER parser = parser_create(lexer);
                             if (parser)
                             {
