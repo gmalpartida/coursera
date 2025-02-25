@@ -28,7 +28,7 @@ void lexer_destroy(PLEXER lexer)
 void lexer_ignore_whitespace(PLEXER lexer)
 {
     char c = scanner_peek_next(lexer->scanner);
-    while (' ' == c || '\t' == c || '\n' == c)
+    while (' ' == c || '\t' == c || '\n' == c || '\r' == c )
     {
         c = scanner_get_next(lexer->scanner);
         c = scanner_peek_next(lexer->scanner);
@@ -221,7 +221,7 @@ int lexer_is_whitespace_or_comment(PLEXER lexer)
 {
     int result = 0;
     char c = scanner_peek_next(lexer->scanner);
-    if ('/' == c || ' ' == c || '\t' == c || '\n' == c)
+    if ('/' == c || ' ' == c || '\t' == c || '\n' == c || '\r' == c )
         result = 1;
     return result;
 }
