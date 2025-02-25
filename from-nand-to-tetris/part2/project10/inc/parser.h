@@ -22,5 +22,12 @@ bool parser_symbol(PPARSER parser, char * symbol);
 bool parser_identifier(PPARSER parser);
 bool parser_type(PPARSER parser);
 void parser_expression(PPARSER parser);
+void parser_statements(PPARSER parser);
+void parser_letStatement(PPARSER parser);
+void parser_whileStatement(PPARSER parser);
+void parser_doStatement(PPARSER parser);
+void parser_returnStatement(PPARSER parser); 
+void parser_subroutineCall(PPARSER parser);
+bool parser_isStatement(PPARSER parser);
 
 #endif

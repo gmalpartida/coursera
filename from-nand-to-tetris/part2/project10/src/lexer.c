@@ -58,15 +58,24 @@ void lexer_ignore_comment(PLEXER lexer)
 		else if ('*' == c)
 		{
 			// this is a block comment
-			c = scanner_get_next(lexer->scanner);
-			c = scanner_peek_next(lexer->scanner);
-			while ('/' != c && '\0' != c)
+			bool done = false;
+			while (!done)
 			{
 				c = scanner_get_next(lexer->scanner);
 				c = scanner_peek_next(lexer->scanner);
+				if (c == '*')
+				{
+					// consume character
+					c = scanner_get_next(lexer->scanner);
+					// peek at next character
+					c = scanner_peek_next(lexer->scanner);
+					if (c == '/')
+					{ // end of block comment
+						c = scanner_get_next(lexer->scanner);
+						done = true;
+					}
+				}
 			}
-			if ('\n' == c)
-				c = scanner_get_next(lexer->scanner);
 		}
    }
 }
@@ -208,6 +217,15 @@ PTOKEN lexer_peek(PLEXER lexer)
 {
     int position = scanner_position(lexer->scanner);
     PTOKEN token = lexer_read(lexer);
+    scanner_set_position(lexer->scanner, position);
+    return token;
+}
+
+PTOKEN lexer_peek2(PLEXER lexer)
+{
+	int position = scanner_position(lexer->scanner);
+    PTOKEN token = lexer_read(lexer);
+	token = lexer_read(lexer);
     scanner_set_position(lexer->scanner, position);
     return token;
 }

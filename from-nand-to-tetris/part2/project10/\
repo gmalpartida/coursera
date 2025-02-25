@@ -128,14 +128,14 @@ void parser_term(PPARSER parser)
 	else if (IDENTIFIER == token->type)
 	{
 		PTOKEN lookAhead = lexer_peek2(parser->lexer);
-		if (SYMBOL == lookAhead->type && !strcmp(lookAhead->text, "["))
+		if (SYMBOL == lookAhead->type && !strcmp(token->text, "["))
 		{
 			token = lexer_read(parser->lexer);
 			parser_symbol(parser, "[");
 			parser_expression(parser);
 			parser_symbol(parser, "]");
 		}
-		else if (SYMBOL == lookAhead->type && (!strcmp(lookAhead->text, "(") || !strcmp(lookAhead->text, ".")))
+		else if (SYMBOL == lookAhead->type && !strcmp(token->text, "("))
 		{
 			parser_subroutineCall(parser);
 		}
@@ -180,7 +180,6 @@ void parser_expression(PPARSER parser)
 	{
 		parser_symbol(parser, token->text);
 		parser_term(parser);
-		token = lexer_peek(parser->lexer);
 	}
 
 	printf("</expression>\n");

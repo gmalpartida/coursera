@@ -13,8 +13,30 @@ class Test
 		let age = 56;
 
 		let age = 92;
+
 		return 12345; 
+	}
+/*
+
+
+*/
+	constructor Test  new(String name, int Age)
+	{
+		var String this_name;
+		var int this_age;
+
+		let this_age = age;
+
+		return that;
+
+		let this_name = name;
+
+		let this_name = this_age;
+
+		return this;
 	}
 
 
 }
+/*********************************/
+

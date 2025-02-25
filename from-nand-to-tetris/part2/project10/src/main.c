@@ -98,7 +98,7 @@ int main(int argc, char * argv[])
     }
     else
     {
-        printf("usage: VMTranslator filename\n");
+        printf("usage: JackAnalyzer (directory | filename)\n");
     }
     return EXIT_SUCCESS;
 }
@@ -120,7 +120,7 @@ char * generate_output_filename(char * filename, bool is_dir)
 			strcpy(out_filename, filename);
 			strcat(out_filename, "/");
 			strcpy(out_filename + strlen(out_filename), p + 1);
-			strcat(out_filename, ".asm");
+			strcat(out_filename, ".xml");
 		}
 		else
 		{
@@ -128,7 +128,7 @@ char * generate_output_filename(char * filename, bool is_dir)
 			strcpy(out_filename, filename);
 			strcat(out_filename, "/");
 			strcat(out_filename, filename);
-			strcat(out_filename, ".asm");
+			strcat(out_filename, ".xml");
 		}
 	}
 	else
@@ -136,7 +136,7 @@ char * generate_output_filename(char * filename, bool is_dir)
 		out_filename = (char*)malloc(sizeof(char) * strlen(filename) + 1);
 		strcpy(out_filename, filename);
 		char *p = strrchr(out_filename, '.');
-		strcpy(p, ".asm");
+		strcpy(p, ".xml");
 
 	}
 	return out_filename;
