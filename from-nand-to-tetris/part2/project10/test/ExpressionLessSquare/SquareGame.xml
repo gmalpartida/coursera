@@ -77,7 +77,7 @@
 <symbol>.</symbol>
 <identifier>dispose</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>
@@ -88,7 +88,7 @@
 <symbol>.</symbol>
 <identifier>deAlloc</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>square</identifier>
@@ -134,7 +134,7 @@
 <symbol>.</symbol>
 <identifier>moveUp</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>
@@ -159,7 +159,7 @@
 <symbol>.</symbol>
 <identifier>moveDown</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>
@@ -184,7 +184,7 @@
 <symbol>.</symbol>
 <identifier>moveLeft</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>
@@ -209,7 +209,7 @@
 <symbol>.</symbol>
 <identifier>moveRight</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>
@@ -223,7 +223,7 @@
 <symbol>.</symbol>
 <identifier>wait</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>direction</identifier>
@@ -312,7 +312,7 @@
 <keyword>do</keyword>
 <identifier>moveSquare</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>
@@ -362,7 +362,7 @@
 <symbol>.</symbol>
 <identifier>decSize</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>
@@ -387,7 +387,7 @@
 <symbol>.</symbol>
 <identifier>incSize</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>
@@ -521,7 +521,7 @@
 <keyword>do</keyword>
 <identifier>moveSquare</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>

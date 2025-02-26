@@ -43,7 +43,7 @@
 <symbol>.</symbol>
 <identifier>readInt</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <stringConstant>HOW MANY NUMBERS? </stringConstant>
@@ -65,7 +65,7 @@
 <symbol>.</symbol>
 <identifier>new</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>length</identifier>
@@ -120,7 +120,7 @@
 <symbol>.</symbol>
 <identifier>readInt</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <stringConstant>ENTER THE NEXT NUMBER: </stringConstant>
@@ -233,7 +233,7 @@
 <symbol>.</symbol>
 <identifier>printString</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <stringConstant>THE AVERAGE IS: </stringConstant>
@@ -249,7 +249,7 @@
 <symbol>.</symbol>
 <identifier>printInt</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>sum</identifier>
@@ -269,7 +269,7 @@
 <symbol>.</symbol>
 <identifier>println</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>

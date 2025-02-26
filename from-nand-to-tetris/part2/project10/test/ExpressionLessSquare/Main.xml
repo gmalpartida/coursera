@@ -42,7 +42,7 @@
 <symbol>.</symbol>
 <identifier>run</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>
@@ -53,7 +53,7 @@
 <symbol>.</symbol>
 <identifier>dispose</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>

@@ -72,7 +72,7 @@
 <keyword>do</keyword>
 <identifier>draw</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>
@@ -107,7 +107,7 @@
 <symbol>.</symbol>
 <identifier>deAlloc</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <keyword>this</keyword>
@@ -142,7 +142,7 @@
 <symbol>.</symbol>
 <identifier>setColor</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -158,7 +158,7 @@
 <symbol>.</symbol>
 <identifier>drawRectangle</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -211,7 +211,7 @@
 <symbol>.</symbol>
 <identifier>setColor</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -227,7 +227,7 @@
 <symbol>.</symbol>
 <identifier>drawRectangle</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -289,7 +289,7 @@
 <keyword>do</keyword>
 <identifier>erase</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>
@@ -309,7 +309,7 @@
 <keyword>do</keyword>
 <identifier>draw</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>
@@ -351,7 +351,7 @@
 <keyword>do</keyword>
 <identifier>erase</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>
@@ -371,7 +371,7 @@
 <keyword>do</keyword>
 <identifier>draw</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 </expressionList>
 <symbol>)</symbol>
 <symbol>;</symbol>
@@ -415,7 +415,7 @@
 <symbol>.</symbol>
 <identifier>setColor</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -431,7 +431,7 @@
 <symbol>.</symbol>
 <identifier>drawRectangle</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -476,7 +476,7 @@
 <symbol>.</symbol>
 <identifier>setColor</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -492,7 +492,7 @@
 <symbol>.</symbol>
 <identifier>drawRectangle</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -559,7 +559,7 @@
 <symbol>.</symbol>
 <identifier>setColor</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -575,7 +575,7 @@
 <symbol>.</symbol>
 <identifier>drawRectangle</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -620,7 +620,7 @@
 <symbol>.</symbol>
 <identifier>setColor</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -636,7 +636,7 @@
 <symbol>.</symbol>
 <identifier>drawRectangle</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -703,7 +703,7 @@
 <symbol>.</symbol>
 <identifier>setColor</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -719,7 +719,7 @@
 <symbol>.</symbol>
 <identifier>drawRectangle</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -764,7 +764,7 @@
 <symbol>.</symbol>
 <identifier>setColor</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -780,7 +780,7 @@
 <symbol>.</symbol>
 <identifier>drawRectangle</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -847,7 +847,7 @@
 <symbol>.</symbol>
 <identifier>setColor</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -863,7 +863,7 @@
 <symbol>.</symbol>
 <identifier>drawRectangle</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -908,7 +908,7 @@
 <symbol>.</symbol>
 <identifier>setColor</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
@@ -924,7 +924,7 @@
 <symbol>.</symbol>
 <identifier>drawRectangle</identifier>
 <symbol>(</symbol>
-<expressionList>>
+<expressionList>
 <expression>
 <term>
 <identifier>x</identifier>
