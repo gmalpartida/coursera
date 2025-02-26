@@ -25,27 +25,29 @@ void lexer_destroy(PLEXER lexer)
     free(lexer);
 }
 
-void lexer_ignore_whitespace(PLEXER lexer)
+bool lexer_ignore_whitespace(PLEXER lexer)
 {
+	bool result = false;
     char c = scanner_peek_next(lexer->scanner);
     while (' ' == c || '\t' == c || '\n' == c || '\r' == c )
     {
+		result = true;
         c = scanner_get_next(lexer->scanner);
         c = scanner_peek_next(lexer->scanner);
     }
+	return result;
 }
 
-void lexer_ignore_comment(PLEXER lexer)
+bool lexer_ignore_comment(PLEXER lexer)
 {
+	bool result = false;
 	char c = scanner_peek_next(lexer->scanner);
-	if ('/' == c)
+	char d = scanner_peek2_next(lexer->scanner);
+
+	if ('/' == c && '/' == d)
 	{
-		c = scanner_get_next(lexer->scanner);
-		c = scanner_peek_next(lexer->scanner);
-		if ('/' == c)
-		{    // this is a line comment
-			c = scanner_get_next(lexer->scanner);
-			c = scanner_peek_next(lexer->scanner);
+		result = true;
+		    // this is a line comment
 			while ('\n' != c && '\0' != c)
 			{
 				c = scanner_get_next(lexer->scanner);
@@ -54,30 +56,34 @@ void lexer_ignore_comment(PLEXER lexer)
 			// read EOL
 			if ('\n' == c)
 				c = scanner_get_next(lexer->scanner);
-		}
-		else if ('*' == c)
+	}
+	else if ('/' == c && '*' == d)
+	{
+		result = true;
+		c = scanner_get_next(lexer->scanner);
+		d = scanner_get_next(lexer->scanner);
+
+		// this is a block comment
+		bool done = false;
+		while (!done)
 		{
-			// this is a block comment
-			bool done = false;
-			while (!done)
+			c = scanner_peek_next(lexer->scanner);
+
+			if ('*' == c)
 			{
-				c = scanner_get_next(lexer->scanner);
-				c = scanner_peek_next(lexer->scanner);
-				if (c == '*')
+				d = scanner_peek2_next(lexer->scanner);
+				if ('/' == d)
 				{
-					// consume character
-					c = scanner_get_next(lexer->scanner);
-					// peek at next character
-					c = scanner_peek_next(lexer->scanner);
-					if (c == '/')
-					{ // end of block comment
-						c = scanner_get_next(lexer->scanner);
-						done = true;
-					}
+					d = scanner_get_next(lexer->scanner);
+					done = true;
+
 				}
 			}
+
+			c = scanner_get_next(lexer->scanner);
 		}
-   }
+	}
+	return result;
 }
 
 bool is_symbol(char c)
@@ -117,10 +123,10 @@ bool is_keyword(char * text)
 PTOKEN lexer_read(PLEXER lexer)
 {
     PTOKEN token = NULL;
-    while (lexer_is_whitespace_or_comment(lexer))
+	bool done = false;
+    while (!done)
     {
-        lexer_ignore_whitespace(lexer);
-        lexer_ignore_comment(lexer);
+        done = !(lexer_ignore_whitespace(lexer) || lexer_ignore_comment(lexer));
     }
 
    if (!scanner_at_end(lexer->scanner))
@@ -234,14 +240,4 @@ void lexer_print(PLEXER lexer)
 {
    scanner_print(lexer->scanner);
 }
-
-int lexer_is_whitespace_or_comment(PLEXER lexer)
-{
-    int result = 0;
-    char c = scanner_peek_next(lexer->scanner);
-    if ('/' == c || ' ' == c || '\t' == c || '\n' == c || '\r' == c )
-        result = 1;
-    return result;
-}
-
 

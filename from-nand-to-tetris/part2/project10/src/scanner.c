@@ -74,6 +74,11 @@ char scanner_peek_next(PSCANNER scanner)
     return *(scanner->tmp_buffer);
 }
 
+char scanner_peek2_next(PSCANNER scanner)
+{
+	return *(scanner->tmp_buffer+1);
+}
+
 void scanner_reset(PSCANNER scanner)
 {
     scanner->tmp_buffer = scanner->buffer;

@@ -2,6 +2,7 @@
 #define INTERPRETER_H
 
 #include "parser.h"
+#include <stdint.h>
 
 typedef struct Interpreter
 {

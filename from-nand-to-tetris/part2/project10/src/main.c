@@ -22,8 +22,8 @@ int main(int argc, char * argv[])
         char * filename = argv[1];
         if (is_directory(filename))
         {
-            char * out_filename = generate_output_filename(filename, true);
-            DIR * dir = opendir(filename);
+            char * out_filename = NULL;
+			DIR * dir = opendir(filename);
             struct dirent* dir_entry;
 			//bool do_bootstrap = true;
             while((dir_entry = readdir(dir)))
@@ -32,6 +32,8 @@ int main(int argc, char * argv[])
                         (NULL != strstr(dir_entry->d_name, ".jack")) )
                 {
 					char * input_filename = generate_input_filename(filename, dir_entry->d_name);
+
+					out_filename =  generate_output_filename(input_filename, false);
 
                     PSCANNER scanner = scanner_create(input_filename);
                     if (scanner)
@@ -43,7 +45,7 @@ int main(int argc, char * argv[])
                             PPARSER parser = parser_create(lexer);
                             if (parser)
                             {
-								parser_execute(parser);
+								parser_execute(parser, out_filename);
 								/*
                                 PINTERPRETER interpreter = interpreter_create(parser);
                                 if (interpreter)
@@ -77,7 +79,7 @@ int main(int argc, char * argv[])
                     PPARSER parser = parser_create(lexer);
                     if (NULL != parser)
                     {
-						parser_execute(parser);
+						parser_execute(parser, out_filename);
 						/*
                         PINTERPRETER interpreter = interpreter_create(parser);
                         if (NULL != interpreter)

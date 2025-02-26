@@ -17,31 +17,20 @@ PPARSER parser_create(PLEXER lexer)
 
     scanner_reset(lexer->scanner);
 
-//    parser->ast = ast_create();
-
     return parser;
 }
 
 void parser_destroy(PPARSER parser)
 {
-  //  ast_destroy(parser->ast);
     free(parser);
     parser = NULL;
 }
 
 void parser_print(PPARSER parser)
 {
-    //ast_print(parser->ast);
+	lexer_read(parser->lexer);
 }
-/*
-void parser_raiseError(PTOKEN token)
-{
-	printf("Syntax error in %s at line %d: token ", __FILE__, __LINE__);
-	token_print(token);
-	printf("\n");
-    exit(EXIT_FAILURE);
-}
-*/
+
 bool parser_isOp(PTOKEN token)
 {
 	return SYMBOL == token->type && (!strcmp(token->text, "+") || !strcmp(token->text, "-") || !strcmp(token->text, "*") ||
@@ -52,16 +41,27 @@ bool parser_isOp(PTOKEN token)
 void parser_expressionList(PPARSER parser)
 {
 	// ( expression (, expression)* )?
-	parser_expression(parser);
+	
+	fprintf(parser->fptr, "<expressionList>>\n");
 
 	PTOKEN token = lexer_peek(parser->lexer);
 
-	if (SYMBOL == token->type && !strcmp(token->text, ","))
+	if (SYMBOL != token->type || strcmp(token->text, ")"))
 	{
-		parser_symbol(parser, ",");
-
 		parser_expression(parser);
+
+		token = lexer_peek(parser->lexer);
+
+		while (SYMBOL == token->type && !strcmp(token->text, ","))
+		{
+			parser_symbol(parser, ",");
+
+			parser_expression(parser);
+
+			token = lexer_peek(parser->lexer);
+		}
 	}
+	fprintf(parser->fptr, "</expressionList>\n");
 }
 
 void parser_subroutineCall(PPARSER parser)
@@ -97,13 +97,13 @@ void parser_subroutineCall(PPARSER parser)
 void parser_integerConstant(PPARSER parser)
 {
 	PTOKEN token = lexer_read(parser->lexer);
-	printf("<integerConstant>%s</integerConstant>", token->text);
+	fprintf(parser->fptr, "<integerConstant>%s</integerConstant>\n", token->text);
 }
 
 void parser_stringConstant(PPARSER parser)
 {
 	PTOKEN token = lexer_read(parser->lexer);
-	printf("<stringConstant>%s</stringConstant>", token->text);
+	fprintf(parser->fptr, "<stringConstant>%s</stringConstant>\n", token->text);
 }
 
 void parser_term(PPARSER parser)
@@ -112,14 +112,12 @@ void parser_term(PPARSER parser)
 	// subroutineCall | ( expression ) | unaryOp term
 	bool raiseError = false;
 
-	printf("<term>\n");
+	fprintf(parser->fptr, "<term>\n");
 
 	PTOKEN token = lexer_peek(parser->lexer);
 
 	if (INTCONSTANT == token->type)
-	{
 		parser_integerConstant(parser);
-	}
 	else if (STRCONSTANT == token->type)
 		parser_stringConstant(parser);
 	else if (KEYWORD == token->type && (!strcmp(token->text, "true") || !strcmp(token->text, "false") ||
@@ -130,7 +128,7 @@ void parser_term(PPARSER parser)
 		PTOKEN lookAhead = lexer_peek2(parser->lexer);
 		if (SYMBOL == lookAhead->type && !strcmp(lookAhead->text, "["))
 		{
-			token = lexer_read(parser->lexer);
+			parser_identifier(parser);
 			parser_symbol(parser, "[");
 			parser_expression(parser);
 			parser_symbol(parser, "]");
@@ -160,7 +158,7 @@ void parser_term(PPARSER parser)
 		}
 	}
 
-	printf("</term>\n");
+	fprintf(parser->fptr, "</term>\n");
 
 	if (raiseError)
 		parser_raiseError(token);
@@ -170,7 +168,7 @@ void parser_term(PPARSER parser)
 void parser_expression(PPARSER parser)
 {
 	// term ( op term )*
-	printf("<expression>\n");
+	fprintf(parser->fptr, "<expression>\n");
 
 	parser_term(parser);
 
@@ -183,7 +181,7 @@ void parser_expression(PPARSER parser)
 		token = lexer_peek(parser->lexer);
 	}
 
-	printf("</expression>\n");
+	fprintf(parser->fptr, "</expression>\n");
 }
 
 bool parser_type(PPARSER parser)
@@ -208,6 +206,10 @@ bool parser_type(PPARSER parser)
 void parser_classVarDec(PPARSER parser)
 {
 	// ( static | field ) type varName (, varName )*;
+	
+
+	fprintf(parser->fptr, "<classVarDec>\n");
+
 	bool raiseError = false;
 	
 	PTOKEN token = lexer_peek(parser->lexer);
@@ -243,6 +245,8 @@ void parser_classVarDec(PPARSER parser)
 
 	if (raiseError)
 		parser_raiseError(token);
+
+	fprintf(parser->fptr, "</classVarDec>\n");
 }
 
 bool parser_isType(PTOKEN token)
@@ -254,18 +258,26 @@ void parser_returnStatement(PPARSER parser)
 {
 	// return expression?
 
+	fprintf(parser->fptr, "<returnStatement>\n");
+
 	parser_keyword(parser, "return");
 
-	parser_expression(parser);
+	PTOKEN token = lexer_peek(parser->lexer);
 
+	if (SYMBOL != token->type || strcmp(token->text, ";"))
+	{
+		parser_expression(parser);
+	}
 	parser_symbol(parser, ";");
+
+	fprintf(parser->fptr, "</returnStatement>\n");
 }
 
 void parser_letStatement(PPARSER parser)
 {
 	// let varName ( [ expression ] )? = expression ;
 	
-	printf("<letStatement>\n");
+	fprintf(parser->fptr, "<letStatement>\n");
 
 	parser_keyword(parser, "let");
 
@@ -288,13 +300,15 @@ void parser_letStatement(PPARSER parser)
 
 	parser_symbol(parser, ";");
 
-	printf("</letStatement>\n");
+	fprintf(parser->fptr, "</letStatement>\n");
 }
 
 void parser_whileStatement(PPARSER parser)
 {
 	// while ( expression ) { statements }
 	
+	fprintf(parser->fptr, "<whileStatement>\n");
+
 	parser_keyword(parser, "while");
 
 	parser_symbol(parser, "(");
@@ -308,22 +322,30 @@ void parser_whileStatement(PPARSER parser)
 	parser_statements(parser);
 
 	parser_symbol(parser, "}");
+
+	fprintf(parser->fptr, "</whileStatement>\n");
 }
 
 void parser_doStatement(PPARSER parser)
 {
 	// do subroutineCall ;
-	//
+	
+	fprintf(parser->fptr, "<doStatement>\n");
+
 	parser_keyword(parser, "do");
 
 	parser_subroutineCall(parser);
 
 	parser_symbol(parser, ";");
+
+	fprintf(parser->fptr, "</doStatement>\n");
 }
 
 void parser_ifStatement(PPARSER parser)
 {
 	// if ( expression ) { statements } ( else { statements } )?
+
+	fprintf(parser->fptr, "<ifStatement>\n");
 
 	parser_keyword(parser, "if");
 
@@ -351,21 +373,19 @@ void parser_ifStatement(PPARSER parser)
 
 		parser_symbol(parser, "}");
 	}
+
+	fprintf(parser->fptr, "</ifStatement>\n");
 }
 
 void parser_statements(PPARSER parser)
 {
 	// statement*
 	
+	fprintf(parser->fptr, "<statements>\n");
+
 	PTOKEN token = NULL;
-	bool doOnce = true;
 	while (parser_isStatement(parser))
 	{
-		if (doOnce)
-		{
-			printf("<statements>\n");
-			doOnce = false;
-		}
 
 		token = lexer_peek(parser->lexer);
 		if (!strcmp(token->text, "return"))
@@ -379,13 +399,9 @@ void parser_statements(PPARSER parser)
 		else if (!strcmp(token->text, "if"))
 			parser_ifStatement(parser);
 
-		if (doOnce)
-		{
-			printf("</statements>\n");
-			doOnce = false;
-		}
 	}
 
+	fprintf(parser->fptr, "</statements>\n");
 }
 
 void parser_parameterList(PPARSER parser)
@@ -394,7 +410,7 @@ void parser_parameterList(PPARSER parser)
 	
 	bool raiseError = false;
 
-	printf("<parameterList>\n");
+	fprintf(parser->fptr, "<parameterList>\n");
 
 	PTOKEN token = lexer_peek(parser->lexer);
 
@@ -417,7 +433,7 @@ void parser_parameterList(PPARSER parser)
 
 	}
 
-	printf("</parameterList>\n");
+	fprintf(parser->fptr, "</parameterList>\n");
 
 	if (raiseError)
 		parser_raiseError(token);
@@ -429,7 +445,7 @@ void parser_varDec(PPARSER parser)
 	//
 	bool raiseError = false;
 
-	printf("<varDec>\n");
+	fprintf(parser->fptr, "<varDec>\n");
 
 	PTOKEN token = lexer_peek(parser->lexer);
 
@@ -450,7 +466,7 @@ void parser_varDec(PPARSER parser)
 
 	parser_symbol(parser, ";");
 
-	printf("</varDec>\n");
+	fprintf(parser->fptr, "</varDec>\n");
 
 	if (raiseError)
 		parser_raiseError(token);
@@ -470,7 +486,7 @@ void parser_subroutineBody(PPARSER parser)
 	//
 	bool raiseError = false;
 
-	printf("<subroutineBody>\n");
+	fprintf(parser->fptr, "<subroutineBody>\n");
 
 	parser_symbol(parser, "{");
 
@@ -486,7 +502,7 @@ void parser_subroutineBody(PPARSER parser)
 
 	parser_symbol(parser, "}");
 
-	printf("</subroutineBody>\n");
+	fprintf(parser->fptr, "</subroutineBody>\n");
 
 	if (raiseError)
 		parser_raiseError(token);
@@ -497,7 +513,7 @@ void parser_subroutineDec(PPARSER parser)
 	// ( constructor | function | method ) (void | type) subroutineName ( parameterList ) subroutineBody
 	
 
-	printf("<subroutineDec>\n");
+	fprintf(parser->fptr, "<subroutineDec>\n");
 	bool raiseError = false;
 	PTOKEN token = lexer_peek(parser->lexer);
 
@@ -528,7 +544,7 @@ void parser_subroutineDec(PPARSER parser)
 	if (raiseError)
 		parser_raiseError(token);
 
-	printf("</subroutineDec>\n");
+	fprintf(parser->fptr, "</subroutineDec>\n");
 
 }
 
@@ -538,7 +554,7 @@ bool parser_identifier(PPARSER parser)
 	PTOKEN token = lexer_read(parser->lexer);
 
 	if (IDENTIFIER == token->type)
-		printf("<identifier>%s</identifier>", token->text);
+		fprintf(parser->fptr, "<identifier>%s</identifier>\n", token->text);
 	else
 		raiseError = true;
 
@@ -554,7 +570,7 @@ bool parser_keyword(PPARSER parser, char * keyword)
 	PTOKEN token = lexer_read(parser->lexer);
 
 	if (KEYWORD == token->type && !strcmp(keyword, token->text))
-		printf("<keyword>%s</keyword>", token->text);
+		fprintf(parser->fptr, "<keyword>%s</keyword>\n", token->text);
 	else
 		raiseError = true;
 
@@ -571,7 +587,21 @@ bool parser_symbol(PPARSER parser, char * symbol)
 	PTOKEN token = lexer_read(parser->lexer);
 
 	if (SYMBOL == token->type && !strcmp(symbol, token->text))
-		printf("<symbol>%s</symbol>", token->text);
+	{
+		fprintf(parser->fptr, "<symbol>");
+		if (!strcmp(token->text, "<"))
+			fprintf(parser->fptr, "&lt;");
+		else if (!strcmp(token->text, ">"))
+			fprintf(parser->fptr, "&gt;");
+		else if (!strcmp(token->text, "\""))
+			fprintf(parser->fptr, "&quot;");
+		else if (!strcmp(token->text, "&"))
+			fprintf(parser->fptr, "&amp;");
+		else
+			fprintf(parser->fptr, "%s", token->text);
+
+		fprintf(parser->fptr, "</symbol>\n");
+	}
 	else
 		raiseError = true;
 
@@ -587,7 +617,7 @@ void parser_class(PPARSER parser)
 
 	bool raiseError = false;
 	
-	printf("<class>\n");
+	fprintf(parser->fptr, "<class>\n");
 
 	// consume the keyword token "class"
 	parser_keyword(parser, "class");
@@ -611,14 +641,27 @@ void parser_class(PPARSER parser)
 	}
 	parser_symbol(parser, "}");
 
-	printf("</class>\n");
+	fprintf(parser->fptr, "</class>\n");
 
 	if (raiseError)
 		parser_raiseError(token);
 }
 
-void parser_execute(PPARSER parser)
+void parser_execute(PPARSER parser, char * out_filename)
 {
-	parser_class(parser);
+	parser->out_filename = out_filename;
+	parser->fptr = fopen(out_filename, "w");;
+
+	if (parser->fptr)
+	{
+		parser_class(parser);
+
+		fclose(parser->fptr);
+	}
+	else
+	{
+		printf("Unable to open file %s\n", out_filename);
+		exit(EXIT_FAILURE);
+	}
 }
 
