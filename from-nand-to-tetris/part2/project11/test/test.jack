@@ -1,0 +1,42 @@
+class Test
+{
+	field String name, name2, name3;
+	static int age, age2, age3;
+	field char c, c2, _c3;
+	function int print(int id, char d)
+	{
+		let name = "gino malpartida";
+
+
+		let name = "gino malpartida";
+
+		let age = 56;
+
+		let age = 92;
+
+		return 12345; 
+	}
+/*
+
+
+*/
+	constructor Test  new(String name, int Age)
+	{
+		var String this_name;
+		var int this_age;
+
+		let this_age = age;
+
+		return that;
+
+		let this_name = name;
+
+		let this_name = this_age;
+
+		return this;
+	}
+
+
+}
+/*********************************/
+
