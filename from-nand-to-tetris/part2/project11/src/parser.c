@@ -16,6 +16,10 @@ PPARSER parser_create(PLEXER lexer)
 
     parser->lexer = lexer;
 
+	parser->class_symbol_table = symbol_table_create();
+
+	parser->function_symbol_table = symbol_table_create();
+
     scanner_reset(lexer->scanner);
 
     return parser;
@@ -158,6 +162,8 @@ void parser_term(PPARSER parser, uint8_t tab_count)
 			parser_term(parser, tab_count+1);
 		}
 	}
+	else
+		raiseError = true;
 
 	fprintf(parser->fptr, "%s</term>\n", parser_makeTabs(tab_count));
 

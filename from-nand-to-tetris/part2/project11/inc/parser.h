@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdint.h>
+#include "symbol_table.h"
 
 typedef struct Parser
 {
@@ -12,6 +13,9 @@ typedef struct Parser
 	char * out_filename;
 	FILE* fptr;
 	uint8_t tab_count;
+	PSYMBOL_TABLE class_symbol_table;
+	PSYMBOL_TABLE function_symbol_table;
+
 } PARSER, *PPARSER;
 
 PPARSER parser_create(PLEXER lexer);
