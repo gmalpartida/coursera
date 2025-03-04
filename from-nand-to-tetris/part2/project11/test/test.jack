@@ -3,6 +3,8 @@ class Test
 	field String name, name2, name3;
 	static int age, age2, age3;
 	field char c, c2, _c3;
+	static int age4;
+	field String name4;
 	function int print(int id, char d)
 	{
 		let name = "gino malpartida";

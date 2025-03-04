@@ -10,6 +10,13 @@
 
 #define parser_raiseError(token) {printf("Syntax error in file %s, function %s at line %d: compiling token ", __FILE__, __FUNCTION__, __LINE__); token_print(token); printf("\n");	exit(EXIT_FAILURE);}
 
+char * duplicate_text(char * text)
+{
+	char * new_text = (char*)malloc(sizeof(char) * strlen(text) + 1);
+	strcpy(new_text, text);
+	return new_text;
+}
+
 PPARSER parser_create(PLEXER lexer)
 {
     PPARSER parser = (PPARSER)malloc(sizeof(PARSER));
@@ -27,13 +34,18 @@ PPARSER parser_create(PLEXER lexer)
 
 void parser_destroy(PPARSER parser)
 {
+	symbol_table_destroy(parser->class_symbol_table);
+	symbol_table_destroy(parser->function_symbol_table);
     free(parser);
     parser = NULL;
 }
 
 void parser_print(PPARSER parser)
 {
-	lexer_read(parser->lexer);
+	printf("Class Symbol Table:\n");
+	symbol_table_print(parser->class_symbol_table);
+	printf("Function Symbol Table:\n");
+	symbol_table_print(parser->function_symbol_table);
 }
 
 bool parser_isOp(PTOKEN token)
@@ -214,34 +226,73 @@ void parser_classVarDec(PPARSER parser, uint8_t tab_count)
 {
 	// ( static | field ) type varName (, varName )*;
 	
-
+	static uint16_t class_var_static_index = 0;
+	static uint16_t class_var_this_index = 0;
 	fprintf(parser->fptr, "%s<classVarDec>\n", parser_makeTabs(tab_count));
 
 	bool raiseError = false;
-	
-	PTOKEN token = lexer_peek(parser->lexer);
 
+	PSYMBOL_REC symbol_rec = (PSYMBOL_REC)malloc(sizeof(SYMBOL_REC));		
+
+	PTOKEN token = lexer_peek(parser->lexer);
+		
+	// store kind of symbol
 	if (!strcmp(token->text, "static"))
+	{
+		symbol_rec->kind = STATIC;
+		symbol_rec->nbr = class_var_static_index++;
 		parser_keyword(parser, "static", tab_count+1);
+	}
 	else if (!strcmp(token->text, "field"))
+	{
+		symbol_rec->kind = THIS;
+		symbol_rec->nbr = class_var_this_index++;
 		parser_keyword(parser, "field", tab_count+1);
+	}
 	else
 		raiseError = true;
 
 	if (!raiseError)
 	{
 		token = lexer_peek(parser->lexer);
+		
+		// type of symbol
+		symbol_rec->type = duplicate_text(token->text);
+	
 		if (IDENTIFIER == token->type)
 			parser_identifier(parser, tab_count+1);
 		else
 			parser_type(parser, tab_count+1);
 
+		// name of symbol
+		token = lexer_peek(parser->lexer);
+		symbol_rec->name = duplicate_text(token->text);
+
 		parser_identifier(parser, tab_count+1);
+
+		symbol_table_add( parser->class_symbol_table, symbol_rec);
 
 		token = lexer_peek(parser->lexer);
 		while ((SYMBOL == token->type) && !strcmp(",", token->text))
 		{
 			parser_symbol(parser, ",", tab_count+1);
+
+			// add next symbol, type and kind are the same
+			// different name and increase index
+
+			PSYMBOL_REC new_symbol_rec = (PSYMBOL_REC)malloc(sizeof(SYMBOL_REC));
+			new_symbol_rec->type = duplicate_text(symbol_rec->type);
+			new_symbol_rec->kind = symbol_rec->kind;
+
+			token = lexer_peek(parser->lexer);
+			new_symbol_rec->name = duplicate_text(token->text);
+			
+			if (new_symbol_rec->kind == STATIC)
+				new_symbol_rec->nbr = class_var_static_index++;
+			else
+				new_symbol_rec->nbr = class_var_this_index++;
+
+			symbol_table_add( parser->class_symbol_table, new_symbol_rec);
 
 			parser_identifier(parser, tab_count+1);
 
@@ -417,16 +468,30 @@ void parser_parameterList(PPARSER parser, uint8_t tab_count)
 	
 	bool raiseError = false;
 
+	static uint16_t argument_index = 0;
 	fprintf(parser->fptr, "%s<parameterList>\n", parser_makeTabs(tab_count));
 
 	PTOKEN token = lexer_peek(parser->lexer);
 
 	while (parser_isType(token))
 	{
+		PSYMBOL_REC symbol_rec = (PSYMBOL_REC)malloc(sizeof(SYMBOL_REC));
+
+		symbol_rec->kind = ARGUMENT;
+
+		symbol_rec->type = duplicate_text(token->text);
 
 		parser_type(parser, tab_count+1);
 	
+		token = lexer_peek(parser->lexer);
+
+		symbol_rec->name = duplicate_text(token->text);
+
 		parser_identifier(parser, tab_count+1);
+
+		symbol_rec->nbr = argument_index++;
+
+		symbol_table_add(parser->function_symbol_table, symbol_rec);
 
 		token = lexer_peek(parser->lexer);
 
@@ -452,21 +517,45 @@ void parser_varDec(PPARSER parser, uint8_t tab_count)
 	//
 	bool raiseError = false;
 
+	static uint16_t var_local_index = 0;
+
+	PSYMBOL_REC symbol_rec = (PSYMBOL_REC)malloc(sizeof(SYMBOL_REC));
+	symbol_rec->kind = LOCAL;
+
 	fprintf(parser->fptr, "%s<varDec>\n", parser_makeTabs(tab_count));
 
 	PTOKEN token = lexer_peek(parser->lexer);
 
 	parser_keyword(parser, "var", tab_count+1);
 
+	token = lexer_peek(parser->lexer);
+	symbol_rec->type = duplicate_text(token->text);
 	parser_type(parser, tab_count+1);
 
+	token = lexer_peek(parser->lexer);
+	symbol_rec->name = duplicate_text(token->text);
 	parser_identifier(parser, tab_count+1);
+
+	symbol_rec->nbr = var_local_index++;
+
+	symbol_table_add( parser->function_symbol_table, symbol_rec);
 
 	token = lexer_peek(parser->lexer);
 
 	while (SYMBOL == token->type && !strcmp(token->text, ","))
 	{
+		PSYMBOL_REC new_symbol_rec = (PSYMBOL_REC)malloc(sizeof(SYMBOL_REC));
+		new_symbol_rec->type = symbol_rec->type;
+		new_symbol_rec->kind = symbol_rec->kind;
+
 		parser_symbol(parser, ",", tab_count+1);
+		
+		token = lexer_peek(parser->lexer);
+		new_symbol_rec->name = duplicate_text(token->text);
+		new_symbol_rec->nbr = var_local_index++;
+
+		symbol_table_add(parser->function_symbol_table, new_symbol_rec);
+
 		parser_identifier(parser, tab_count+1);
 		token = lexer_peek(parser->lexer);
 	}
@@ -682,5 +771,7 @@ void parser_execute(PPARSER parser, char * out_filename)
 		printf("Unable to open file %s\n", out_filename);
 		exit(EXIT_FAILURE);
 	}
+
+	parser_print(parser);
 }
 

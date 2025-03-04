@@ -1,192 +1,204 @@
 <class>
-<keyword>class</keyword>
-<identifier>Test</identifier>
-<symbol>{</symbol>
-<classVarDec>
-<keyword>field</keyword>
-<identifier>String</identifier>
-<identifier>name</identifier>
-<symbol>,</symbol>
-<identifier>name2</identifier>
-<symbol>,</symbol>
-<identifier>name3</identifier>
-<symbol>;</symbol>
-</classVarDec>
-<classVarDec>
-<keyword>static</keyword>
-<keyword>int</keyword>
-<identifier>age</identifier>
-<symbol>,</symbol>
-<identifier>age2</identifier>
-<symbol>,</symbol>
-<identifier>age3</identifier>
-<symbol>;</symbol>
-</classVarDec>
-<classVarDec>
-<keyword>field</keyword>
-<keyword>char</keyword>
-<identifier>c</identifier>
-<symbol>,</symbol>
-<identifier>c2</identifier>
-<symbol>,</symbol>
-<identifier>_c3</identifier>
-<symbol>;</symbol>
-</classVarDec>
-<subroutineDec>
-<keyword>function</keyword>
-<keyword>int</keyword>
-<identifier>print</identifier>
-<symbol>(</symbol>
-<parameterList>
-<keyword>int</keyword>
-<identifier>id</identifier>
-<symbol>,</symbol>
-<keyword>char</keyword>
-<identifier>d</identifier>
-</parameterList>
-<symbol>)</symbol>
-<subroutineBody>
-<symbol>{</symbol>
-<statements>
-<letStatement>
-<keyword>let</keyword>
-<identifier>name</identifier>
-<symbol>=</symbol>
-<expression>
-<term>
-<stringConstant>gino malpartida</stringConstant>
-</term>
-</expression>
-<symbol>;</symbol>
-</letStatement>
-<letStatement>
-<keyword>let</keyword>
-<identifier>name</identifier>
-<symbol>=</symbol>
-<expression>
-<term>
-<stringConstant>gino malpartida</stringConstant>
-</term>
-</expression>
-<symbol>;</symbol>
-</letStatement>
-<letStatement>
-<keyword>let</keyword>
-<identifier>age</identifier>
-<symbol>=</symbol>
-<expression>
-<term>
-<integerConstant>56</integerConstant>
-</term>
-</expression>
-<symbol>;</symbol>
-</letStatement>
-<letStatement>
-<keyword>let</keyword>
-<identifier>age</identifier>
-<symbol>=</symbol>
-<expression>
-<term>
-<integerConstant>92</integerConstant>
-</term>
-</expression>
-<symbol>;</symbol>
-</letStatement>
-<returnStatement>
-<keyword>return</keyword>
-<expression>
-<term>
-<integerConstant>12345</integerConstant>
-</term>
-</expression>
-<symbol>;</symbol>
-</returnStatement>
-</statements>
-<symbol>}</symbol>
-</subroutineBody>
-</subroutineDec>
-<subroutineDec>
-<keyword>constructor</keyword>
-<identifier>Test</identifier>
-<identifier>new</identifier>
-<symbol>(</symbol>
-<parameterList>
-<identifier>String</identifier>
-<identifier>name</identifier>
-<symbol>,</symbol>
-<keyword>int</keyword>
-<identifier>Age</identifier>
-</parameterList>
-<symbol>)</symbol>
-<subroutineBody>
-<symbol>{</symbol>
-<varDec>
-<keyword>var</keyword>
-<identifier>String</identifier>
-<identifier>this_name</identifier>
-<symbol>;</symbol>
-</varDec>
-<varDec>
-<keyword>var</keyword>
-<keyword>int</keyword>
-<identifier>this_age</identifier>
-<symbol>;</symbol>
-</varDec>
-<statements>
-<letStatement>
-<keyword>let</keyword>
-<identifier>this_age</identifier>
-<symbol>=</symbol>
-<expression>
-<term>
-<identifier>age</identifier>
-</term>
-</expression>
-<symbol>;</symbol>
-</letStatement>
-<returnStatement>
-<keyword>return</keyword>
-<expression>
-<term>
-<identifier>that</identifier>
-</term>
-</expression>
-<symbol>;</symbol>
-</returnStatement>
-<letStatement>
-<keyword>let</keyword>
-<identifier>this_name</identifier>
-<symbol>=</symbol>
-<expression>
-<term>
-<identifier>name</identifier>
-</term>
-</expression>
-<symbol>;</symbol>
-</letStatement>
-<letStatement>
-<keyword>let</keyword>
-<identifier>this_name</identifier>
-<symbol>=</symbol>
-<expression>
-<term>
-<identifier>this_age</identifier>
-</term>
-</expression>
-<symbol>;</symbol>
-</letStatement>
-<returnStatement>
-<keyword>return</keyword>
-<expression>
-<term>
-<keyword>this</keyword>
-</term>
-</expression>
-<symbol>;</symbol>
-</returnStatement>
-</statements>
-<symbol>}</symbol>
-</subroutineBody>
-</subroutineDec>
-<symbol>}</symbol>
+	<keyword>class</keyword>
+	<identifier>Test</identifier>
+	<symbol>{</symbol>
+	<classVarDec>
+		<keyword>field</keyword>
+		<identifier>String</identifier>
+		<identifier>name</identifier>
+		<symbol>,</symbol>
+		<identifier>name2</identifier>
+		<symbol>,</symbol>
+		<identifier>name3</identifier>
+		<symbol>;</symbol>
+	</classVarDec>
+	<classVarDec>
+		<keyword>static</keyword>
+		<keyword>int</keyword>
+		<identifier>age</identifier>
+		<symbol>,</symbol>
+		<identifier>age2</identifier>
+		<symbol>,</symbol>
+		<identifier>age3</identifier>
+		<symbol>;</symbol>
+	</classVarDec>
+	<classVarDec>
+		<keyword>field</keyword>
+		<keyword>char</keyword>
+		<identifier>c</identifier>
+		<symbol>,</symbol>
+		<identifier>c2</identifier>
+		<symbol>,</symbol>
+		<identifier>_c3</identifier>
+		<symbol>;</symbol>
+	</classVarDec>
+	<classVarDec>
+		<keyword>static</keyword>
+		<keyword>int</keyword>
+		<identifier>age4</identifier>
+		<symbol>;</symbol>
+	</classVarDec>
+	<classVarDec>
+		<keyword>field</keyword>
+		<identifier>String</identifier>
+		<identifier>name4</identifier>
+		<symbol>;</symbol>
+	</classVarDec>
+	<subroutineDec>
+		<keyword>function</keyword>
+		<keyword>int</keyword>
+		<identifier>print</identifier>
+		<symbol>(</symbol>
+		<parameterList>
+			<keyword>int</keyword>
+			<identifier>id</identifier>
+			<symbol>,</symbol>
+			<keyword>char</keyword>
+			<identifier>d</identifier>
+		</parameterList>
+		<symbol>)</symbol>
+		<subroutineBody>
+			<symbol>{</symbol>
+			<statements>
+				<letStatement>
+					<keyword>let</keyword>
+					<identifier>name</identifier>
+					<symbol>=</symbol>
+					<expression>
+						<term>
+							<stringConstant>gino malpartida</stringConstant>
+						</term>
+					</expression>
+					<symbol>;</symbol>
+				</letStatement>
+				<letStatement>
+					<keyword>let</keyword>
+					<identifier>name</identifier>
+					<symbol>=</symbol>
+					<expression>
+						<term>
+							<stringConstant>gino malpartida</stringConstant>
+						</term>
+					</expression>
+					<symbol>;</symbol>
+				</letStatement>
+				<letStatement>
+					<keyword>let</keyword>
+					<identifier>age</identifier>
+					<symbol>=</symbol>
+					<expression>
+						<term>
+							<integerConstant>56</integerConstant>
+						</term>
+					</expression>
+					<symbol>;</symbol>
+				</letStatement>
+				<letStatement>
+					<keyword>let</keyword>
+					<identifier>age</identifier>
+					<symbol>=</symbol>
+					<expression>
+						<term>
+							<integerConstant>92</integerConstant>
+						</term>
+					</expression>
+					<symbol>;</symbol>
+				</letStatement>
+				<returnStatement>
+					<keyword>return</keyword>
+					<expression>
+						<term>
+							<integerConstant>12345</integerConstant>
+						</term>
+					</expression>
+					<symbol>;</symbol>
+				</returnStatement>
+			</statements>
+			<symbol>}</symbol>
+		</subroutineBody>
+	</subroutineDec>
+	<subroutineDec>
+		<keyword>constructor</keyword>
+		<identifier>Test</identifier>
+		<identifier>new</identifier>
+		<symbol>(</symbol>
+		<parameterList>
+			<identifier>String</identifier>
+			<identifier>name</identifier>
+			<symbol>,</symbol>
+			<keyword>int</keyword>
+			<identifier>Age</identifier>
+		</parameterList>
+		<symbol>)</symbol>
+		<subroutineBody>
+			<symbol>{</symbol>
+			<varDec>
+				<keyword>var</keyword>
+				<identifier>String</identifier>
+				<identifier>this_name</identifier>
+				<symbol>;</symbol>
+			</varDec>
+			<varDec>
+				<keyword>var</keyword>
+				<keyword>int</keyword>
+				<identifier>this_age</identifier>
+				<symbol>;</symbol>
+			</varDec>
+			<statements>
+				<letStatement>
+					<keyword>let</keyword>
+					<identifier>this_age</identifier>
+					<symbol>=</symbol>
+					<expression>
+						<term>
+							<identifier>age</identifier>
+						</term>
+					</expression>
+					<symbol>;</symbol>
+				</letStatement>
+				<returnStatement>
+					<keyword>return</keyword>
+					<expression>
+						<term>
+							<identifier>that</identifier>
+						</term>
+					</expression>
+					<symbol>;</symbol>
+				</returnStatement>
+				<letStatement>
+					<keyword>let</keyword>
+					<identifier>this_name</identifier>
+					<symbol>=</symbol>
+					<expression>
+						<term>
+							<identifier>name</identifier>
+						</term>
+					</expression>
+					<symbol>;</symbol>
+				</letStatement>
+				<letStatement>
+					<keyword>let</keyword>
+					<identifier>this_name</identifier>
+					<symbol>=</symbol>
+					<expression>
+						<term>
+							<identifier>this_age</identifier>
+						</term>
+					</expression>
+					<symbol>;</symbol>
+				</letStatement>
+				<returnStatement>
+					<keyword>return</keyword>
+					<expression>
+						<term>
+							<keyword>this</keyword>
+						</term>
+					</expression>
+					<symbol>;</symbol>
+				</returnStatement>
+			</statements>
+			<symbol>}</symbol>
+		</subroutineBody>
+	</subroutineDec>
+	<symbol>}</symbol>
 </class>

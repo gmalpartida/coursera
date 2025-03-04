@@ -14,7 +14,8 @@ PSCANNER scanner_create(char * filename)
         scanner->buffer_size = 0;
         char * file_content = NULL;
         FILE * f = fopen(filename, "r");
-        if (NULL != f){
+        if (NULL != f)
+		{
             fseek(f, 0, SEEK_END);
             long fsize = ftell(f);
             fseek(f, 0, SEEK_SET);
@@ -26,7 +27,9 @@ PSCANNER scanner_create(char * filename)
                 scanner->buffer_size = fsize;
                 scanner->buffer = scanner->tmp_buffer = file_content;
             }
-            else{
+            else
+			{
+				fclose(f);
                 free(scanner);
                 scanner = NULL;
             }

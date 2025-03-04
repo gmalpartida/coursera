@@ -2,11 +2,17 @@
 #define SYMBOL_TABLE_H
 
 #include "linked_list.h"
+#include <stdint.h>
 
-typedef struct _SYMBOL_TABLE_RECORD
+typedef enum  {THIS, STATIC, LOCAL, ARGUMENT} SYMBOL_KIND;
+
+typedef struct _SYMBOL_REC
 {
-	
-} SYMBOL_TABLE_RECORD, *PSYMBOL_TABLE_RECORD;
+	char * name;
+	char * type;
+	SYMBOL_KIND kind;
+	uint8_t nbr;
+} SYMBOL_REC, *PSYMBOL_REC;
 
 typedef struct _SYMBOL_TABLE
 {
@@ -16,5 +22,7 @@ typedef struct _SYMBOL_TABLE
 
 PSYMBOL_TABLE symbol_table_create();
 void symbol_table_destroy(PSYMBOL_TABLE symbol_table);
+void symbol_table_add(PSYMBOL_TABLE symbol_table, PSYMBOL_REC symbol_rec);
+void symbol_table_print(PSYMBOL_TABLE symbol_table);
 
 #endif
