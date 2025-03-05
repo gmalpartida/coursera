@@ -15,6 +15,10 @@ typedef struct Parser
 	uint8_t tab_count;
 	PSYMBOL_TABLE class_symbol_table;
 	PSYMBOL_TABLE function_symbol_table;
+	uint16_t var_local_index;
+	uint16_t var_argument_index;
+	uint16_t class_this_index;
+	uint16_t class_static_index;
 
 } PARSER, *PPARSER;
 

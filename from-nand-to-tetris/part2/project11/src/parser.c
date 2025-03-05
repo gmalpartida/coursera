@@ -27,6 +27,8 @@ PPARSER parser_create(PLEXER lexer)
 
 	parser->function_symbol_table = symbol_table_create();
 
+	parser->var_local_index = parser->var_argument_index = parser->class_this_index = parser->class_static_index = 0;
+
     scanner_reset(lexer->scanner);
 
     return parser;
@@ -226,8 +228,6 @@ void parser_classVarDec(PPARSER parser, uint8_t tab_count)
 {
 	// ( static | field ) type varName (, varName )*;
 	
-	static uint16_t class_var_static_index = 0;
-	static uint16_t class_var_this_index = 0;
 	fprintf(parser->fptr, "%s<classVarDec>\n", parser_makeTabs(tab_count));
 
 	bool raiseError = false;
@@ -240,13 +240,13 @@ void parser_classVarDec(PPARSER parser, uint8_t tab_count)
 	if (!strcmp(token->text, "static"))
 	{
 		symbol_rec->kind = STATIC;
-		symbol_rec->nbr = class_var_static_index++;
+		symbol_rec->nbr = parser->class_static_index++;
 		parser_keyword(parser, "static", tab_count+1);
 	}
 	else if (!strcmp(token->text, "field"))
 	{
 		symbol_rec->kind = THIS;
-		symbol_rec->nbr = class_var_this_index++;
+		symbol_rec->nbr = parser->class_this_index++;
 		parser_keyword(parser, "field", tab_count+1);
 	}
 	else
@@ -288,9 +288,9 @@ void parser_classVarDec(PPARSER parser, uint8_t tab_count)
 			new_symbol_rec->name = duplicate_text(token->text);
 			
 			if (new_symbol_rec->kind == STATIC)
-				new_symbol_rec->nbr = class_var_static_index++;
+				new_symbol_rec->nbr = parser->class_static_index++;
 			else
-				new_symbol_rec->nbr = class_var_this_index++;
+				new_symbol_rec->nbr = parser->class_this_index++;
 
 			symbol_table_add( parser->class_symbol_table, new_symbol_rec);
 
@@ -468,7 +468,6 @@ void parser_parameterList(PPARSER parser, uint8_t tab_count)
 	
 	bool raiseError = false;
 
-	static uint16_t argument_index = 0;
 	fprintf(parser->fptr, "%s<parameterList>\n", parser_makeTabs(tab_count));
 
 	PTOKEN token = lexer_peek(parser->lexer);
@@ -489,7 +488,7 @@ void parser_parameterList(PPARSER parser, uint8_t tab_count)
 
 		parser_identifier(parser, tab_count+1);
 
-		symbol_rec->nbr = argument_index++;
+		symbol_rec->nbr = parser->var_argument_index++;
 
 		symbol_table_add(parser->function_symbol_table, symbol_rec);
 
@@ -517,8 +516,6 @@ void parser_varDec(PPARSER parser, uint8_t tab_count)
 	//
 	bool raiseError = false;
 
-	static uint16_t var_local_index = 0;
-
 	PSYMBOL_REC symbol_rec = (PSYMBOL_REC)malloc(sizeof(SYMBOL_REC));
 	symbol_rec->kind = LOCAL;
 
@@ -536,7 +533,7 @@ void parser_varDec(PPARSER parser, uint8_t tab_count)
 	symbol_rec->name = duplicate_text(token->text);
 	parser_identifier(parser, tab_count+1);
 
-	symbol_rec->nbr = var_local_index++;
+	symbol_rec->nbr = parser->var_local_index++;
 
 	symbol_table_add( parser->function_symbol_table, symbol_rec);
 
@@ -545,14 +542,14 @@ void parser_varDec(PPARSER parser, uint8_t tab_count)
 	while (SYMBOL == token->type && !strcmp(token->text, ","))
 	{
 		PSYMBOL_REC new_symbol_rec = (PSYMBOL_REC)malloc(sizeof(SYMBOL_REC));
-		new_symbol_rec->type = symbol_rec->type;
+		new_symbol_rec->type = duplicate_text(symbol_rec->type);
 		new_symbol_rec->kind = symbol_rec->kind;
 
 		parser_symbol(parser, ",", tab_count+1);
 		
 		token = lexer_peek(parser->lexer);
 		new_symbol_rec->name = duplicate_text(token->text);
-		new_symbol_rec->nbr = var_local_index++;
+		new_symbol_rec->nbr = parser->var_local_index++;
 
 		symbol_table_add(parser->function_symbol_table, new_symbol_rec);
 
