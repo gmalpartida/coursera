@@ -35,4 +35,9 @@ class Main {
 	
 	return;
     }
+
+	method void test(int int1, char char1, Class class1)
+	{
+		return;
+	}
 }

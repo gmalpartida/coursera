@@ -19,6 +19,7 @@ typedef struct Parser
 	uint16_t var_argument_index;
 	uint16_t class_this_index;
 	uint16_t class_static_index;
+	char * class_name;
 
 } PARSER, *PPARSER;
 

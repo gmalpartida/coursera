@@ -29,4 +29,6 @@ PNODE linked_list_find(PLINKED_LIST linked_list, PNODE node);
 
 void linked_list_delete(PLINKED_LIST linked_list, PNODE node);
 
+void linked_list_clear(PLINKED_LIST linked_list);
+
 #endif

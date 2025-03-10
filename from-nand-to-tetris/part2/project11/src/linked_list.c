@@ -16,17 +16,7 @@ PLINKED_LIST linked_list_create(DATA_PRINT data_print, DATA_COMPARE data_compare
 
 void linked_list_destroy(PLINKED_LIST linked_list)
 {
-	PNODE cur = linked_list->head;
-	PNODE prev = NULL;
-
-	while (cur)
-	{
-		prev = cur;
-		cur = cur->next;
-		if (linked_list->data_destroy)
-			linked_list->data_destroy(prev->data);
-		node_destroy(prev);
-	}
+	linked_list_clear(linked_list);
 
 	free(linked_list);
 }
@@ -111,5 +101,19 @@ void linked_list_delete(PLINKED_LIST linked_list, PNODE node)
 	}
 }
 
+void linked_list_clear(PLINKED_LIST linked_list)
+{
+	PNODE cur = linked_list->head;
+	PNODE prev = NULL;
 
+	while (cur)
+	{
+		prev = cur;
+		cur = cur->next;
+		if (linked_list->data_destroy)
+			linked_list->data_destroy(prev->data);
+		node_destroy(prev);
+	}
+	linked_list->head = NULL;
+}
 

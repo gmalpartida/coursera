@@ -5,7 +5,7 @@ SIZE = size
 CC = gcc
 
 LD = ld
-TARGET = bin/CompileEngine
+TARGET = bin/JackCompiler
 LDFLAGS= -Xlinker -Map=$(TARGET).map
 
 CFLAGS = $(INCLUDES) -Wall -Werror -g -O0 -std=c99 

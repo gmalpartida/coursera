@@ -29,6 +29,8 @@ PPARSER parser_create(PLEXER lexer)
 
 	parser->var_local_index = parser->var_argument_index = parser->class_this_index = parser->class_static_index = 0;
 
+	parser->class_name = NULL;
+
     scanner_reset(lexer->scanner);
 
     return parser;
@@ -136,7 +138,11 @@ void parser_term(PPARSER parser, uint8_t tab_count)
 	PTOKEN token = lexer_peek(parser->lexer);
 
 	if (INTCONSTANT == token->type)
-		parser_integerConstant(parser, tab_count+1);
+	{
+		token = lexer_read(parser->lexer);
+		fprintf(parser->fptr, "push constant %s\n", token->text);
+		//parser_integerConstant(parser, tab_count+1);
+	}
 	else if (STRCONSTANT == token->type)
 		parser_stringConstant(parser, tab_count+1);
 	else if (KEYWORD == token->type && (!strcmp(token->text, "true") || !strcmp(token->text, "false") ||
@@ -157,7 +163,11 @@ void parser_term(PPARSER parser, uint8_t tab_count)
 			parser_subroutineCall(parser, tab_count);
 		}
 		else
-			parser_identifier(parser, tab_count+1);
+		{
+			token = lexer_read(parser->lexer);
+			fprintf(parser->fptr, "push %s\n", token->text);
+			//parser_identifier(parser, tab_count+1);
+		}
 	}
 	else if (SYMBOL == token->type)
 	{
@@ -614,6 +624,20 @@ void parser_subroutineDec(PPARSER parser, uint8_t tab_count)
 
 	if (!raiseError)
 	{
+		linked_list_clear(parser->function_symbol_table->linked_list);
+		parser->var_argument_index = 0;
+		parser->var_local_index = 0;
+		if (!strcmp(token->text, "method"))
+		{
+			// add 'this' variable to symbol table.
+			PSYMBOL_REC symbol_rec = (PSYMBOL_REC)malloc(sizeof(SYMBOL_REC));
+			symbol_rec->kind = ARGUMENT;
+			symbol_rec->name = duplicate_text("this");
+			symbol_rec->type = duplicate_text(parser->class_name);
+			symbol_rec->nbr = parser->var_argument_index++;
+
+			symbol_table_add(parser->function_symbol_table, symbol_rec);
+		}
 		parser_keyword(parser, token->text, tab_count+1);
 
 		token = lexer_peek(parser->lexer);
@@ -715,11 +739,15 @@ void parser_class(PPARSER parser, uint8_t tab_count)
 	// consume the keyword token "class"
 	parser_keyword(parser, "class", tab_count+1);
 
+	// save class name
+	PTOKEN token = lexer_peek(parser->lexer);
+	parser->class_name = duplicate_text(token->text);
+	
 	parser_identifier(parser, tab_count+1);
 
 	parser_symbol(parser, "{", tab_count+1);
 
-	PTOKEN token = lexer_peek(parser->lexer);
+	token = lexer_peek(parser->lexer);
 	while (KEYWORD == token->type && (!strcmp(token->text, "static") || !strcmp(token->text, "field")))
 	{
 		parser_classVarDec(parser, tab_count+1);

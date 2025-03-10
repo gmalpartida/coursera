@@ -68,7 +68,7 @@
 							<expressionList>
 								<expression>
 									<term>
-										<identifier>length</identifier>
+push length
 									</term>
 								</expression>
 							</expressionList>
@@ -83,7 +83,7 @@
 					<symbol>=</symbol>
 					<expression>
 						<term>
-							<integerConstant>0</integerConstant>
+push constant 0
 						</term>
 					</expression>
 					<symbol>;</symbol>
@@ -93,11 +93,11 @@
 					<symbol>(</symbol>
 					<expression>
 						<term>
-							<identifier>i</identifier>
+push i
 						</term>
 						<symbol>&lt;</symbol>
 						<term>
-							<identifier>length</identifier>
+push length
 						</term>
 					</expression>
 					<symbol>)</symbol>
@@ -109,7 +109,7 @@
 							<symbol>[</symbol>
 							<expression>
 								<term>
-									<identifier>i</identifier>
+push i
 								</term>
 							</expression>
 							<symbol>]</symbol>
@@ -138,11 +138,11 @@
 							<symbol>=</symbol>
 							<expression>
 								<term>
-									<identifier>i</identifier>
+push i
 								</term>
 								<symbol>+</symbol>
 								<term>
-									<integerConstant>1</integerConstant>
+push constant 1
 								</term>
 							</expression>
 							<symbol>;</symbol>
@@ -156,7 +156,7 @@
 					<symbol>=</symbol>
 					<expression>
 						<term>
-							<integerConstant>0</integerConstant>
+push constant 0
 						</term>
 					</expression>
 					<symbol>;</symbol>
@@ -167,7 +167,7 @@
 					<symbol>=</symbol>
 					<expression>
 						<term>
-							<integerConstant>0</integerConstant>
+push constant 0
 						</term>
 					</expression>
 					<symbol>;</symbol>
@@ -177,11 +177,11 @@
 					<symbol>(</symbol>
 					<expression>
 						<term>
-							<identifier>i</identifier>
+push i
 						</term>
 						<symbol>&lt;</symbol>
 						<term>
-							<identifier>length</identifier>
+push length
 						</term>
 					</expression>
 					<symbol>)</symbol>
@@ -193,7 +193,7 @@
 							<symbol>=</symbol>
 							<expression>
 								<term>
-									<identifier>sum</identifier>
+push sum
 								</term>
 								<symbol>+</symbol>
 								<term>
@@ -201,7 +201,7 @@
 									<symbol>[</symbol>
 									<expression>
 										<term>
-											<identifier>i</identifier>
+push i
 										</term>
 									</expression>
 									<symbol>]</symbol>
@@ -215,11 +215,11 @@
 							<symbol>=</symbol>
 							<expression>
 								<term>
-									<identifier>i</identifier>
+push i
 								</term>
 								<symbol>+</symbol>
 								<term>
-									<integerConstant>1</integerConstant>
+push constant 1
 								</term>
 							</expression>
 							<symbol>;</symbol>
@@ -252,11 +252,11 @@
 						<expressionList>
 							<expression>
 								<term>
-									<identifier>sum</identifier>
+push sum
 								</term>
 								<symbol>/</symbol>
 								<term>
-									<identifier>length</identifier>
+push length
 								</term>
 							</expression>
 						</expressionList>
@@ -274,6 +274,33 @@
 						<symbol>)</symbol>
 					<symbol>;</symbol>
 				</doStatement>
+				<returnStatement>
+					<keyword>return</keyword>
+					<symbol>;</symbol>
+				</returnStatement>
+			</statements>
+			<symbol>}</symbol>
+		</subroutineBody>
+	</subroutineDec>
+	<subroutineDec>
+		<keyword>method</keyword>
+		<keyword>void</keyword>
+		<identifier>test</identifier>
+		<symbol>(</symbol>
+		<parameterList>
+			<keyword>int</keyword>
+			<identifier>int1</identifier>
+			<symbol>,</symbol>
+			<keyword>char</keyword>
+			<identifier>char1</identifier>
+			<symbol>,</symbol>
+			<identifier>Class</identifier>
+			<identifier>class1</identifier>
+		</parameterList>
+		<symbol>)</symbol>
+		<subroutineBody>
+			<symbol>{</symbol>
+			<statements>
 				<returnStatement>
 					<keyword>return</keyword>
 					<symbol>;</symbol>
