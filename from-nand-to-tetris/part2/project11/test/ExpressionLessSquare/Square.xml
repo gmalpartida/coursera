@@ -41,7 +41,7 @@
 					<symbol>=</symbol>
 					<expression>
 						<term>
-							<identifier>Ax</identifier>
+push Ax
 						</term>
 					</expression>
 					<symbol>;</symbol>
@@ -52,7 +52,7 @@
 					<symbol>=</symbol>
 					<expression>
 						<term>
-							<identifier>Ay</identifier>
+push Ay
 						</term>
 					</expression>
 					<symbol>;</symbol>
@@ -63,7 +63,7 @@
 					<symbol>=</symbol>
 					<expression>
 						<term>
-							<identifier>Asize</identifier>
+push Asize
 						</term>
 					</expression>
 					<symbol>;</symbol>
@@ -81,7 +81,7 @@
 					<keyword>return</keyword>
 					<expression>
 						<term>
-							<identifier>x</identifier>
+push x
 						</term>
 					</expression>
 					<symbol>;</symbol>
@@ -145,7 +145,7 @@
 						<expressionList>
 							<expression>
 								<term>
-									<identifier>x</identifier>
+push x
 								</term>
 							</expression>
 						</expressionList>
@@ -161,25 +161,25 @@
 						<expressionList>
 							<expression>
 								<term>
-									<identifier>x</identifier>
+push x
 								</term>
 							</expression>
 							<symbol>,</symbol>
 							<expression>
 								<term>
-									<identifier>y</identifier>
+push y
 								</term>
 							</expression>
 							<symbol>,</symbol>
 							<expression>
 								<term>
-									<identifier>x</identifier>
+push x
 								</term>
 							</expression>
 							<symbol>,</symbol>
 							<expression>
 								<term>
-									<identifier>y</identifier>
+push y
 								</term>
 							</expression>
 						</expressionList>
@@ -214,7 +214,7 @@
 						<expressionList>
 							<expression>
 								<term>
-									<identifier>x</identifier>
+push x
 								</term>
 							</expression>
 						</expressionList>
@@ -230,25 +230,25 @@
 						<expressionList>
 							<expression>
 								<term>
-									<identifier>x</identifier>
+push x
 								</term>
 							</expression>
 							<symbol>,</symbol>
 							<expression>
 								<term>
-									<identifier>y</identifier>
+push y
 								</term>
 							</expression>
 							<symbol>,</symbol>
 							<expression>
 								<term>
-									<identifier>x</identifier>
+push x
 								</term>
 							</expression>
 							<symbol>,</symbol>
 							<expression>
 								<term>
-									<identifier>y</identifier>
+push y
 								</term>
 							</expression>
 						</expressionList>
@@ -279,7 +279,7 @@
 					<symbol>(</symbol>
 					<expression>
 						<term>
-							<identifier>x</identifier>
+push x
 						</term>
 					</expression>
 					<symbol>)</symbol>
@@ -300,7 +300,7 @@
 							<symbol>=</symbol>
 							<expression>
 								<term>
-									<identifier>size</identifier>
+push size
 								</term>
 							</expression>
 							<symbol>;</symbol>
@@ -341,7 +341,7 @@
 					<symbol>(</symbol>
 					<expression>
 						<term>
-							<identifier>size</identifier>
+push size
 						</term>
 					</expression>
 					<symbol>)</symbol>
@@ -362,7 +362,7 @@
 							<symbol>=</symbol>
 							<expression>
 								<term>
-									<identifier>size</identifier>
+push size
 								</term>
 							</expression>
 							<symbol>;</symbol>
@@ -403,7 +403,7 @@
 					<symbol>(</symbol>
 					<expression>
 						<term>
-							<identifier>y</identifier>
+push y
 						</term>
 					</expression>
 					<symbol>)</symbol>
@@ -418,7 +418,7 @@
 								<expressionList>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 								</expressionList>
@@ -434,25 +434,25 @@
 								<expressionList>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>y</identifier>
+push y
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>y</identifier>
+push y
 										</term>
 									</expression>
 								</expressionList>
@@ -465,7 +465,7 @@
 							<symbol>=</symbol>
 							<expression>
 								<term>
-									<identifier>y</identifier>
+push y
 								</term>
 							</expression>
 							<symbol>;</symbol>
@@ -479,7 +479,7 @@
 								<expressionList>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 								</expressionList>
@@ -495,25 +495,25 @@
 								<expressionList>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>y</identifier>
+push y
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>y</identifier>
+push y
 										</term>
 									</expression>
 								</expressionList>
@@ -547,7 +547,7 @@
 					<symbol>(</symbol>
 					<expression>
 						<term>
-							<identifier>y</identifier>
+push y
 						</term>
 					</expression>
 					<symbol>)</symbol>
@@ -562,7 +562,7 @@
 								<expressionList>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 								</expressionList>
@@ -578,25 +578,25 @@
 								<expressionList>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>y</identifier>
+push y
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>y</identifier>
+push y
 										</term>
 									</expression>
 								</expressionList>
@@ -609,7 +609,7 @@
 							<symbol>=</symbol>
 							<expression>
 								<term>
-									<identifier>y</identifier>
+push y
 								</term>
 							</expression>
 							<symbol>;</symbol>
@@ -623,7 +623,7 @@
 								<expressionList>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 								</expressionList>
@@ -639,25 +639,25 @@
 								<expressionList>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>y</identifier>
+push y
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>y</identifier>
+push y
 										</term>
 									</expression>
 								</expressionList>
@@ -691,7 +691,7 @@
 					<symbol>(</symbol>
 					<expression>
 						<term>
-							<identifier>x</identifier>
+push x
 						</term>
 					</expression>
 					<symbol>)</symbol>
@@ -706,7 +706,7 @@
 								<expressionList>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 								</expressionList>
@@ -722,25 +722,25 @@
 								<expressionList>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>y</identifier>
+push y
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>y</identifier>
+push y
 										</term>
 									</expression>
 								</expressionList>
@@ -753,7 +753,7 @@
 							<symbol>=</symbol>
 							<expression>
 								<term>
-									<identifier>x</identifier>
+push x
 								</term>
 							</expression>
 							<symbol>;</symbol>
@@ -767,7 +767,7 @@
 								<expressionList>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 								</expressionList>
@@ -783,25 +783,25 @@
 								<expressionList>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>y</identifier>
+push y
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>y</identifier>
+push y
 										</term>
 									</expression>
 								</expressionList>
@@ -835,7 +835,7 @@
 					<symbol>(</symbol>
 					<expression>
 						<term>
-							<identifier>x</identifier>
+push x
 						</term>
 					</expression>
 					<symbol>)</symbol>
@@ -850,7 +850,7 @@
 								<expressionList>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 								</expressionList>
@@ -866,25 +866,25 @@
 								<expressionList>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>y</identifier>
+push y
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>y</identifier>
+push y
 										</term>
 									</expression>
 								</expressionList>
@@ -897,7 +897,7 @@
 							<symbol>=</symbol>
 							<expression>
 								<term>
-									<identifier>x</identifier>
+push x
 								</term>
 							</expression>
 							<symbol>;</symbol>
@@ -911,7 +911,7 @@
 								<expressionList>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 								</expressionList>
@@ -927,25 +927,25 @@
 								<expressionList>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>y</identifier>
+push y
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>x</identifier>
+push x
 										</term>
 									</expression>
 									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>y</identifier>
+push y
 										</term>
 									</expression>
 								</expressionList>

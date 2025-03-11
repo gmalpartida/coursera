@@ -31,7 +31,7 @@
 					<symbol>=</symbol>
 					<expression>
 						<term>
-							<identifier>game</identifier>
+push game
 						</term>
 					</expression>
 					<symbol>;</symbol>
@@ -88,7 +88,7 @@
 					<symbol>(</symbol>
 					<expression>
 						<term>
-							<identifier>b</identifier>
+push b
 						</term>
 					</expression>
 					<symbol>)</symbol>

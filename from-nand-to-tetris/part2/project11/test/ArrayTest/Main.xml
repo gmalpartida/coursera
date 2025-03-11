@@ -95,10 +95,10 @@ push constant 0
 						<term>
 push i
 						</term>
-						<symbol>&lt;</symbol>
 						<term>
 push length
 						</term>
+<
 					</expression>
 					<symbol>)</symbol>
 					<symbol>{</symbol>
@@ -140,10 +140,10 @@ push i
 								<term>
 push i
 								</term>
-								<symbol>+</symbol>
 								<term>
 push constant 1
 								</term>
++
 							</expression>
 							<symbol>;</symbol>
 						</letStatement>
@@ -179,10 +179,10 @@ push constant 0
 						<term>
 push i
 						</term>
-						<symbol>&lt;</symbol>
 						<term>
 push length
 						</term>
+<
 					</expression>
 					<symbol>)</symbol>
 					<symbol>{</symbol>
@@ -195,7 +195,6 @@ push length
 								<term>
 push sum
 								</term>
-								<symbol>+</symbol>
 								<term>
 									<identifier>a</identifier>
 									<symbol>[</symbol>
@@ -206,6 +205,7 @@ push i
 									</expression>
 									<symbol>]</symbol>
 								</term>
++
 							</expression>
 							<symbol>;</symbol>
 						</letStatement>
@@ -217,10 +217,10 @@ push i
 								<term>
 push i
 								</term>
-								<symbol>+</symbol>
 								<term>
 push constant 1
 								</term>
++
 							</expression>
 							<symbol>;</symbol>
 						</letStatement>
@@ -254,10 +254,10 @@ push constant 1
 								<term>
 push sum
 								</term>
-								<symbol>/</symbol>
 								<term>
 push length
 								</term>
+/
 							</expression>
 						</expressionList>
 						<symbol>)</symbol>

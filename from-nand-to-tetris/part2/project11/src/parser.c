@@ -147,7 +147,16 @@ void parser_term(PPARSER parser, uint8_t tab_count)
 		parser_stringConstant(parser, tab_count+1);
 	else if (KEYWORD == token->type && (!strcmp(token->text, "true") || !strcmp(token->text, "false") ||
 				!strcmp(token->text, "null") || !strcmp(token->text, "this")))
-		parser_keyword(parser, token->text, tab_count+1);
+	{
+		//parser_keyword(parser, token->text, tab_count+1);
+		token = lexer_read(parser->lexer);
+		if (!strcmp(token->text, "true"))
+			fprintf(parser->fptr, "constant 1\nneg\n");
+		else if (!strcmp(token->text, "this"))
+			fprintf(parser->fptr, "pointer 0\n");
+		else
+			fprintf(parser->fptr, "constant 0\n");
+	}
 	else if (IDENTIFIER == token->type)
 	{
 		PTOKEN lookAhead = lexer_peek2(parser->lexer);
@@ -207,8 +216,10 @@ void parser_expression(PPARSER parser, uint8_t tab_count)
 
 	while (parser_isOp(token))
 	{
-		parser_symbol(parser, token->text, tab_count+1);
+		//parser_symbol(parser, token->text, tab_count+1);
+		token = lexer_read(parser->lexer);
 		parser_term(parser, tab_count+1);
+		fprintf(parser->fptr, "%s\n", token->text);
 		token = lexer_peek(parser->lexer);
 	}
 
