@@ -1,13 +1,3 @@
-<class>
-	<keyword>class</keyword>
-	<identifier>Main</identifier>
-	<symbol>{</symbol>
-	<classVarDec>
-		<keyword>static</keyword>
-		<keyword>boolean</keyword>
-		<identifier>test</identifier>
-		<symbol>;</symbol>
-	</classVarDec>
 	<subroutineDec>
 		<keyword>function</keyword>
 		<keyword>void</keyword>
@@ -18,26 +8,13 @@
 		<symbol>)</symbol>
 		<subroutineBody>
 			<symbol>{</symbol>
-			<varDec>
-				<keyword>var</keyword>
-				<identifier>SquareGame</identifier>
-				<identifier>game</identifier>
-				<symbol>;</symbol>
-			</varDec>
 			<statements>
-				<letStatement>
-					<keyword>let</keyword>
-					<identifier>game</identifier>
-					<symbol>=</symbol>
 					<expression>
 						<term>
-push game
+push local 0
 						</term>
 					</expression>
-					<symbol>;</symbol>
-				</letStatement>
-				<doStatement>
-					<keyword>do</keyword>
+pop local 0
 						<identifier>game</identifier>
 						<symbol>.</symbol>
 						<identifier>run</identifier>
@@ -45,10 +22,7 @@ push game
 						<expressionList>
 						</expressionList>
 						<symbol>)</symbol>
-					<symbol>;</symbol>
-				</doStatement>
-				<doStatement>
-					<keyword>do</keyword>
+pop temp 0
 						<identifier>game</identifier>
 						<symbol>.</symbol>
 						<identifier>dispose</identifier>
@@ -56,12 +30,9 @@ push game
 						<expressionList>
 						</expressionList>
 						<symbol>)</symbol>
-					<symbol>;</symbol>
-				</doStatement>
-				<returnStatement>
-					<keyword>return</keyword>
-					<symbol>;</symbol>
-				</returnStatement>
+pop temp 0
+push constant 0
+return
 			</statements>
 			<symbol>}</symbol>
 		</subroutineBody>
@@ -76,39 +47,24 @@ push game
 		<symbol>)</symbol>
 		<subroutineBody>
 			<symbol>{</symbol>
-			<varDec>
-				<keyword>var</keyword>
-				<keyword>boolean</keyword>
-				<identifier>b</identifier>
-				<symbol>;</symbol>
-			</varDec>
 			<statements>
-				<ifStatement>
-					<keyword>if</keyword>
-					<symbol>(</symbol>
 					<expression>
 						<term>
-push b
+push local 0
 						</term>
 					</expression>
-					<symbol>)</symbol>
-					<symbol>{</symbol>
+not
+if-goto Label0
 					<statements>
 					</statements>
-					<symbol>}</symbol>
-					<keyword>else</keyword>
-					<symbol>{</symbol>
+goto Label1
+label Label0
 					<statements>
 					</statements>
-					<symbol>}</symbol>
-				</ifStatement>
-				<returnStatement>
-					<keyword>return</keyword>
-					<symbol>;</symbol>
-				</returnStatement>
+label Label1
+push constant 0
+return
 			</statements>
 			<symbol>}</symbol>
 		</subroutineBody>
 	</subroutineDec>
-	<symbol>}</symbol>
-</class>

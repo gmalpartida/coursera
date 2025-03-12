@@ -1,22 +1,5 @@
-<class>
-	<keyword>class</keyword>
-	<identifier>SquareGame</identifier>
-	<symbol>{</symbol>
-	<classVarDec>
-		<keyword>field</keyword>
-		<identifier>Square</identifier>
-		<identifier>square</identifier>
-		<symbol>;</symbol>
-	</classVarDec>
-	<classVarDec>
-		<keyword>field</keyword>
-		<keyword>int</keyword>
-		<identifier>direction</identifier>
-		<symbol>;</symbol>
-	</classVarDec>
 	<subroutineDec>
 		<keyword>constructor</keyword>
-		<identifier>SquareGame</identifier>
 		<identifier>new</identifier>
 		<symbol>(</symbol>
 		<parameterList>
@@ -25,37 +8,24 @@
 		<subroutineBody>
 			<symbol>{</symbol>
 			<statements>
-				<letStatement>
-					<keyword>let</keyword>
-					<identifier>square</identifier>
-					<symbol>=</symbol>
 					<expression>
 						<term>
-push square
+push this 0
 						</term>
 					</expression>
-					<symbol>;</symbol>
-				</letStatement>
-				<letStatement>
-					<keyword>let</keyword>
-					<identifier>direction</identifier>
-					<symbol>=</symbol>
+pop this 0
 					<expression>
 						<term>
-push direction
+push this 1
 						</term>
 					</expression>
-					<symbol>;</symbol>
-				</letStatement>
-				<returnStatement>
-					<keyword>return</keyword>
+pop this 1
 					<expression>
 						<term>
-push square
+push this 0
 						</term>
 					</expression>
-					<symbol>;</symbol>
-				</returnStatement>
+return
 			</statements>
 			<symbol>}</symbol>
 		</subroutineBody>
@@ -71,8 +41,6 @@ push square
 		<subroutineBody>
 			<symbol>{</symbol>
 			<statements>
-				<doStatement>
-					<keyword>do</keyword>
 						<identifier>square</identifier>
 						<symbol>.</symbol>
 						<identifier>dispose</identifier>
@@ -80,10 +48,7 @@ push square
 						<expressionList>
 						</expressionList>
 						<symbol>)</symbol>
-					<symbol>;</symbol>
-				</doStatement>
-				<doStatement>
-					<keyword>do</keyword>
+pop temp 0
 						<identifier>Memory</identifier>
 						<symbol>.</symbol>
 						<identifier>deAlloc</identifier>
@@ -91,17 +56,14 @@ push square
 						<expressionList>
 							<expression>
 								<term>
-push square
+push this 0
 								</term>
 							</expression>
 						</expressionList>
 						<symbol>)</symbol>
-					<symbol>;</symbol>
-				</doStatement>
-				<returnStatement>
-					<keyword>return</keyword>
-					<symbol>;</symbol>
-				</returnStatement>
+pop temp 0
+push constant 0
+return
 			</statements>
 			<symbol>}</symbol>
 		</subroutineBody>
@@ -117,19 +79,14 @@ push square
 		<subroutineBody>
 			<symbol>{</symbol>
 			<statements>
-				<ifStatement>
-					<keyword>if</keyword>
-					<symbol>(</symbol>
 					<expression>
 						<term>
-push direction
+push this 1
 						</term>
 					</expression>
-					<symbol>)</symbol>
-					<symbol>{</symbol>
+not
+if-goto Label2
 					<statements>
-						<doStatement>
-							<keyword>do</keyword>
 								<identifier>square</identifier>
 								<symbol>.</symbol>
 								<identifier>moveUp</identifier>
@@ -137,24 +94,19 @@ push direction
 								<expressionList>
 								</expressionList>
 								<symbol>)</symbol>
-							<symbol>;</symbol>
-						</doStatement>
+pop temp 0
 					</statements>
-					<symbol>}</symbol>
-				</ifStatement>
-				<ifStatement>
-					<keyword>if</keyword>
-					<symbol>(</symbol>
+goto Label3
+label Label2
+label Label3
 					<expression>
 						<term>
-push direction
+push this 1
 						</term>
 					</expression>
-					<symbol>)</symbol>
-					<symbol>{</symbol>
+not
+if-goto Label4
 					<statements>
-						<doStatement>
-							<keyword>do</keyword>
 								<identifier>square</identifier>
 								<symbol>.</symbol>
 								<identifier>moveDown</identifier>
@@ -162,24 +114,19 @@ push direction
 								<expressionList>
 								</expressionList>
 								<symbol>)</symbol>
-							<symbol>;</symbol>
-						</doStatement>
+pop temp 0
 					</statements>
-					<symbol>}</symbol>
-				</ifStatement>
-				<ifStatement>
-					<keyword>if</keyword>
-					<symbol>(</symbol>
+goto Label5
+label Label4
+label Label5
 					<expression>
 						<term>
-push direction
+push this 1
 						</term>
 					</expression>
-					<symbol>)</symbol>
-					<symbol>{</symbol>
+not
+if-goto Label6
 					<statements>
-						<doStatement>
-							<keyword>do</keyword>
 								<identifier>square</identifier>
 								<symbol>.</symbol>
 								<identifier>moveLeft</identifier>
@@ -187,24 +134,19 @@ push direction
 								<expressionList>
 								</expressionList>
 								<symbol>)</symbol>
-							<symbol>;</symbol>
-						</doStatement>
+pop temp 0
 					</statements>
-					<symbol>}</symbol>
-				</ifStatement>
-				<ifStatement>
-					<keyword>if</keyword>
-					<symbol>(</symbol>
+goto Label7
+label Label6
+label Label7
 					<expression>
 						<term>
-push direction
+push this 1
 						</term>
 					</expression>
-					<symbol>)</symbol>
-					<symbol>{</symbol>
+not
+if-goto Label8
 					<statements>
-						<doStatement>
-							<keyword>do</keyword>
 								<identifier>square</identifier>
 								<symbol>.</symbol>
 								<identifier>moveRight</identifier>
@@ -212,13 +154,11 @@ push direction
 								<expressionList>
 								</expressionList>
 								<symbol>)</symbol>
-							<symbol>;</symbol>
-						</doStatement>
+pop temp 0
 					</statements>
-					<symbol>}</symbol>
-				</ifStatement>
-				<doStatement>
-					<keyword>do</keyword>
+goto Label9
+label Label8
+label Label9
 						<identifier>Sys</identifier>
 						<symbol>.</symbol>
 						<identifier>wait</identifier>
@@ -226,17 +166,14 @@ push direction
 						<expressionList>
 							<expression>
 								<term>
-push direction
+push this 1
 								</term>
 							</expression>
 						</expressionList>
 						<symbol>)</symbol>
-					<symbol>;</symbol>
-				</doStatement>
-				<returnStatement>
-					<keyword>return</keyword>
-					<symbol>;</symbol>
-				</returnStatement>
+pop temp 0
+push constant 0
+return
 			</statements>
 			<symbol>}</symbol>
 		</subroutineBody>
@@ -251,113 +188,70 @@ push direction
 		<symbol>)</symbol>
 		<subroutineBody>
 			<symbol>{</symbol>
-			<varDec>
-				<keyword>var</keyword>
-				<keyword>char</keyword>
-				<identifier>key</identifier>
-				<symbol>;</symbol>
-			</varDec>
-			<varDec>
-				<keyword>var</keyword>
-				<keyword>boolean</keyword>
-				<identifier>exit</identifier>
-				<symbol>;</symbol>
-			</varDec>
 			<statements>
-				<letStatement>
-					<keyword>let</keyword>
-					<identifier>exit</identifier>
-					<symbol>=</symbol>
 					<expression>
 						<term>
-push key
+push local 0
 						</term>
 					</expression>
-					<symbol>;</symbol>
-				</letStatement>
-				<whileStatement>
-					<keyword>while</keyword>
-					<symbol>(</symbol>
+pop local 1
+label Label10
 					<expression>
 						<term>
-push exit
+push local 1
 						</term>
 					</expression>
-					<symbol>)</symbol>
-					<symbol>{</symbol>
-					<statements>
-						<whileStatement>
-							<keyword>while</keyword>
-							<symbol>(</symbol>
+not
+if-goto Label11					<statements>
+label Label12
 							<expression>
 								<term>
-push key
+push local 0
 								</term>
 							</expression>
-							<symbol>)</symbol>
-							<symbol>{</symbol>
-							<statements>
-								<letStatement>
-									<keyword>let</keyword>
-									<identifier>key</identifier>
-									<symbol>=</symbol>
+not
+if-goto Label13							<statements>
 									<expression>
 										<term>
-push key
+push local 0
 										</term>
 									</expression>
-									<symbol>;</symbol>
-								</letStatement>
-								<doStatement>
-									<keyword>do</keyword>
+pop local 0
 										<identifier>moveSquare</identifier>
 										<symbol>(</symbol>
 										<expressionList>
 										</expressionList>
 										<symbol>)</symbol>
-									<symbol>;</symbol>
-								</doStatement>
+pop temp 0
 							</statements>
-							<symbol>}</symbol>
-						</whileStatement>
-						<ifStatement>
-							<keyword>if</keyword>
-							<symbol>(</symbol>
+goto Label12
+label Label13
 							<expression>
 								<term>
-push key
+push local 0
 								</term>
 							</expression>
-							<symbol>)</symbol>
-							<symbol>{</symbol>
+not
+if-goto Label14
 							<statements>
-								<letStatement>
-									<keyword>let</keyword>
-									<identifier>exit</identifier>
-									<symbol>=</symbol>
 									<expression>
 										<term>
-push exit
+push local 1
 										</term>
 									</expression>
-									<symbol>;</symbol>
-								</letStatement>
+pop local 1
 							</statements>
-							<symbol>}</symbol>
-						</ifStatement>
-						<ifStatement>
-							<keyword>if</keyword>
-							<symbol>(</symbol>
+goto Label15
+label Label14
+label Label15
 							<expression>
 								<term>
-push key
+push local 0
 								</term>
 							</expression>
-							<symbol>)</symbol>
-							<symbol>{</symbol>
+not
+if-goto Label16
 							<statements>
-								<doStatement>
-									<keyword>do</keyword>
 										<identifier>square</identifier>
 										<symbol>.</symbol>
 										<identifier>decSize</identifier>
@@ -365,24 +259,19 @@ push key
 										<expressionList>
 										</expressionList>
 										<symbol>)</symbol>
-									<symbol>;</symbol>
-								</doStatement>
+pop temp 0
 							</statements>
-							<symbol>}</symbol>
-						</ifStatement>
-						<ifStatement>
-							<keyword>if</keyword>
-							<symbol>(</symbol>
+goto Label17
+label Label16
+label Label17
 							<expression>
 								<term>
-push key
+push local 0
 								</term>
 							</expression>
-							<symbol>)</symbol>
-							<symbol>{</symbol>
+not
+if-goto Label18
 							<statements>
-								<doStatement>
-									<keyword>do</keyword>
 										<identifier>square</identifier>
 										<symbol>.</symbol>
 										<identifier>incSize</identifier>
@@ -390,155 +279,112 @@ push key
 										<expressionList>
 										</expressionList>
 										<symbol>)</symbol>
-									<symbol>;</symbol>
-								</doStatement>
+pop temp 0
 							</statements>
-							<symbol>}</symbol>
-						</ifStatement>
-						<ifStatement>
-							<keyword>if</keyword>
-							<symbol>(</symbol>
+goto Label19
+label Label18
+label Label19
 							<expression>
 								<term>
-push key
+push local 0
 								</term>
 							</expression>
-							<symbol>)</symbol>
-							<symbol>{</symbol>
+not
+if-goto Label20
 							<statements>
-								<letStatement>
-									<keyword>let</keyword>
-									<identifier>direction</identifier>
-									<symbol>=</symbol>
 									<expression>
 										<term>
-push exit
+push local 1
 										</term>
 									</expression>
-									<symbol>;</symbol>
-								</letStatement>
+pop this 1
 							</statements>
-							<symbol>}</symbol>
-						</ifStatement>
-						<ifStatement>
-							<keyword>if</keyword>
-							<symbol>(</symbol>
+goto Label21
+label Label20
+label Label21
 							<expression>
 								<term>
-push key
+push local 0
 								</term>
 							</expression>
-							<symbol>)</symbol>
-							<symbol>{</symbol>
+not
+if-goto Label22
 							<statements>
-								<letStatement>
-									<keyword>let</keyword>
-									<identifier>direction</identifier>
-									<symbol>=</symbol>
 									<expression>
 										<term>
-push key
+push local 0
 										</term>
 									</expression>
-									<symbol>;</symbol>
-								</letStatement>
+pop this 1
 							</statements>
-							<symbol>}</symbol>
-						</ifStatement>
-						<ifStatement>
-							<keyword>if</keyword>
-							<symbol>(</symbol>
+goto Label23
+label Label22
+label Label23
 							<expression>
 								<term>
-push key
+push local 0
 								</term>
 							</expression>
-							<symbol>)</symbol>
-							<symbol>{</symbol>
+not
+if-goto Label24
 							<statements>
-								<letStatement>
-									<keyword>let</keyword>
-									<identifier>direction</identifier>
-									<symbol>=</symbol>
 									<expression>
 										<term>
-push square
+push this 0
 										</term>
 									</expression>
-									<symbol>;</symbol>
-								</letStatement>
+pop this 1
 							</statements>
-							<symbol>}</symbol>
-						</ifStatement>
-						<ifStatement>
-							<keyword>if</keyword>
-							<symbol>(</symbol>
+goto Label25
+label Label24
+label Label25
 							<expression>
 								<term>
-push key
+push local 0
 								</term>
 							</expression>
-							<symbol>)</symbol>
-							<symbol>{</symbol>
+not
+if-goto Label26
 							<statements>
-								<letStatement>
-									<keyword>let</keyword>
-									<identifier>direction</identifier>
-									<symbol>=</symbol>
 									<expression>
 										<term>
-push direction
+push this 1
 										</term>
 									</expression>
-									<symbol>;</symbol>
-								</letStatement>
+pop this 1
 							</statements>
-							<symbol>}</symbol>
-						</ifStatement>
-						<whileStatement>
-							<keyword>while</keyword>
-							<symbol>(</symbol>
+goto Label27
+label Label26
+label Label27
+label Label28
 							<expression>
 								<term>
-push key
+push local 0
 								</term>
 							</expression>
-							<symbol>)</symbol>
-							<symbol>{</symbol>
-							<statements>
-								<letStatement>
-									<keyword>let</keyword>
-									<identifier>key</identifier>
-									<symbol>=</symbol>
+not
+if-goto Label29							<statements>
 									<expression>
 										<term>
-push key
+push local 0
 										</term>
 									</expression>
-									<symbol>;</symbol>
-								</letStatement>
-								<doStatement>
-									<keyword>do</keyword>
+pop local 0
 										<identifier>moveSquare</identifier>
 										<symbol>(</symbol>
 										<expressionList>
 										</expressionList>
 										<symbol>)</symbol>
-									<symbol>;</symbol>
-								</doStatement>
+pop temp 0
 							</statements>
-							<symbol>}</symbol>
-						</whileStatement>
+goto Label28
+label Label29
 					</statements>
-					<symbol>}</symbol>
-				</whileStatement>
-				<returnStatement>
-					<keyword>return</keyword>
-					<symbol>;</symbol>
-				</returnStatement>
+goto Label10
+label Label11
+push constant 0
+return
 			</statements>
 			<symbol>}</symbol>
 		</subroutineBody>
 	</subroutineDec>
-	<symbol>}</symbol>
-</class>

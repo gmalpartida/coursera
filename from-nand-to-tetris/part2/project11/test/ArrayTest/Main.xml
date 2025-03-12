@@ -68,7 +68,7 @@
 							<expressionList>
 								<expression>
 									<term>
-push length
+push local 1
 									</term>
 								</expression>
 							</expressionList>
@@ -93,10 +93,10 @@ push constant 0
 					<symbol>(</symbol>
 					<expression>
 						<term>
-push i
+push local 2
 						</term>
 						<term>
-push length
+push local 1
 						</term>
 <
 					</expression>
@@ -109,7 +109,7 @@ push length
 							<symbol>[</symbol>
 							<expression>
 								<term>
-push i
+push local 2
 								</term>
 							</expression>
 							<symbol>]</symbol>
@@ -138,7 +138,7 @@ push i
 							<symbol>=</symbol>
 							<expression>
 								<term>
-push i
+push local 2
 								</term>
 								<term>
 push constant 1
@@ -177,10 +177,10 @@ push constant 0
 					<symbol>(</symbol>
 					<expression>
 						<term>
-push i
+push local 2
 						</term>
 						<term>
-push length
+push local 1
 						</term>
 <
 					</expression>
@@ -193,14 +193,14 @@ push length
 							<symbol>=</symbol>
 							<expression>
 								<term>
-push sum
+push local 3
 								</term>
 								<term>
 									<identifier>a</identifier>
 									<symbol>[</symbol>
 									<expression>
 										<term>
-push i
+push local 2
 										</term>
 									</expression>
 									<symbol>]</symbol>
@@ -215,7 +215,7 @@ push i
 							<symbol>=</symbol>
 							<expression>
 								<term>
-push i
+push local 2
 								</term>
 								<term>
 push constant 1
@@ -252,10 +252,10 @@ push constant 1
 						<expressionList>
 							<expression>
 								<term>
-push sum
+push local 3
 								</term>
 								<term>
-push length
+push local 1
 								</term>
 /
 							</expression>

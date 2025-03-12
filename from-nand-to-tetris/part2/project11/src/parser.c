@@ -52,6 +52,31 @@ void parser_print(PPARSER parser)
 	symbol_table_print(parser->function_symbol_table);
 }
 
+PSYMBOL_REC parser_find_symbol(PPARSER parser, PTOKEN token)
+{
+	PSYMBOL_REC symbol_to_find = symbol_table_find(parser->function_symbol_table, token->text);
+	if (NULL == symbol_to_find)
+	{
+		symbol_to_find = symbol_table_find(parser->class_symbol_table, token->text);
+		if (NULL == symbol_to_find)
+		{
+			parser_raiseError(token);
+		}
+	}
+	return symbol_to_find;
+}
+
+char * parser_unique_label(char * prefix)
+{
+	static uint16_t unique_label_index = 0;
+
+	char * label = (char*)malloc(sizeof(char) * 255 + 1);
+
+	sprintf(label, "%s%d", prefix, unique_label_index++);
+
+	return label;
+}
+
 bool parser_isOp(PTOKEN token)
 {
 	return SYMBOL == token->type && (!strcmp(token->text, "+") || !strcmp(token->text, "-") || !strcmp(token->text, "*") ||
@@ -151,11 +176,11 @@ void parser_term(PPARSER parser, uint8_t tab_count)
 		//parser_keyword(parser, token->text, tab_count+1);
 		token = lexer_read(parser->lexer);
 		if (!strcmp(token->text, "true"))
-			fprintf(parser->fptr, "constant 1\nneg\n");
+			fprintf(parser->fptr, "push constant 1\nneg\n");
 		else if (!strcmp(token->text, "this"))
-			fprintf(parser->fptr, "pointer 0\n");
+			fprintf(parser->fptr, "push pointer 0\n");
 		else
-			fprintf(parser->fptr, "constant 0\n");
+			fprintf(parser->fptr, "push constant 0\n");
 	}
 	else if (IDENTIFIER == token->type)
 	{
@@ -174,7 +199,10 @@ void parser_term(PPARSER parser, uint8_t tab_count)
 		else
 		{
 			token = lexer_read(parser->lexer);
-			fprintf(parser->fptr, "push %s\n", token->text);
+			PSYMBOL_REC symbol_rec = parser_find_symbol(parser, token);
+
+			fprintf(parser->fptr, "push %s %d\n", symbol_kind_desc(symbol_rec->kind), symbol_rec->nbr);
+
 			//parser_identifier(parser, tab_count+1);
 		}
 	}
@@ -219,7 +247,7 @@ void parser_expression(PPARSER parser, uint8_t tab_count)
 		//parser_symbol(parser, token->text, tab_count+1);
 		token = lexer_read(parser->lexer);
 		parser_term(parser, tab_count+1);
-		fprintf(parser->fptr, "%s\n", token->text);
+		fprintf(parser->fptr, "%s\n", symbol_op_desc(token->text));
 		token = lexer_peek(parser->lexer);
 	}
 
@@ -233,9 +261,17 @@ bool parser_type(PPARSER parser, uint8_t tab_count)
 	PTOKEN token = lexer_peek(parser->lexer);
 
 	if (KEYWORD == token->type && (!strcmp("int", token->text) || !strcmp("boolean", token->text) || !strcmp("char", token->text)))
-		parser_keyword(parser, token->text, tab_count);
+	{
+		token = lexer_read(parser->lexer);
+		token_destroy(token);
+		//parser_keyword(parser, token->text, tab_count);
+	}
 	else if (IDENTIFIER == token->type)
-		parser_identifier(parser, tab_count);
+	{
+		token = lexer_read(parser->lexer);
+		token_destroy(token);
+		//parser_identifier(parser, tab_count);
+	}
 	else
 		raiseError = true;
 
@@ -249,7 +285,7 @@ void parser_classVarDec(PPARSER parser, uint8_t tab_count)
 {
 	// ( static | field ) type varName (, varName )*;
 	
-	fprintf(parser->fptr, "%s<classVarDec>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s<classVarDec>\n", parser_makeTabs(tab_count));
 
 	bool raiseError = false;
 
@@ -262,13 +298,19 @@ void parser_classVarDec(PPARSER parser, uint8_t tab_count)
 	{
 		symbol_rec->kind = STATIC;
 		symbol_rec->nbr = parser->class_static_index++;
-		parser_keyword(parser, "static", tab_count+1);
+
+		token = lexer_read(parser->lexer);
+		token_destroy(token);
+		//parser_keyword(parser, "static", tab_count+1);
 	}
 	else if (!strcmp(token->text, "field"))
 	{
 		symbol_rec->kind = THIS;
 		symbol_rec->nbr = parser->class_this_index++;
-		parser_keyword(parser, "field", tab_count+1);
+
+		token = lexer_read(parser->lexer);
+		token_destroy(token);
+		//parser_keyword(parser, "field", tab_count+1);
 	}
 	else
 		raiseError = true;
@@ -281,22 +323,29 @@ void parser_classVarDec(PPARSER parser, uint8_t tab_count)
 		symbol_rec->type = duplicate_text(token->text);
 	
 		if (IDENTIFIER == token->type)
-			parser_identifier(parser, tab_count+1);
+		{
+			token = lexer_read(parser->lexer);
+			token_destroy(token);
+			//parser_identifier(parser, tab_count+1);
+		}
 		else
 			parser_type(parser, tab_count+1);
 
 		// name of symbol
-		token = lexer_peek(parser->lexer);
+		token = lexer_read(parser->lexer);
 		symbol_rec->name = duplicate_text(token->text);
 
-		parser_identifier(parser, tab_count+1);
+		token_destroy(token);
+		//parser_identifier(parser, tab_count+1);
 
 		symbol_table_add( parser->class_symbol_table, symbol_rec);
 
 		token = lexer_peek(parser->lexer);
 		while ((SYMBOL == token->type) && !strcmp(",", token->text))
 		{
-			parser_symbol(parser, ",", tab_count+1);
+			token = lexer_read(parser->lexer);
+			token_destroy(token);
+			//parser_symbol(parser, ",", tab_count+1);
 
 			// add next symbol, type and kind are the same
 			// different name and increase index
@@ -305,9 +354,11 @@ void parser_classVarDec(PPARSER parser, uint8_t tab_count)
 			new_symbol_rec->type = duplicate_text(symbol_rec->type);
 			new_symbol_rec->kind = symbol_rec->kind;
 
-			token = lexer_peek(parser->lexer);
+			token = lexer_read(parser->lexer);
 			new_symbol_rec->name = duplicate_text(token->text);
 			
+			token_destroy(token);
+
 			if (new_symbol_rec->kind == STATIC)
 				new_symbol_rec->nbr = parser->class_static_index++;
 			else
@@ -315,17 +366,22 @@ void parser_classVarDec(PPARSER parser, uint8_t tab_count)
 
 			symbol_table_add( parser->class_symbol_table, new_symbol_rec);
 
-			parser_identifier(parser, tab_count+1);
+			token = lexer_read(parser->lexer);
+			token_destroy(token);
+			//parser_identifier(parser, tab_count+1);
 
 			token = lexer_peek(parser->lexer);
 		}
-		parser_symbol(parser, ";", tab_count+1);
+
+		token = lexer_read(parser->lexer);
+		token_destroy(token);
+		//parser_symbol(parser, ";", tab_count+1);
 	}
 
 	if (raiseError)
 		parser_raiseError(token);
 
-	fprintf(parser->fptr, "%s</classVarDec>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s</classVarDec>\n", parser_makeTabs(tab_count));
 }
 
 bool parser_isType(PTOKEN token)
@@ -337,32 +393,42 @@ void parser_returnStatement(PPARSER parser, uint8_t tab_count)
 {
 	// return expression?
 
-	fprintf(parser->fptr, "%s<returnStatement>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s<returnStatement>\n", parser_makeTabs(tab_count));
 
-	parser_keyword(parser, "return", tab_count+1);
+	PTOKEN token = lexer_read(parser->lexer);
+	//parser_keyword(parser, "return", tab_count+1);
 
-	PTOKEN token = lexer_peek(parser->lexer);
+	token = lexer_peek(parser->lexer);
 
 	if (SYMBOL != token->type || strcmp(token->text, ";"))
 	{
 		parser_expression(parser, tab_count+1);
 	}
-	parser_symbol(parser, ";", tab_count+1);
+	else
+	{
+		fprintf(parser->fptr, "push constant 0\n");
+	}
 
-	fprintf(parser->fptr, "%s</returnStatement>\n", parser_makeTabs(tab_count));
+	token = lexer_read(parser->lexer);
+	//parser_symbol(parser, ";", tab_count+1);
+
+	fprintf(parser->fptr, "return\n");
+	//fprintf(parser->fptr, "%s</returnStatement>\n", parser_makeTabs(tab_count));
 }
 
 void parser_letStatement(PPARSER parser, uint8_t tab_count)
 {
 	// let varName ( [ expression ] )? = expression ;
 	
-	fprintf(parser->fptr, "%s<letStatement>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s<letStatement>\n", parser_makeTabs(tab_count));
 
-	parser_keyword(parser, "let", tab_count+1);
+	PTOKEN token = lexer_read(parser->lexer);
+	//parser_keyword(parser, "let", tab_count+1);
 
-	parser_identifier(parser, tab_count+1);
+	PTOKEN var_token = lexer_read(parser->lexer);
+	//parser_identifier(parser, tab_count+1);
 
-	PTOKEN token = lexer_peek(parser->lexer);
+	token = lexer_peek(parser->lexer);
 
 	if (SYMBOL == token->type && !strcmp(token->text, "["))
 	{
@@ -373,87 +439,132 @@ void parser_letStatement(PPARSER parser, uint8_t tab_count)
 		parser_symbol(parser, "]", tab_count+1);
 	}
 
-	parser_symbol(parser, "=", tab_count+1);
+	token = lexer_read(parser->lexer);
+	//parser_symbol(parser, "=", tab_count+1);
 
 	parser_expression(parser, tab_count+1);
 
-	parser_symbol(parser, ";", tab_count+1);
+	token = lexer_read(parser->lexer);
+	//parser_symbol(parser, ";", tab_count+1);
 
-	fprintf(parser->fptr, "%s</letStatement>\n", parser_makeTabs(tab_count));
+	PSYMBOL_REC symbol_rec = parser_find_symbol(parser, var_token);
+	fprintf(parser->fptr, "pop %s %d\n", symbol_kind_desc(symbol_rec->kind), symbol_rec->nbr);
+	//fprintf(parser->fptr, "%s</letStatement>\n", parser_makeTabs(tab_count));
 }
 
 void parser_whileStatement(PPARSER parser, uint8_t tab_count)
 {
 	// while ( expression ) { statements }
 	
-	fprintf(parser->fptr, "%s<whileStatement>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s<whileStatement>\n", parser_makeTabs(tab_count));
 
-	parser_keyword(parser, "while", tab_count+1);
+	PTOKEN token = lexer_read(parser->lexer);
+	token_destroy(token);
+	//parser_keyword(parser, "while", tab_count+1);
 
-	parser_symbol(parser, "(", tab_count+1);
+	char * label1 = parser_unique_label("Label");
+	char * label2 = parser_unique_label("Label");
 
+	token = lexer_read(parser->lexer);
+	token_destroy(token);
+	//parser_symbol(parser, "(", tab_count+1);
+
+	fprintf(parser->fptr, "label %s\n", label1);
 	parser_expression(parser, tab_count+1);
 
-	parser_symbol(parser, ")", tab_count+1);
+	fprintf(parser->fptr, "not\nif-goto %s", label2);
 
-	parser_symbol(parser, "{", tab_count+1);
+	token = lexer_read(parser->lexer);
+	token_destroy(token);
+	//parser_symbol(parser, ")", tab_count+1);
+
+	token = lexer_read(parser->lexer);
+	token_destroy(token);
+	//parser_symbol(parser, "{", tab_count+1);
 
 	parser_statements(parser, tab_count+1);
 
-	parser_symbol(parser, "}", tab_count+1);
+	fprintf(parser->fptr, "goto %s\n", label1);
 
-	fprintf(parser->fptr, "%s</whileStatement>\n", parser_makeTabs(tab_count));
+	token = lexer_read(parser->lexer);
+	token_destroy(token);
+	//parser_symbol(parser, "}", tab_count+1);
+
+	//fprintf(parser->fptr, "%s</whileStatement>\n", parser_makeTabs(tab_count));
+	//
+	fprintf(parser->fptr, "label %s\n", label2);
 }
 
 void parser_doStatement(PPARSER parser, uint8_t tab_count)
 {
 	// do subroutineCall ;
 	
-	fprintf(parser->fptr, "%s<doStatement>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s<doStatement>\n", parser_makeTabs(tab_count));
 
-	parser_keyword(parser, "do", tab_count+1);
+	PTOKEN token = lexer_read(parser->lexer);
+	//parser_keyword(parser, "do", tab_count+1);
 
+	token_destroy(token);
 	parser_subroutineCall(parser, tab_count+1);
 
-	parser_symbol(parser, ";", tab_count+1);
+	token = lexer_read(parser->lexer);
+	token_destroy(token);
+	//parser_symbol(parser, ";", tab_count+1);
+	fprintf(parser->fptr, "pop temp 0\n");
 
-	fprintf(parser->fptr, "%s</doStatement>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s</doStatement>\n", parser_makeTabs(tab_count));
 }
 
 void parser_ifStatement(PPARSER parser, uint8_t tab_count)
 {
 	// if ( expression ) { statements } ( else { statements } )?
 
-	fprintf(parser->fptr, "%s<ifStatement>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s<ifStatement>\n", parser_makeTabs(tab_count));
 
-	parser_keyword(parser, "if", tab_count+1);
+	PTOKEN token = lexer_read(parser->lexer);
+	//parser_keyword(parser, "if", tab_count+1);
 
-	parser_symbol(parser, "(", tab_count+1);
+	token = lexer_read(parser->lexer);
+	//parser_symbol(parser, "(", tab_count+1);
 
 	parser_expression(parser, tab_count+1);
+	fprintf(parser->fptr, "not\n");
 
-	parser_symbol(parser, ")", tab_count+1);
+	char * label1 = parser_unique_label("Label");
+	char * label2 = parser_unique_label("Label");
 
-	parser_symbol(parser, "{", tab_count+1);
+	token = lexer_read(parser->lexer);
+	//parser_symbol(parser, ")", tab_count+1);
 
+	token = lexer_read(parser->lexer);
+	//parser_symbol(parser, "{", tab_count+1);
+
+	fprintf(parser->fptr, "if-goto %s\n", label1);
 	parser_statements(parser, tab_count+1);
+	fprintf(parser->fptr, "goto %s\n", label2);
 
-	parser_symbol(parser, "}", tab_count+1);
+	token = lexer_read(parser->lexer);
+	//parser_symbol(parser, "}", tab_count+1);
 
-	PTOKEN token = lexer_peek(parser->lexer);
+	fprintf(parser->fptr, "label %s\n", label1);
+	token = lexer_peek(parser->lexer);
 
 	if (KEYWORD == token->type && (!strcmp(token->text, "else")))
 	{
-		parser_keyword(parser, "else", tab_count+1);
+		token = lexer_read(parser->lexer);
+		//parser_keyword(parser, "else", tab_count+1);
 
-		parser_symbol(parser, "{", tab_count+1);
+		token = lexer_read(parser->lexer);
+		//parser_symbol(parser, "{", tab_count+1);
 
 		parser_statements(parser, tab_count+1);
 
-		parser_symbol(parser, "}", tab_count+1);
+		token = lexer_read(parser->lexer);
+		//parser_symbol(parser, "}", tab_count+1);
 	}
 
-	fprintf(parser->fptr, "%s</ifStatement>\n", parser_makeTabs(tab_count));
+	fprintf(parser->fptr, "label %s\n", label2);
+	//fprintf(parser->fptr, "%s</ifStatement>\n", parser_makeTabs(tab_count));
 }
 
 void parser_statements(PPARSER parser, uint8_t tab_count)
@@ -540,19 +651,26 @@ void parser_varDec(PPARSER parser, uint8_t tab_count)
 	PSYMBOL_REC symbol_rec = (PSYMBOL_REC)malloc(sizeof(SYMBOL_REC));
 	symbol_rec->kind = LOCAL;
 
-	fprintf(parser->fptr, "%s<varDec>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s<varDec>\n", parser_makeTabs(tab_count));
 
-	PTOKEN token = lexer_peek(parser->lexer);
+	PTOKEN token = lexer_read(parser->lexer);
+	token_destroy(token);
 
-	parser_keyword(parser, "var", tab_count+1);
+	//parser_keyword(parser, "var", tab_count+1);
 
 	token = lexer_peek(parser->lexer);
 	symbol_rec->type = duplicate_text(token->text);
-	parser_type(parser, tab_count+1);
+
+	token = lexer_read(parser->lexer);
+	token_destroy(token);
+	//parser_type(parser, tab_count+1);
 
 	token = lexer_peek(parser->lexer);
 	symbol_rec->name = duplicate_text(token->text);
-	parser_identifier(parser, tab_count+1);
+
+	token = lexer_read(parser->lexer);
+	token_destroy(token);
+	//parser_identifier(parser, tab_count+1);
 
 	symbol_rec->nbr = parser->var_local_index++;
 
@@ -566,7 +684,9 @@ void parser_varDec(PPARSER parser, uint8_t tab_count)
 		new_symbol_rec->type = duplicate_text(symbol_rec->type);
 		new_symbol_rec->kind = symbol_rec->kind;
 
-		parser_symbol(parser, ",", tab_count+1);
+		token = lexer_read(parser->lexer);
+		token_destroy(token);
+		//parser_symbol(parser, ",", tab_count+1);
 		
 		token = lexer_peek(parser->lexer);
 		new_symbol_rec->name = duplicate_text(token->text);
@@ -574,13 +694,17 @@ void parser_varDec(PPARSER parser, uint8_t tab_count)
 
 		symbol_table_add(parser->function_symbol_table, new_symbol_rec);
 
-		parser_identifier(parser, tab_count+1);
+		token = lexer_read(parser->lexer);
+		token_destroy(token);
+		//parser_identifier(parser, tab_count+1);
 		token = lexer_peek(parser->lexer);
 	}
 
-	parser_symbol(parser, ";", tab_count+1);
+	token = lexer_read(parser->lexer);
+	token_destroy(token);
+	//parser_symbol(parser, ";", tab_count+1);
 
-	fprintf(parser->fptr, "%s</varDec>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s</varDec>\n", parser_makeTabs(tab_count));
 
 	if (raiseError)
 		parser_raiseError(token);
@@ -745,18 +869,23 @@ void parser_class(PPARSER parser, uint8_t tab_count)
 
 	bool raiseError = false;
 	
-	fprintf(parser->fptr, "%s<class>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s<class>\n", parser_makeTabs(tab_count));
 
 	// consume the keyword token "class"
-	parser_keyword(parser, "class", tab_count+1);
+	PTOKEN token = lexer_read(parser->lexer);
+	token_destroy(token);
+	//parser_keyword(parser, "class", tab_count+1);
 
 	// save class name
-	PTOKEN token = lexer_peek(parser->lexer);
+	token = lexer_read(parser->lexer);
 	parser->class_name = duplicate_text(token->text);
 	
-	parser_identifier(parser, tab_count+1);
+	token_destroy(token);
+	//parser_identifier(parser, tab_count+1);
 
-	parser_symbol(parser, "{", tab_count+1);
+	token = lexer_read(parser->lexer);
+	token_destroy(token);
+	//parser_symbol(parser, "{", tab_count+1);
 
 	token = lexer_peek(parser->lexer);
 	while (KEYWORD == token->type && (!strcmp(token->text, "static") || !strcmp(token->text, "field")))
@@ -771,9 +900,12 @@ void parser_class(PPARSER parser, uint8_t tab_count)
 		parser_subroutineDec(parser, tab_count+1);
 		token = lexer_peek(parser->lexer);
 	}
-	parser_symbol(parser, "}", tab_count+1);
 
-	fprintf(parser->fptr, "%s</class>\n", parser_makeTabs(tab_count));
+	token = lexer_read(parser->lexer);
+	token_destroy(token);
+	//parser_symbol(parser, "}", tab_count+1);
+
+	//fprintf(parser->fptr, "%s</class>\n", parser_makeTabs(tab_count));
 
 	if (raiseError)
 		parser_raiseError(token);

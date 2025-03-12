@@ -19,22 +19,6 @@ char * symbol_kind_desc(SYMBOL_KIND kind)
 	return "";
 }
 
-char * symbol_op_desc(char * op)
-{
-	if (!strcmp(op, "+"))
-		return "add";
-	else if (!strcmp(op, "-"))
-		return "sub";
-	else if (!strcmp(op, "*"))
-		return "Math.multiply 2";
-	else if (!strcmp(op, "/"))
-		return "Math.divide 2";
-	else
-		return op;
-
-	return "";
-}
-
 void symbol_print(void * data)
 {
 	printf("name: %s, type: %s, kind: %s, index: %d\n", ((PSYMBOL_REC)data)->name, ((PSYMBOL_REC)data)->type,
@@ -83,23 +67,4 @@ void symbol_table_print(PSYMBOL_TABLE symbol_table)
 {
 	linked_list_print(symbol_table->linked_list);
 }
-
-PSYMBOL_REC symbol_table_find(PSYMBOL_TABLE symbol_table, char * symbol_name)
-{
-	PSYMBOL_REC symbol_to_find = (PSYMBOL_REC)malloc(sizeof(SYMBOL_REC));
-
-	symbol_to_find->name = symbol_name;
-
-	PNODE node_to_find = node_create(symbol_to_find, NULL); 
-
-	PNODE cur = linked_list_find(symbol_table->linked_list, node_to_find);
-
-	PSYMBOL_REC symbol = cur ? cur->data : NULL;
-
-	free(symbol_to_find);
-
-	return symbol;
-}
-
-
 

@@ -91,6 +91,7 @@ int main(int argc, char * argv[])
 						*/
                         parser_destroy(parser);
                     }
+					lexer_destroy(lexer);
                 }
                 scanner_destroy(scanner);
             }

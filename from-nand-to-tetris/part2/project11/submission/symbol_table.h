@@ -24,9 +24,5 @@ PSYMBOL_TABLE symbol_table_create();
 void symbol_table_destroy(PSYMBOL_TABLE symbol_table);
 void symbol_table_add(PSYMBOL_TABLE symbol_table, PSYMBOL_REC symbol_rec);
 void symbol_table_print(PSYMBOL_TABLE symbol_table);
-PSYMBOL_REC symbol_table_find(PSYMBOL_TABLE symbol_table, char * symbol_name);
-char * symbol_kind_desc(SYMBOL_KIND kind);
-char * symbol_op_desc(char * op);
-
 
 #endif
