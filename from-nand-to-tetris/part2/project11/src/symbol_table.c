@@ -26,9 +26,19 @@ char * symbol_op_desc(char * op)
 	else if (!strcmp(op, "-"))
 		return "sub";
 	else if (!strcmp(op, "*"))
-		return "Math.multiply 2";
+		return "call Math.multiply 2";
 	else if (!strcmp(op, "/"))
-		return "Math.divide 2";
+		return "call Math.divide 2";
+	else if (!strcmp(op, "<"))
+		return "lt";
+	else if (!strcmp(op, ">"))
+		return "gt";
+	else if (!strcmp(op, "&"))
+		return "and";
+	else if (!strcmp(op, "|"))
+		return "or";
+	else if (!strcmp(op, "="))
+		return "eq";
 	else
 		return op;
 

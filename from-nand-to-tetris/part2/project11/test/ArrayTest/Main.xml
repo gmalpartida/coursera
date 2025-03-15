@@ -1,96 +1,34 @@
-<class>
-	<keyword>class</keyword>
-	<identifier>Main</identifier>
-	<symbol>{</symbol>
-	<subroutineDec>
-		<keyword>function</keyword>
-		<keyword>void</keyword>
-		<identifier>main</identifier>
-		<symbol>(</symbol>
-		<parameterList>
-		</parameterList>
-		<symbol>)</symbol>
-		<subroutineBody>
-			<symbol>{</symbol>
-			<varDec>
-				<keyword>var</keyword>
-				<identifier>Array</identifier>
-				<identifier>a</identifier>
-				<symbol>;</symbol>
-			</varDec>
-			<varDec>
-				<keyword>var</keyword>
-				<keyword>int</keyword>
-				<identifier>length</identifier>
-				<symbol>;</symbol>
-			</varDec>
-			<varDec>
-				<keyword>var</keyword>
-				<keyword>int</keyword>
-				<identifier>i</identifier>
-				<symbol>,</symbol>
-				<identifier>sum</identifier>
-				<symbol>;</symbol>
-			</varDec>
+function main 4
 			<statements>
-				<letStatement>
-					<keyword>let</keyword>
-					<identifier>length</identifier>
-					<symbol>=</symbol>
 					<expression>
 						<term>
-							<identifier>Keyboard</identifier>
-							<symbol>.</symbol>
-							<identifier>readInt</identifier>
-							<symbol>(</symbol>
-							<expressionList>
 								<expression>
 									<term>
 										<stringConstant>HOW MANY NUMBERS? </stringConstant>
 									</term>
 								</expression>
-							</expressionList>
-							<symbol>)</symbol>
+call Keyboard.readInt 1
 						</term>
 					</expression>
-					<symbol>;</symbol>
-				</letStatement>
-				<letStatement>
-					<keyword>let</keyword>
-					<identifier>a</identifier>
-					<symbol>=</symbol>
+pop local 1
 					<expression>
 						<term>
-							<identifier>Array</identifier>
-							<symbol>.</symbol>
-							<identifier>new</identifier>
-							<symbol>(</symbol>
-							<expressionList>
 								<expression>
 									<term>
 push local 1
 									</term>
 								</expression>
-							</expressionList>
-							<symbol>)</symbol>
+call Array.new 1
 						</term>
 					</expression>
-					<symbol>;</symbol>
-				</letStatement>
-				<letStatement>
-					<keyword>let</keyword>
-					<identifier>i</identifier>
-					<symbol>=</symbol>
+pop local 0
 					<expression>
 						<term>
 push constant 0
 						</term>
 					</expression>
-					<symbol>;</symbol>
-				</letStatement>
-				<whileStatement>
-					<keyword>while</keyword>
-					<symbol>(</symbol>
+pop local 2
+label Label0
 					<expression>
 						<term>
 push local 2
@@ -98,14 +36,10 @@ push local 2
 						<term>
 push local 1
 						</term>
-<
+lt
 					</expression>
-					<symbol>)</symbol>
-					<symbol>{</symbol>
-					<statements>
-						<letStatement>
-							<keyword>let</keyword>
-							<identifier>a</identifier>
+not
+if-goto Label1					<statements>
 							<symbol>[</symbol>
 							<expression>
 								<term>
@@ -113,29 +47,17 @@ push local 2
 								</term>
 							</expression>
 							<symbol>]</symbol>
-							<symbol>=</symbol>
 							<expression>
 								<term>
-									<identifier>Keyboard</identifier>
-									<symbol>.</symbol>
-									<identifier>readInt</identifier>
-									<symbol>(</symbol>
-									<expressionList>
 										<expression>
 											<term>
 												<stringConstant>ENTER THE NEXT NUMBER: </stringConstant>
 											</term>
 										</expression>
-									</expressionList>
-									<symbol>)</symbol>
+call Keyboard.readInt 1
 								</term>
 							</expression>
-							<symbol>;</symbol>
-						</letStatement>
-						<letStatement>
-							<keyword>let</keyword>
-							<identifier>i</identifier>
-							<symbol>=</symbol>
+pop local 0
 							<expression>
 								<term>
 push local 2
@@ -143,38 +65,25 @@ push local 2
 								<term>
 push constant 1
 								</term>
-+
+add
 							</expression>
-							<symbol>;</symbol>
-						</letStatement>
+pop local 2
 					</statements>
-					<symbol>}</symbol>
-				</whileStatement>
-				<letStatement>
-					<keyword>let</keyword>
-					<identifier>i</identifier>
-					<symbol>=</symbol>
+goto Label0
+label Label1
 					<expression>
 						<term>
 push constant 0
 						</term>
 					</expression>
-					<symbol>;</symbol>
-				</letStatement>
-				<letStatement>
-					<keyword>let</keyword>
-					<identifier>sum</identifier>
-					<symbol>=</symbol>
+pop local 2
 					<expression>
 						<term>
 push constant 0
 						</term>
 					</expression>
-					<symbol>;</symbol>
-				</letStatement>
-				<whileStatement>
-					<keyword>while</keyword>
-					<symbol>(</symbol>
+pop local 3
+label Label2
 					<expression>
 						<term>
 push local 2
@@ -182,15 +91,10 @@ push local 2
 						<term>
 push local 1
 						</term>
-<
+lt
 					</expression>
-					<symbol>)</symbol>
-					<symbol>{</symbol>
-					<statements>
-						<letStatement>
-							<keyword>let</keyword>
-							<identifier>sum</identifier>
-							<symbol>=</symbol>
+not
+if-goto Label3					<statements>
 							<expression>
 								<term>
 push local 3
@@ -205,14 +109,9 @@ push local 2
 									</expression>
 									<symbol>]</symbol>
 								</term>
-+
+add
 							</expression>
-							<symbol>;</symbol>
-						</letStatement>
-						<letStatement>
-							<keyword>let</keyword>
-							<identifier>i</identifier>
-							<symbol>=</symbol>
+pop local 3
 							<expression>
 								<term>
 push local 2
@@ -220,36 +119,19 @@ push local 2
 								<term>
 push constant 1
 								</term>
-+
+add
 							</expression>
-							<symbol>;</symbol>
-						</letStatement>
+pop local 2
 					</statements>
-					<symbol>}</symbol>
-				</whileStatement>
-				<doStatement>
-					<keyword>do</keyword>
-						<identifier>Output</identifier>
-						<symbol>.</symbol>
-						<identifier>printString</identifier>
-						<symbol>(</symbol>
-						<expressionList>
+goto Label2
+label Label3
 							<expression>
 								<term>
 									<stringConstant>THE AVERAGE IS: </stringConstant>
 								</term>
 							</expression>
-						</expressionList>
-						<symbol>)</symbol>
-					<symbol>;</symbol>
-				</doStatement>
-				<doStatement>
-					<keyword>do</keyword>
-						<identifier>Output</identifier>
-						<symbol>.</symbol>
-						<identifier>printInt</identifier>
-						<symbol>(</symbol>
-						<expressionList>
+call Output.printString 1
+pop temp 0
 							<expression>
 								<term>
 push local 3
@@ -257,57 +139,17 @@ push local 3
 								<term>
 push local 1
 								</term>
-/
+call Math.divide 2
 							</expression>
-						</expressionList>
-						<symbol>)</symbol>
-					<symbol>;</symbol>
-				</doStatement>
-				<doStatement>
-					<keyword>do</keyword>
-						<identifier>Output</identifier>
-						<symbol>.</symbol>
-						<identifier>println</identifier>
-						<symbol>(</symbol>
-						<expressionList>
-						</expressionList>
-						<symbol>)</symbol>
-					<symbol>;</symbol>
-				</doStatement>
-				<returnStatement>
-					<keyword>return</keyword>
-					<symbol>;</symbol>
-				</returnStatement>
+call Output.printInt 1
+pop temp 0
+call Output.println 0
+pop temp 0
+push constant 0
+return
 			</statements>
-			<symbol>}</symbol>
-		</subroutineBody>
-	</subroutineDec>
-	<subroutineDec>
-		<keyword>method</keyword>
-		<keyword>void</keyword>
-		<identifier>test</identifier>
-		<symbol>(</symbol>
-		<parameterList>
-			<keyword>int</keyword>
-			<identifier>int1</identifier>
-			<symbol>,</symbol>
-			<keyword>char</keyword>
-			<identifier>char1</identifier>
-			<symbol>,</symbol>
-			<identifier>Class</identifier>
-			<identifier>class1</identifier>
-		</parameterList>
-		<symbol>)</symbol>
-		<subroutineBody>
-			<symbol>{</symbol>
+function Main.test 0
 			<statements>
-				<returnStatement>
-					<keyword>return</keyword>
-					<symbol>;</symbol>
-				</returnStatement>
+push constant 0
+return
 			</statements>
-			<symbol>}</symbol>
-		</subroutineBody>
-	</subroutineDec>
-	<symbol>}</symbol>
-</class>

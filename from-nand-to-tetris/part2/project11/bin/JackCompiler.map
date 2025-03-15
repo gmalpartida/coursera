@@ -1,0 +1,788 @@
+
+Merging program properties
+
+
+As-needed library included to satisfy reference by file (symbol)
+
+libc.so.6                     src/main.o (malloc@@GLIBC_2.2.5)
+
+Discarded input sections
+
+ .note.GNU-stack
+                0x0000000000000000        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+ .note.gnu.property
+                0x0000000000000000       0x20 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o
+ .note.gnu.property
+                0x0000000000000000       0x20 /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 src/main.o
+ .note.gnu.property
+                0x0000000000000000       0x20 src/main.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 src/scanner.o
+ .note.gnu.property
+                0x0000000000000000       0x20 src/scanner.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 src/token.o
+ .note.gnu.property
+                0x0000000000000000       0x20 src/token.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 src/lexer.o
+ .note.gnu.property
+                0x0000000000000000       0x20 src/lexer.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 src/parser.o
+ .note.gnu.property
+                0x0000000000000000       0x20 src/parser.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 src/linked_list.o
+ .note.gnu.property
+                0x0000000000000000       0x20 src/linked_list.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 src/node.o
+ .note.gnu.property
+                0x0000000000000000       0x20 src/node.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 src/symbol_table.o
+ .note.gnu.property
+                0x0000000000000000       0x20 src/symbol_table.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o
+ .note.gnu.property
+                0x0000000000000000       0x20 /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o
+ .note.gnu.property
+                0x0000000000000000       0x20 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+ .note.GNU-stack
+                0x0000000000000000        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+LOAD /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o
+LOAD /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o
+LOAD src/main.o
+LOAD src/scanner.o
+LOAD src/token.o
+LOAD src/lexer.o
+LOAD src/parser.o
+LOAD src/linked_list.o
+LOAD src/node.o
+LOAD src/symbol_table.o
+LOAD /usr/lib/gcc/x86_64-linux-gnu/11/libgcc.a
+LOAD /usr/lib/gcc/x86_64-linux-gnu/11/libgcc_s.so
+START GROUP
+LOAD /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/libgcc_s.so.1
+LOAD /usr/lib/gcc/x86_64-linux-gnu/11/libgcc.a
+END GROUP
+LOAD /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/libc.so
+START GROUP
+LOAD /lib/x86_64-linux-gnu/libc.so.6
+LOAD /usr/lib/x86_64-linux-gnu/libc_nonshared.a
+LOAD /lib64/ld-linux-x86-64.so.2
+END GROUP
+LOAD /usr/lib/gcc/x86_64-linux-gnu/11/libgcc.a
+LOAD /usr/lib/gcc/x86_64-linux-gnu/11/libgcc_s.so
+START GROUP
+LOAD /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/libgcc_s.so.1
+LOAD /usr/lib/gcc/x86_64-linux-gnu/11/libgcc.a
+END GROUP
+LOAD /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o
+LOAD /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+                [!provide]                        PROVIDE (__executable_start = SEGMENT_START ("text-segment", 0x0))
+                0x0000000000000318                . = (SEGMENT_START ("text-segment", 0x0) + SIZEOF_HEADERS)
+
+.interp         0x0000000000000318       0x1c
+ *(.interp)
+ .interp        0x0000000000000318       0x1c /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+
+.note.gnu.property
+                0x0000000000000338       0x30
+ .note.gnu.property
+                0x0000000000000338       0x30 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+
+.note.gnu.build-id
+                0x0000000000000368       0x24
+ *(.note.gnu.build-id)
+ .note.gnu.build-id
+                0x0000000000000368       0x24 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+
+.note.ABI-tag   0x000000000000038c       0x20
+ .note.ABI-tag  0x000000000000038c       0x20 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+
+.hash
+ *(.hash)
+
+.gnu.hash       0x00000000000003b0       0x24
+ *(.gnu.hash)
+ .gnu.hash      0x00000000000003b0       0x24 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+
+.dynsym         0x00000000000003d8      0x318
+ *(.dynsym)
+ .dynsym        0x00000000000003d8      0x318 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+
+.dynstr         0x00000000000006f0      0x169
+ *(.dynstr)
+ .dynstr        0x00000000000006f0      0x169 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+
+.gnu.version    0x000000000000085a       0x42
+ *(.gnu.version)
+ .gnu.version   0x000000000000085a       0x42 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+
+.gnu.version_d  0x00000000000008a0        0x0
+ *(.gnu.version_d)
+ .gnu.version_d
+                0x00000000000008a0        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+
+.gnu.version_r  0x00000000000008a0       0x60
+ *(.gnu.version_r)
+ .gnu.version_r
+                0x00000000000008a0       0x60 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+
+.rela.dyn       0x0000000000000900      0x360
+ *(.rela.init)
+ *(.rela.text .rela.text.* .rela.gnu.linkonce.t.*)
+ *(.rela.fini)
+ *(.rela.rodata .rela.rodata.* .rela.gnu.linkonce.r.*)
+ *(.rela.data .rela.data.* .rela.gnu.linkonce.d.*)
+ .rela.data.rel.ro
+                0x0000000000000900        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+ .rela.data.rel.local
+                0x0000000000000900      0x2b8 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+ *(.rela.tdata .rela.tdata.* .rela.gnu.linkonce.td.*)
+ *(.rela.tbss .rela.tbss.* .rela.gnu.linkonce.tb.*)
+ *(.rela.ctors)
+ *(.rela.dtors)
+ *(.rela.got)
+ .rela.got      0x0000000000000bb8       0x78 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+ *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*)
+ .rela.bss      0x0000000000000c30        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+ *(.rela.ldata .rela.ldata.* .rela.gnu.linkonce.l.*)
+ *(.rela.lbss .rela.lbss.* .rela.gnu.linkonce.lb.*)
+ *(.rela.lrodata .rela.lrodata.* .rela.gnu.linkonce.lr.*)
+ *(.rela.ifunc)
+ .rela.ifunc    0x0000000000000c30        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+ .rela.fini_array
+                0x0000000000000c30       0x18 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+ .rela.init_array
+                0x0000000000000c48       0x18 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+
+.rela.plt       0x0000000000000c60      0x288
+ *(.rela.plt)
+ .rela.plt      0x0000000000000c60      0x288 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+ *(.rela.iplt)
+
+.relr.dyn
+ *(.relr.dyn)
+                0x0000000000001000                . = ALIGN (CONSTANT (MAXPAGESIZE))
+
+.init           0x0000000000001000       0x1b
+ *(SORT_NONE(.init))
+ .init          0x0000000000001000       0x16 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o
+                0x0000000000001000                _init
+ .init          0x0000000000001016        0x5 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+
+.plt            0x0000000000001020      0x1c0
+ *(.plt)
+ .plt           0x0000000000001020      0x1c0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+ *(.iplt)
+
+.plt.got        0x00000000000011e0       0x10
+ *(.plt.got)
+ .plt.got       0x00000000000011e0       0x10 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+                0x00000000000011e0                __cxa_finalize@@GLIBC_2.2.5
+
+.plt.sec        0x00000000000011f0      0x1b0
+ *(.plt.sec)
+ .plt.sec       0x00000000000011f0      0x1b0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+                0x00000000000011f0                free@@GLIBC_2.2.5
+                0x0000000000001200                putchar@@GLIBC_2.2.5
+                0x0000000000001210                strcpy@@GLIBC_2.2.5
+                0x0000000000001220                puts@@GLIBC_2.2.5
+                0x0000000000001230                fread@@GLIBC_2.2.5
+                0x0000000000001240                fclose@@GLIBC_2.2.5
+                0x0000000000001250                opendir@@GLIBC_2.2.5
+                0x0000000000001260                strlen@@GLIBC_2.2.5
+                0x0000000000001270                __stack_chk_fail@@GLIBC_2.4
+                0x0000000000001280                printf@@GLIBC_2.2.5
+                0x0000000000001290                strrchr@@GLIBC_2.2.5
+                0x00000000000012a0                __assert_fail@@GLIBC_2.2.5
+                0x00000000000012b0                fputs@@GLIBC_2.2.5
+                0x00000000000012c0                strcmp@@GLIBC_2.2.5
+                0x00000000000012d0                fprintf@@GLIBC_2.2.5
+                0x00000000000012e0                ftell@@GLIBC_2.2.5
+                0x00000000000012f0                stat@@GLIBC_2.33
+                0x0000000000001300                readdir@@GLIBC_2.2.5
+                0x0000000000001310                malloc@@GLIBC_2.2.5
+                0x0000000000001320                fseek@@GLIBC_2.2.5
+                0x0000000000001330                fopen@@GLIBC_2.2.5
+                0x0000000000001340                strcat@@GLIBC_2.2.5
+                0x0000000000001350                sprintf@@GLIBC_2.2.5
+                0x0000000000001360                exit@@GLIBC_2.2.5
+                0x0000000000001370                fwrite@@GLIBC_2.2.5
+                0x0000000000001380                strstr@@GLIBC_2.2.5
+                0x0000000000001390                __ctype_b_loc@@GLIBC_2.3
+
+.text           0x00000000000013a0     0x491d
+ *(.text.unlikely .text.*_unlikely .text.unlikely.*)
+ *(.text.exit .text.exit.*)
+ *(.text.startup .text.startup.*)
+ *(.text.hot .text.hot.*)
+ *(SORT_BY_NAME(.text.sorted.*))
+ *(.text .stub .text.* .gnu.linkonce.t.*)
+ .text          0x00000000000013a0       0x26 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+                0x00000000000013a0                _start
+ .text          0x00000000000013c6        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o
+ *fill*         0x00000000000013c6        0xa 
+ .text          0x00000000000013d0       0xb9 /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o
+ .text          0x0000000000001489      0x5a1 src/main.o
+                0x0000000000001489                main
+                0x00000000000016d7                generate_output_filename
+                0x00000000000018d1                is_directory
+                0x0000000000001950                generate_input_filename
+ .text          0x0000000000001a2a      0x310 src/scanner.o
+                0x0000000000001a2a                scanner_create
+                0x0000000000001b97                scanner_get_next
+                0x0000000000001bbc                scanner_at_end
+                0x0000000000001c07                scanner_print
+                0x0000000000001c67                scanner_destroy
+                0x0000000000001c9d                scanner_position
+                0x0000000000001cc0                scanner_peek_next
+                0x0000000000001cd9                scanner_peek2_next
+                0x0000000000001cf3                scanner_reset
+                0x0000000000001d11                scanner_set_position
+ .text          0x0000000000001d3a      0x1cd src/token.o
+                0x0000000000001d3a                token_create
+                0x0000000000001db0                token_destroy
+                0x0000000000001de6                token_map_type_to_text
+                0x0000000000001e5c                token_map_text_to_type
+                0x0000000000001ebe                token_print
+ .text          0x0000000000001f07      0x77e src/lexer.o
+                0x0000000000001f07                lexer_create
+                0x0000000000001f36                lexer_destroy
+                0x0000000000001f55                lexer_ignore_whitespace
+                0x0000000000001fc3                lexer_ignore_comment
+                0x0000000000002109                is_symbol
+                0x0000000000002159                is_keyword
+                0x00000000000021c3                lexer_read
+                0x00000000000025bb                lexer_peek
+                0x0000000000002607                lexer_peek2
+                0x0000000000002663                lexer_print
+ .text          0x0000000000002685     0x2f01 src/parser.o
+                0x0000000000002685                duplicate_text
+                0x00000000000026ca                parser_create
+                0x0000000000002772                parser_destroy
+                0x00000000000027b9                parser_print
+                0x000000000000280a                parser_find_symbol
+                0x00000000000028c0                parser_unique_label
+                0x0000000000002914                parser_isOp
+                0x0000000000002a5a                parser_expressionList
+                0x0000000000002b6d                parser_subroutineCall
+                0x0000000000002dc9                parser_integerConstant
+                0x0000000000002e2d                parser_stringConstant
+                0x0000000000002e91                parser_term
+                0x0000000000003446                parser_expression
+                0x0000000000003564                parser_type
+                0x00000000000036b0                parser_classVarDec
+                0x0000000000003a5a                parser_isType
+                0x0000000000003ae9                parser_returnStatement
+                0x0000000000003bc5                parser_letStatement
+                0x0000000000003d2b                parser_whileStatement
+                0x0000000000003ec0                parser_doStatement
+                0x0000000000003f52                parser_ifStatement
+                0x000000000000415b                parser_statements
+                0x0000000000004318                parser_parameterList
+                0x00000000000044e9                parser_varDec
+                0x00000000000047b9                parser_isStatement
+                0x000000000000488d                parser_subroutineBody
+                0x0000000000004aa6                parser_subroutineDec
+                0x0000000000004e0c                parser_identifier
+                0x0000000000004eef                parser_keyword
+                0x0000000000004fef                parser_symbol
+                0x000000000000523c                parser_class
+                0x0000000000005479                parser_makeTabs
+                0x00000000000054e1                parser_execute
+ .text          0x0000000000005586      0x2de src/linked_list.o
+                0x0000000000005586                linked_list_create
+                0x00000000000055e1                linked_list_destroy
+                0x000000000000560c                linked_list_add
+                0x000000000000566f                linked_list_print
+                0x00000000000056c4                linked_list_find
+                0x0000000000005738                linked_list_delete
+                0x00000000000057e9                linked_list_clear
+ .text          0x0000000000005864       0x5e src/node.o
+                0x0000000000005864                node_create
+                0x00000000000058a3                node_destroy
+ .text          0x00000000000058c2      0x3fb src/symbol_table.o
+                0x00000000000058c2                symbol_kind_desc
+                0x0000000000005920                symbol_op_desc
+                0x0000000000005a80                symbol_print
+                0x0000000000005add                symbol_compare
+                0x0000000000005b1c                symbol_destroy
+                0x0000000000005b5a                symbol_table_create
+                0x0000000000005ba4                symbol_table_destroy
+                0x0000000000005bd2                symbol_table_add
+                0x0000000000005c14                symbol_table_print
+                0x0000000000005c36                symbol_table_find
+ .text          0x0000000000005cbd        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o
+ .text          0x0000000000005cbd        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+ *(.gnu.warning)
+
+.fini           0x0000000000005cc0        0xd
+ *(SORT_NONE(.fini))
+ .fini          0x0000000000005cc0        0x8 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o
+                0x0000000000005cc0                _fini
+ .fini          0x0000000000005cc8        0x5 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+                [!provide]                        PROVIDE (__etext = .)
+                [!provide]                        PROVIDE (_etext = .)
+                [!provide]                        PROVIDE (etext = .)
+                0x0000000000006000                . = ALIGN (CONSTANT (MAXPAGESIZE))
+                0x0000000000006000                . = SEGMENT_START ("rodata-segment", (ALIGN (CONSTANT (MAXPAGESIZE)) + (. & (CONSTANT (MAXPAGESIZE) - 0x1))))
+
+.rodata         0x0000000000006000      0x6a1
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+ .rodata.cst4   0x0000000000006000        0x4 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+                0x0000000000006000                _IO_stdin_used
+ *fill*         0x0000000000006004        0x4 
+ .rodata        0x0000000000006008       0x3b src/main.o
+ *fill*         0x0000000000006043        0x5 
+ .rodata        0x0000000000006048       0x2e src/scanner.o
+ *fill*         0x0000000000006076        0x2 
+ .rodata        0x0000000000006078       0x63 src/token.o
+ *fill*         0x00000000000060db        0x1 
+ .rodata        0x00000000000060dc       0x86 src/lexer.o
+                0x0000000000006156                keyword_cnt
+ *fill*         0x0000000000006162        0xe 
+ .rodata        0x0000000000006170      0x495 src/parser.o
+ *fill*         0x0000000000006605        0x3 
+ .rodata        0x0000000000006608       0x99 src/symbol_table.o
+
+.rodata1
+ *(.rodata1)
+
+.eh_frame_hdr   0x00000000000066a4      0x2b4
+ *(.eh_frame_hdr)
+ .eh_frame_hdr  0x00000000000066a4      0x2b4 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+                0x00000000000066a4                __GNU_EH_FRAME_HDR
+ *(.eh_frame_entry .eh_frame_entry.*)
+
+.eh_frame       0x0000000000006958      0xad8
+ *(.eh_frame)
+ .eh_frame      0x0000000000006958       0x30 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+                                         0x2c (size before relaxing)
+ *fill*         0x0000000000006988        0x0 
+ .eh_frame      0x0000000000006988       0x28 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+                                         0x40 (size before relaxing)
+ .eh_frame      0x00000000000069b0       0x18 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+                                         0x30 (size before relaxing)
+ .eh_frame      0x00000000000069c8       0x18 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+                                         0x30 (size before relaxing)
+ .eh_frame      0x00000000000069e0       0x88 src/main.o
+                                         0xa0 (size before relaxing)
+ .eh_frame      0x0000000000006a68      0x140 src/scanner.o
+                                        0x158 (size before relaxing)
+ .eh_frame      0x0000000000006ba8       0xa0 src/token.o
+                                         0xb8 (size before relaxing)
+ .eh_frame      0x0000000000006c48      0x140 src/lexer.o
+                                        0x158 (size before relaxing)
+ .eh_frame      0x0000000000006d88      0x440 src/parser.o
+                                        0x458 (size before relaxing)
+ .eh_frame      0x00000000000071c8       0xe0 src/linked_list.o
+                                         0xf8 (size before relaxing)
+ .eh_frame      0x00000000000072a8       0x40 src/node.o
+                                         0x58 (size before relaxing)
+ .eh_frame      0x00000000000072e8      0x144 src/symbol_table.o
+                                        0x160 (size before relaxing)
+ .eh_frame      0x000000000000742c        0x4 /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o
+ *(.eh_frame.*)
+
+.gcc_except_table
+ *(.gcc_except_table .gcc_except_table.*)
+
+.gnu_extab
+ *(.gnu_extab*)
+
+.exception_ranges
+ *(.exception_ranges*)
+                0x0000000000008ce8                . = DATA_SEGMENT_ALIGN (CONSTANT (MAXPAGESIZE), CONSTANT (COMMONPAGESIZE))
+
+.eh_frame
+ *(.eh_frame)
+ *(.eh_frame.*)
+
+.gnu_extab
+ *(.gnu_extab)
+
+.gcc_except_table
+ *(.gcc_except_table .gcc_except_table.*)
+
+.exception_ranges
+ *(.exception_ranges*)
+
+.tdata          0x0000000000008ce8        0x0
+                [!provide]                        PROVIDE (__tdata_start = .)
+ *(.tdata .tdata.* .gnu.linkonce.td.*)
+
+.tbss
+ *(.tbss .tbss.* .gnu.linkonce.tb.*)
+ *(.tcommon)
+
+.preinit_array  0x0000000000008ce8        0x0
+                [!provide]                        PROVIDE (__preinit_array_start = .)
+ *(.preinit_array)
+                [!provide]                        PROVIDE (__preinit_array_end = .)
+
+.init_array     0x0000000000008ce8        0x8
+                [!provide]                        PROVIDE (__init_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.init_array.*) SORT_BY_INIT_PRIORITY(.ctors.*))
+ *(.init_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .ctors)
+ .init_array    0x0000000000008ce8        0x8 /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o
+                [!provide]                        PROVIDE (__init_array_end = .)
+
+.fini_array     0x0000000000008cf0        0x8
+                [!provide]                        PROVIDE (__fini_array_start = .)
+ *(SORT_BY_INIT_PRIORITY(.fini_array.*) SORT_BY_INIT_PRIORITY(.dtors.*))
+ *(.fini_array EXCLUDE_FILE(*crtend?.o *crtend.o *crtbegin?.o *crtbegin.o) .dtors)
+ .fini_array    0x0000000000008cf0        0x8 /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o
+                [!provide]                        PROVIDE (__fini_array_end = .)
+
+.ctors
+ *crtbegin.o(.ctors)
+ *crtbegin?.o(.ctors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+ *(SORT_BY_NAME(.ctors.*))
+ *(.ctors)
+
+.dtors
+ *crtbegin.o(.dtors)
+ *crtbegin?.o(.dtors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+ *(SORT_BY_NAME(.dtors.*))
+ *(.dtors)
+
+.jcr
+ *(.jcr)
+
+.data.rel.ro    0x0000000000008cf8        0x0
+ *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*)
+ *(.data.rel.ro .data.rel.ro.* .gnu.linkonce.d.rel.ro.*)
+ .data.rel.ro   0x0000000000008cf8        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+
+.dynamic        0x0000000000008cf8      0x1f0
+ *(.dynamic)
+ .dynamic       0x0000000000008cf8      0x1f0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+                0x0000000000008cf8                _DYNAMIC
+
+.got            0x0000000000008ee8      0x118
+ *(.got.plt)
+ .got.plt       0x0000000000008ee8       0xf0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+                0x0000000000008ee8                _GLOBAL_OFFSET_TABLE_
+ *(.igot.plt)
+ *(.got)
+ .got           0x0000000000008fd8       0x28 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+ *(.igot)
+                0x0000000000009000                . = DATA_SEGMENT_RELRO_END (., 0x0)
+
+.data           0x0000000000009000      0x128
+ *(.data .data.* .gnu.linkonce.d.*)
+ .data          0x0000000000009000        0x4 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+                0x0000000000009000                data_start
+                0x0000000000009000                __data_start
+ .data          0x0000000000009004        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o
+ .data          0x0000000000009004        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o
+ *fill*         0x0000000000009004        0x4 
+ .data.rel.local
+                0x0000000000009008        0x8 /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o
+                0x0000000000009008                __dso_handle
+ .data          0x0000000000009010        0x0 src/main.o
+ .data          0x0000000000009010        0x0 src/scanner.o
+ .data          0x0000000000009010        0x4 src/token.o
+                0x0000000000009010                token_type_map_size
+ *fill*         0x0000000000009014        0xc 
+ .data.rel.local
+                0x0000000000009020       0x38 src/token.o
+                0x0000000000009020                token_type_map
+ *fill*         0x0000000000009058        0x8 
+ .data          0x0000000000009060       0x13 src/lexer.o
+                0x0000000000009060                symbols
+ *fill*         0x0000000000009073        0xd 
+ .data.rel.local
+                0x0000000000009080       0xa8 src/lexer.o
+                0x0000000000009080                keywords
+ .data          0x0000000000009128        0x0 src/parser.o
+ .data          0x0000000000009128        0x0 src/linked_list.o
+ .data          0x0000000000009128        0x0 src/node.o
+ .data          0x0000000000009128        0x0 src/symbol_table.o
+ .data          0x0000000000009128        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o
+ .data          0x0000000000009128        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+
+.tm_clone_table
+                0x0000000000009128        0x0
+ .tm_clone_table
+                0x0000000000009128        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o
+ .tm_clone_table
+                0x0000000000009128        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o
+
+.data1
+ *(.data1)
+                0x0000000000009128                _edata = .
+                [!provide]                        PROVIDE (edata = .)
+                0x0000000000009128                . = .
+                0x0000000000009128                __bss_start = .
+
+.bss            0x0000000000009128        0x8
+ *(.dynbss)
+ .dynbss        0x0000000000009128        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ .bss           0x0000000000009128        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/Scrt1.o
+ .bss           0x0000000000009128        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crti.o
+ .bss           0x0000000000009128        0x1 /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o
+ .bss           0x0000000000009129        0x0 src/main.o
+ .bss           0x0000000000009129        0x0 src/scanner.o
+ .bss           0x0000000000009129        0x0 src/token.o
+ .bss           0x0000000000009129        0x0 src/lexer.o
+ *fill*         0x0000000000009129        0x1 
+ .bss           0x000000000000912a        0x2 src/parser.o
+ .bss           0x000000000000912c        0x0 src/linked_list.o
+ .bss           0x000000000000912c        0x0 src/node.o
+ .bss           0x000000000000912c        0x0 src/symbol_table.o
+ .bss           0x000000000000912c        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o
+ .bss           0x000000000000912c        0x0 /usr/lib/gcc/x86_64-linux-gnu/11/../../../x86_64-linux-gnu/crtn.o
+ *(COMMON)
+                0x0000000000009130                . = ALIGN ((. != 0x0)?0x8:0x1)
+ *fill*         0x000000000000912c        0x4 
+
+.lbss
+ *(.dynlbss)
+ *(.lbss .lbss.* .gnu.linkonce.lb.*)
+ *(LARGE_COMMON)
+                0x0000000000009130                . = ALIGN (0x8)
+                0x0000000000009130                . = SEGMENT_START ("ldata-segment", .)
+
+.lrodata
+ *(.lrodata .lrodata.* .gnu.linkonce.lr.*)
+
+.ldata          0x000000000000b130        0x0
+ *(.ldata .ldata.* .gnu.linkonce.l.*)
+                0x000000000000b130                . = ALIGN ((. != 0x0)?0x8:0x1)
+                0x000000000000b130                . = ALIGN (0x8)
+                0x0000000000009130                _end = .
+                [!provide]                        PROVIDE (end = .)
+                0x000000000000b130                . = DATA_SEGMENT_END (.)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x0000000000000000       0x2b
+ *(.comment)
+ .comment       0x0000000000000000       0x2b /usr/lib/gcc/x86_64-linux-gnu/11/crtbeginS.o
+                                         0x2c (size before relaxing)
+ .comment       0x000000000000002b       0x2c src/main.o
+ .comment       0x000000000000002b       0x2c src/scanner.o
+ .comment       0x000000000000002b       0x2c src/token.o
+ .comment       0x000000000000002b       0x2c src/lexer.o
+ .comment       0x000000000000002b       0x2c src/parser.o
+ .comment       0x000000000000002b       0x2c src/linked_list.o
+ .comment       0x000000000000002b       0x2c src/node.o
+ .comment       0x000000000000002b       0x2c src/symbol_table.o
+ .comment       0x000000000000002b       0x2c /usr/lib/gcc/x86_64-linux-gnu/11/crtendS.o
+
+.gnu.build.attributes
+ *(.gnu.build.attributes .gnu.build.attributes.*)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x0000000000000000      0x180
+ *(.debug_aranges)
+ .debug_aranges
+                0x0000000000000000       0x30 src/main.o
+ .debug_aranges
+                0x0000000000000030       0x30 src/scanner.o
+ .debug_aranges
+                0x0000000000000060       0x30 src/token.o
+ .debug_aranges
+                0x0000000000000090       0x30 src/lexer.o
+ .debug_aranges
+                0x00000000000000c0       0x30 src/parser.o
+ .debug_aranges
+                0x00000000000000f0       0x30 src/linked_list.o
+ .debug_aranges
+                0x0000000000000120       0x30 src/node.o
+ .debug_aranges
+                0x0000000000000150       0x30 src/symbol_table.o
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info     0x0000000000000000     0x3cbe
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x0000000000000000      0xb6b src/main.o
+ .debug_info    0x0000000000000b6b      0x64f src/scanner.o
+ .debug_info    0x00000000000011ba      0x329 src/token.o
+ .debug_info    0x00000000000014e3      0x7b2 src/lexer.o
+ .debug_info    0x0000000000001c95     0x1610 src/parser.o
+ .debug_info    0x00000000000032a5      0x386 src/linked_list.o
+ .debug_info    0x000000000000362b      0x12f src/node.o
+ .debug_info    0x000000000000375a      0x564 src/symbol_table.o
+
+.debug_abbrev   0x0000000000000000      0xdf3
+ *(.debug_abbrev)
+ .debug_abbrev  0x0000000000000000      0x19e src/main.o
+ .debug_abbrev  0x000000000000019e      0x1c7 src/scanner.o
+ .debug_abbrev  0x0000000000000365      0x1a3 src/token.o
+ .debug_abbrev  0x0000000000000508      0x20e src/lexer.o
+ .debug_abbrev  0x0000000000000716      0x293 src/parser.o
+ .debug_abbrev  0x00000000000009a9      0x17f src/linked_list.o
+ .debug_abbrev  0x0000000000000b28       0xf9 src/node.o
+ .debug_abbrev  0x0000000000000c21      0x1d2 src/symbol_table.o
+
+.debug_line     0x0000000000000000     0x1988
+ *(.debug_line .debug_line.* .debug_line_end)
+ .debug_line    0x0000000000000000      0x253 src/main.o
+ .debug_line    0x0000000000000253      0x17f src/scanner.o
+ .debug_line    0x00000000000003d2       0xf7 src/token.o
+ .debug_line    0x00000000000004c9      0x310 src/lexer.o
+ .debug_line    0x00000000000007d9      0xe53 src/parser.o
+ .debug_line    0x000000000000162c      0x156 src/linked_list.o
+ .debug_line    0x0000000000001782       0x7d src/node.o
+ .debug_line    0x00000000000017ff      0x189 src/symbol_table.o
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str      0x0000000000000000      0xe2d
+ *(.debug_str)
+ .debug_str     0x0000000000000000      0x68b src/main.o
+                                        0x71f (size before relaxing)
+ .debug_str     0x000000000000068b       0xe6 src/scanner.o
+                                        0x407 (size before relaxing)
+ .debug_str     0x0000000000000771       0xc8 src/token.o
+                                        0x21d (size before relaxing)
+ .debug_str     0x0000000000000839      0x10d src/lexer.o
+                                        0x3ca (size before relaxing)
+ .debug_str     0x0000000000000946      0x3fd src/parser.o
+                                        0x9bf (size before relaxing)
+ .debug_str     0x0000000000000d43       0x7f src/linked_list.o
+                                        0x1fe (size before relaxing)
+ .debug_str     0x0000000000000dc2       0x15 src/node.o
+                                        0x114 (size before relaxing)
+ .debug_str     0x0000000000000dd7       0x56 src/symbol_table.o
+                                        0x3b0 (size before relaxing)
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.debug_pubtypes
+ *(.debug_pubtypes)
+
+.debug_ranges
+ *(.debug_ranges)
+
+.debug_addr
+ *(.debug_addr)
+
+.debug_line_str
+                0x0000000000000000      0x21a
+ *(.debug_line_str)
+ .debug_line_str
+                0x0000000000000000      0x196 src/main.o
+                                        0x204 (size before relaxing)
+ .debug_line_str
+                0x0000000000000196       0x1f src/scanner.o
+                                        0x188 (size before relaxing)
+ .debug_line_str
+                0x00000000000001b5       0x14 src/token.o
+                                        0x117 (size before relaxing)
+ .debug_line_str
+                0x00000000000001c9       0x14 src/lexer.o
+                                        0x163 (size before relaxing)
+ .debug_line_str
+                0x00000000000001dd        0xd src/parser.o
+                                        0x1d1 (size before relaxing)
+ .debug_line_str
+                0x00000000000001ea       0x12 src/linked_list.o
+                                        0x125 (size before relaxing)
+ .debug_line_str
+                0x00000000000001fc        0xb src/node.o
+                                        0x102 (size before relaxing)
+ .debug_line_str
+                0x0000000000000207       0x13 src/symbol_table.o
+                                        0x182 (size before relaxing)
+
+.debug_loclists
+ *(.debug_loclists)
+
+.debug_macro
+ *(.debug_macro)
+
+.debug_names
+ *(.debug_names)
+
+.debug_rnglists
+                0x0000000000000000       0x17
+ *(.debug_rnglists)
+ .debug_rnglists
+                0x0000000000000000       0x17 src/linked_list.o
+
+.debug_str_offsets
+ *(.debug_str_offsets)
+
+.debug_sup
+ *(.debug_sup)
+
+.gnu.attributes
+ *(.gnu.attributes)
+
+/DISCARD/
+ *(.note.GNU-stack)
+ *(.gnu_debuglink)
+ *(.gnu.lto_*)
+OUTPUT(bin/JackCompiler elf64-x86-64)

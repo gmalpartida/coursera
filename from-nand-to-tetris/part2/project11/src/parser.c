@@ -84,60 +84,98 @@ bool parser_isOp(PTOKEN token)
 			!strcmp(token->text, "<") || !strcmp(token->text, ">") || !strcmp(token->text, "="));
 }
 
-void parser_expressionList(PPARSER parser, uint8_t tab_count)
+uint8_t parser_expressionList(PPARSER parser, uint8_t tab_count)
 {
 	// ( expression (, expression)* )?
 	
-	fprintf(parser->fptr, "%s<expressionList>\n", parser_makeTabs(tab_count));
+	uint8_t arg_count = 0;
+
+	//fprintf(parser->fptr, "%s<expressionList>\n", parser_makeTabs(tab_count));
 
 	PTOKEN token = lexer_peek(parser->lexer);
 
 	if (SYMBOL != token->type || strcmp(token->text, ")"))
 	{
+		arg_count++;
 		parser_expression(parser, tab_count + 1);
 
 		token = lexer_peek(parser->lexer);
 
 		while (SYMBOL == token->type && !strcmp(token->text, ","))
 		{
-			parser_symbol(parser, ",", tab_count + 1);
+			token = lexer_read(parser->lexer);
+			token_destroy(token);
+			//parser_symbol(parser, ",", tab_count + 1);
 
+			arg_count++;
 			parser_expression(parser, tab_count+1);
 
 			token = lexer_peek(parser->lexer);
 		}
 	}
-	fprintf(parser->fptr, "%s</expressionList>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s</expressionList>\n", parser_makeTabs(tab_count));
+
+	return arg_count;
 }
 
 void parser_subroutineCall(PPARSER parser, uint8_t tab_count)
 {
 	// subroutineName ( expressionList ) | (className | varName).subroutineName ( expressionList )
 	//
-	parser_identifier(parser, tab_count+1);
+	uint8_t arg_count = 0;
+
+	PTOKEN token_class_or_function = lexer_read(parser->lexer);
+	char * class_or_subroutine_name = duplicate_text(token_class_or_function->text);
 
 	PTOKEN token = lexer_peek(parser->lexer);
 
 	if (SYMBOL == token->type && !strcmp(token->text, "("))
 	{
-		parser_symbol(parser, "(", tab_count+1);
+		token = lexer_read(parser->lexer);
+		token_destroy(token);
+		//parser_symbol(parser, "(", tab_count+1);
 
-		parser_expressionList(parser, tab_count+1);
+		arg_count += parser_expressionList(parser, tab_count+1);
 
-		parser_symbol(parser, ")", tab_count+1);
+		token = lexer_read(parser->lexer);
+		token_destroy(token);
+		//parser_symbol(parser, ")", tab_count+1);
+
+		fprintf(parser->fptr, "call %s %d\n", class_or_subroutine_name, arg_count);
 	}
 	else
 	{
-		parser_symbol(parser, ".", tab_count+1);
+		token = lexer_read(parser->lexer);
+		token_destroy(token);
+		//parser_symbol(parser, ".", tab_count+1);
 
-		parser_identifier(parser, tab_count+1);
+		token = lexer_read(parser->lexer);
+		char * subroutine_name = duplicate_text(token->text);
+		token_destroy(token);
+		//parser_identifier(parser, tab_count+1);
+		//
+		token = lexer_read(parser->lexer);
+		token_destroy(token);
+		//parser_symbol(parser, "(", tab_count+1);
+		PSYMBOL_REC symbol_rec = parser_find_symbol(parser, token_class_or_function);
 
-		parser_symbol(parser, "(", tab_count+1);
+		if (symbol_rec)
+		{
+			fprintf(parser->fptr, "push %s %d\n", symbol_kind_desc( symbol_rec->kind), symbol_rec->nbr);
+			arg_count++;
+		}
 
-		parser_expressionList(parser, tab_count+1);
+		arg_count += parser_expressionList(parser, tab_count+1);
 
-		parser_symbol(parser, ")", tab_count+1);
+		token = lexer_read(parser->lexer);
+		token_destroy(token);
+		//parser_symbol(parser, ")", tab_count+1);
+		//
+		fprintf(parser->fptr, "call %s.%s %d\n", class_or_subroutine_name, subroutine_name, arg_count);
+
+		free(subroutine_name);
 	}
+	free(class_or_subroutine_name);
 }
 
 void parser_integerConstant(PPARSER parser, uint8_t tab_count)
@@ -210,17 +248,33 @@ void parser_term(PPARSER parser, uint8_t tab_count)
 	{
 		if (!strcmp(token->text, "("))
 		{
-			parser_symbol(parser, "(", tab_count+1);
+			token_destroy(token);
+
+			token = lexer_read(parser->lexer);
+			token_destroy(token);
+			//parser_symbol(parser, "(", tab_count+1);
 
 			parser_expression(parser, tab_count+1);
 
-			parser_symbol(parser, ")", tab_count+1);
+			token = lexer_read(parser->lexer);
+			token_destroy(token);
+			//parser_symbol(parser, ")", tab_count+1);
 		}
 		else if (!strcmp(token->text, "-") || !strcmp(token->text, "~"))
 		{
-			parser_symbol(parser, token->text, tab_count+1);
+			token_destroy(token);
+
+			token = lexer_read(parser->lexer);
+			//parser_symbol(parser, token->text, tab_count+1);
 
 			parser_term(parser, tab_count+1);
+
+			if (!strcmp(token->text, "-"))
+				fprintf(parser->fptr, "neg\n");
+			else
+				fprintf(parser->fptr, "not\n");
+
+			token_destroy(token);
 		}
 	}
 	else
@@ -281,13 +335,14 @@ bool parser_type(PPARSER parser, uint8_t tab_count)
 	return !raiseError;
 }
 
-void parser_classVarDec(PPARSER parser, uint8_t tab_count)
+uint8_t parser_classVarDec(PPARSER parser, uint8_t tab_count)
 {
 	// ( static | field ) type varName (, varName )*;
 	
 	//fprintf(parser->fptr, "%s<classVarDec>\n", parser_makeTabs(tab_count));
 
 	bool raiseError = false;
+	uint8_t field_count = 0;
 
 	PSYMBOL_REC symbol_rec = (PSYMBOL_REC)malloc(sizeof(SYMBOL_REC));		
 
@@ -311,6 +366,7 @@ void parser_classVarDec(PPARSER parser, uint8_t tab_count)
 		token = lexer_read(parser->lexer);
 		token_destroy(token);
 		//parser_keyword(parser, "field", tab_count+1);
+		field_count++;
 	}
 	else
 		raiseError = true;
@@ -366,9 +422,8 @@ void parser_classVarDec(PPARSER parser, uint8_t tab_count)
 
 			symbol_table_add( parser->class_symbol_table, new_symbol_rec);
 
-			token = lexer_read(parser->lexer);
-			token_destroy(token);
-			//parser_identifier(parser, tab_count+1);
+			if (field_count > 0)
+				field_count++;
 
 			token = lexer_peek(parser->lexer);
 		}
@@ -382,6 +437,8 @@ void parser_classVarDec(PPARSER parser, uint8_t tab_count)
 		parser_raiseError(token);
 
 	//fprintf(parser->fptr, "%s</classVarDec>\n", parser_makeTabs(tab_count));
+	//
+	return field_count;
 }
 
 bool parser_isType(PTOKEN token)
@@ -600,7 +657,7 @@ void parser_parameterList(PPARSER parser, uint8_t tab_count)
 	
 	bool raiseError = false;
 
-	fprintf(parser->fptr, "%s<parameterList>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s<parameterList>\n", parser_makeTabs(tab_count));
 
 	PTOKEN token = lexer_peek(parser->lexer);
 
@@ -618,7 +675,9 @@ void parser_parameterList(PPARSER parser, uint8_t tab_count)
 
 		symbol_rec->name = duplicate_text(token->text);
 
-		parser_identifier(parser, tab_count+1);
+		token = lexer_read(parser->lexer);
+		token_destroy(token);
+		//parser_identifier(parser, tab_count+1);
 
 		symbol_rec->nbr = parser->var_argument_index++;
 
@@ -630,23 +689,26 @@ void parser_parameterList(PPARSER parser, uint8_t tab_count)
 			break;
 		else
 		{
-			parser_symbol(parser, ",", tab_count+1);
+			token = lexer_read(parser->lexer);
+			token_destroy(token);
+			//parser_symbol(parser, ",", tab_count+1);
 			token = lexer_peek(parser->lexer);
 		}
 
 	}
 
-	fprintf(parser->fptr, "%s</parameterList>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s</parameterList>\n", parser_makeTabs(tab_count));
 
 	if (raiseError)
 		parser_raiseError(token);
 }
 
-void parser_varDec(PPARSER parser, uint8_t tab_count)
+uint8_t parser_varDec(PPARSER parser, uint8_t tab_count)
 {
 	// var type varName (, varName )* ;
 	//
 	bool raiseError = false;
+	uint8_t var_count = 0;
 
 	PSYMBOL_REC symbol_rec = (PSYMBOL_REC)malloc(sizeof(SYMBOL_REC));
 	symbol_rec->kind = LOCAL;
@@ -667,6 +729,7 @@ void parser_varDec(PPARSER parser, uint8_t tab_count)
 
 	token = lexer_peek(parser->lexer);
 	symbol_rec->name = duplicate_text(token->text);
+	var_count++;
 
 	token = lexer_read(parser->lexer);
 	token_destroy(token);
@@ -680,6 +743,7 @@ void parser_varDec(PPARSER parser, uint8_t tab_count)
 
 	while (SYMBOL == token->type && !strcmp(token->text, ","))
 	{
+		var_count++;
 		PSYMBOL_REC new_symbol_rec = (PSYMBOL_REC)malloc(sizeof(SYMBOL_REC));
 		new_symbol_rec->type = duplicate_text(symbol_rec->type);
 		new_symbol_rec->kind = symbol_rec->kind;
@@ -696,7 +760,7 @@ void parser_varDec(PPARSER parser, uint8_t tab_count)
 
 		token = lexer_read(parser->lexer);
 		token_destroy(token);
-		//parser_identifier(parser, tab_count+1);
+
 		token = lexer_peek(parser->lexer);
 	}
 
@@ -708,6 +772,8 @@ void parser_varDec(PPARSER parser, uint8_t tab_count)
 
 	if (raiseError)
 		parser_raiseError(token);
+
+	return var_count;
 }
 
 bool parser_isStatement(PPARSER parser)
@@ -718,47 +784,68 @@ bool parser_isStatement(PPARSER parser)
 				!strcmp(token->text, "if") || !strcmp(token->text, "do") || !strcmp(token->text, "return")));
 }
 
-void parser_subroutineBody(PPARSER parser, uint8_t tab_count)
+void parser_subroutineBody(PPARSER parser, uint8_t tab_count, bool is_constructor, bool is_function, char * function_name, uint8_t field_count)
 {
 	// { varDec* statements}
 	//
 	bool raiseError = false;
+	uint8_t var_count = 0;
 
-	fprintf(parser->fptr, "%s<subroutineBody>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s<subroutineBody>\n", parser_makeTabs(tab_count));
 
-	parser_symbol(parser, "{", tab_count+1);
+	PTOKEN token = lexer_read(parser->lexer);
+	token_destroy(token);
+	//parser_symbol(parser, "{", tab_count+1);
 
-	PTOKEN token = lexer_peek(parser->lexer);
+	token = lexer_peek(parser->lexer);
 
 	while (KEYWORD == token->type && !strcmp(token->text, "var"))
 	{
-		parser_varDec(parser, tab_count+1);
+		var_count += parser_varDec(parser, tab_count+1);
 		token = lexer_peek(parser->lexer);
+	}
+	
+	if (is_function)
+		fprintf(parser->fptr, "function %s %d\n", function_name, var_count);
+	else
+		fprintf(parser->fptr, "function %s.%s %d\n", parser->class_name, function_name, var_count);
+
+	if (is_constructor)
+	{
+		fprintf(parser->fptr, "push constant %d\n", field_count);
+		fprintf(parser->fptr, "call Memory.alloc 1\n");
+		fprintf(parser->fptr, "pop pointer 0\n");
 	}
 
 	parser_statements(parser, tab_count+1);
 
-	parser_symbol(parser, "}", tab_count+1);
+	token = lexer_read(parser->lexer);
+	token_destroy(token);
+	//parser_symbol(parser, "}", tab_count+1);
 
-	fprintf(parser->fptr, "%s</subroutineBody>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s</subroutineBody>\n", parser_makeTabs(tab_count));
 
 	if (raiseError)
 		parser_raiseError(token);
+
 }
 
-void parser_subroutineDec(PPARSER parser, uint8_t tab_count)
+void parser_subroutineDec(PPARSER parser, uint8_t tab_count, uint8_t field_count)
 {
 	// ( constructor | function | method ) (void | type) subroutineName ( parameterList ) subroutineBody
 	
 
-	fprintf(parser->fptr, "%s<subroutineDec>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s<subroutineDec>\n", parser_makeTabs(tab_count));
 	bool raiseError = false;
 	PTOKEN token = lexer_peek(parser->lexer);
 
 	raiseError = (token->type != KEYWORD || (strcmp(token->text, "constructor") && strcmp(token->text, "function") && strcmp(token->text, "method")));
 
 	if (!raiseError)
-	{
+	{		
+		bool is_constructor = !strcmp("constructor", token->text);
+		bool is_function = !strcmp("function", token->text);
+
 		linked_list_clear(parser->function_symbol_table->linked_list);
 		parser->var_argument_index = 0;
 		parser->var_local_index = 0;
@@ -773,30 +860,45 @@ void parser_subroutineDec(PPARSER parser, uint8_t tab_count)
 
 			symbol_table_add(parser->function_symbol_table, symbol_rec);
 		}
-		parser_keyword(parser, token->text, tab_count+1);
+		token_destroy(token);
+		token = lexer_read(parser->lexer);
+		token_destroy(token);
+		//parser_keyword(parser, token->text, tab_count+1);
 
 		token = lexer_peek(parser->lexer);
 
 		if (KEYWORD == token->type && !strcmp(token->text, "void"))
-			parser_keyword(parser, "void", tab_count+1);
+		{
+			token = lexer_read(parser->lexer);
+			token_destroy(token);
+			//parser_keyword(parser, "void", tab_count+1);
+		}
 		else
 			parser_type(parser, tab_count+1);
 
-		parser_identifier(parser, tab_count+1);
+		token = lexer_read(parser->lexer);
+		char * function_name = duplicate_text(token->text);
+		token_destroy(token);
+		//parser_identifier(parser, tab_count+1);
 
-		parser_symbol(parser, "(", tab_count+1);
+		token = lexer_read(parser->lexer);
+		token_destroy(token);
+		//parser_symbol(parser, "(", tab_count+1);
 
 		parser_parameterList(parser, tab_count+1);
 
-		parser_symbol(parser, ")", tab_count+1);
+		token = lexer_read(parser->lexer);
+		token_destroy(token);
+		//parser_symbol(parser, ")", tab_count+1);
 
-		parser_subroutineBody(parser, tab_count+1);
+		parser_subroutineBody(parser, tab_count+1, is_constructor, is_function, function_name, field_count);
+
 	}
 	
 	if (raiseError)
 		parser_raiseError(token);
 
-	fprintf(parser->fptr, "%s</subroutineDec>\n", parser_makeTabs(tab_count));
+	//fprintf(parser->fptr, "%s</subroutineDec>\n", parser_makeTabs(tab_count));
 
 }
 
@@ -868,6 +970,7 @@ void parser_class(PPARSER parser, uint8_t tab_count)
 	// class className { classVarDec* subroutineDec* }
 
 	bool raiseError = false;
+	uint8_t field_count = 0;
 	
 	//fprintf(parser->fptr, "%s<class>\n", parser_makeTabs(tab_count));
 
@@ -890,14 +993,14 @@ void parser_class(PPARSER parser, uint8_t tab_count)
 	token = lexer_peek(parser->lexer);
 	while (KEYWORD == token->type && (!strcmp(token->text, "static") || !strcmp(token->text, "field")))
 	{
-		parser_classVarDec(parser, tab_count+1);
+		field_count += parser_classVarDec(parser, tab_count+1);
 		token = lexer_peek(parser->lexer);
 	}
 
 	token = lexer_peek(parser->lexer);
 	while (KEYWORD == token->type && (!strcmp(token->text, "constructor") || !strcmp(token->text, "function") || !strcmp(token->text, "method")))
 	{
-		parser_subroutineDec(parser, tab_count+1);
+		parser_subroutineDec(parser, tab_count+1, field_count);
 		token = lexer_peek(parser->lexer);
 	}
 

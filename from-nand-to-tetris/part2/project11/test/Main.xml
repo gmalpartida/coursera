@@ -1,455 +1,164 @@
-<class>
-	<keyword>class</keyword>
-	<identifier>Main</identifier>
-	<symbol>{</symbol>
-	<subroutineDec>
-		<keyword>function</keyword>
-		<keyword>void</keyword>
-		<identifier>main</identifier>
-		<symbol>(</symbol>
-		<parameterList>
-		</parameterList>
-		<symbol>)</symbol>
-		<subroutineBody>
-			<symbol>{</symbol>
-			<varDec>
-				<keyword>var</keyword>
-				<identifier>CityMap</identifier>
-				<identifier>Cities</identifier>
-				<symbol>;</symbol>
-			</varDec>
-			<varDec>
-				<keyword>var</keyword>
-				<identifier>TravelPlanner</identifier>
-				<identifier>planner</identifier>
-				<symbol>;</symbol>
-			</varDec>
-			<varDec>
-				<keyword>var</keyword>
-				<keyword>int</keyword>
-				<identifier>source</identifier>
-				<symbol>,</symbol>
-				<identifier>dest</identifier>
-				<symbol>;</symbol>
-			</varDec>
-			<varDec>
-				<keyword>var</keyword>
-				<identifier>Menu</identifier>
-				<identifier>menu</identifier>
-				<symbol>;</symbol>
-			</varDec>
-			<varDec>
-				<keyword>var</keyword>
-				<keyword>boolean</keyword>
-				<identifier>done</identifier>
-				<symbol>;</symbol>
-			</varDec>
-			<varDec>
-				<keyword>var</keyword>
-				<identifier>Array</identifier>
-				<identifier>Distance</identifier>
-				<symbol>;</symbol>
-			</varDec>
-			<varDec>
-				<keyword>var</keyword>
-				<identifier>String</identifier>
-				<identifier>text</identifier>
-				<symbol>;</symbol>
-			</varDec>
+function main 8
 			<statements>
-				<letStatement>
-					<keyword>let</keyword>
-					<identifier>Cities</identifier>
-					<symbol>=</symbol>
 					<expression>
 						<term>
-							<identifier>CityMap</identifier>
-							<symbol>.</symbol>
-							<identifier>new</identifier>
-							<symbol>(</symbol>
-							<expressionList>
-							</expressionList>
-							<symbol>)</symbol>
+call CityMap.new 0
 						</term>
 					</expression>
-					<symbol>;</symbol>
-				</letStatement>
-				<doStatement>
-					<keyword>do</keyword>
-						<identifier>Cities</identifier>
-						<symbol>.</symbol>
-						<identifier>BuildCities</identifier>
-						<symbol>(</symbol>
-						<expressionList>
-						</expressionList>
-						<symbol>)</symbol>
-					<symbol>;</symbol>
-				</doStatement>
-				<letStatement>
-					<keyword>let</keyword>
-					<identifier>planner</identifier>
-					<symbol>=</symbol>
+pop local 0
+call Cities.BuildCities 0
+pop temp 0
 					<expression>
 						<term>
-							<identifier>TravelPlanner</identifier>
-							<symbol>.</symbol>
-							<identifier>new</identifier>
-							<symbol>(</symbol>
-							<expressionList>
 								<expression>
 									<term>
-										<identifier>Cities</identifier>
+push local 0
 									</term>
 								</expression>
-							</expressionList>
-							<symbol>)</symbol>
+call TravelPlanner.new 1
 						</term>
 					</expression>
-					<symbol>;</symbol>
-				</letStatement>
-				<doStatement>
-					<keyword>do</keyword>
-						<identifier>planner</identifier>
-						<symbol>.</symbol>
-						<identifier>buildFligthMap</identifier>
-						<symbol>(</symbol>
-						<expressionList>
-						</expressionList>
-						<symbol>)</symbol>
-					<symbol>;</symbol>
-				</doStatement>
-				<letStatement>
-					<keyword>let</keyword>
-					<identifier>done</identifier>
-					<symbol>=</symbol>
+pop local 1
+call planner.buildFligthMap 0
+pop temp 0
 					<expression>
 						<term>
-							<keyword>false</keyword>
+push constant 0
 						</term>
 					</expression>
-					<symbol>;</symbol>
-				</letStatement>
-				<letStatement>
-					<keyword>let</keyword>
-					<identifier>menu</identifier>
-					<symbol>=</symbol>
+pop local 5
 					<expression>
 						<term>
-							<identifier>Menu</identifier>
-							<symbol>.</symbol>
-							<identifier>new</identifier>
-							<symbol>(</symbol>
-							<expressionList>
 								<expression>
 									<term>
-										<identifier>Cities</identifier>
+push local 0
 									</term>
 								</expression>
-							</expressionList>
-							<symbol>)</symbol>
+call Menu.new 1
 						</term>
 					</expression>
-					<symbol>;</symbol>
-				</letStatement>
-				<whileStatement>
-					<keyword>while</keyword>
-					<symbol>(</symbol>
+pop local 4
+label Label0
 					<expression>
 						<term>
 							<symbol>~</symbol>
 							<term>
-								<identifier>done</identifier>
+push local 5
 							</term>
 						</term>
 					</expression>
-					<symbol>)</symbol>
-					<symbol>{</symbol>
-					<statements>
-						<doStatement>
-							<keyword>do</keyword>
-								<identifier>Output</identifier>
-								<symbol>.</symbol>
-								<identifier>moveCursor</identifier>
-								<symbol>(</symbol>
-								<expressionList>
+not
+if-goto Label1					<statements>
 									<expression>
 										<term>
-											<integerConstant>0</integerConstant>
+push constant 0
 										</term>
 									</expression>
-									<symbol>,</symbol>
 									<expression>
 										<term>
-											<integerConstant>0</integerConstant>
+push constant 0
 										</term>
 									</expression>
-								</expressionList>
-								<symbol>)</symbol>
-							<symbol>;</symbol>
-						</doStatement>
-						<doStatement>
-							<keyword>do</keyword>
-								<identifier>menu</identifier>
-								<symbol>.</symbol>
-								<identifier>show</identifier>
-								<symbol>(</symbol>
-								<expressionList>
-								</expressionList>
-								<symbol>)</symbol>
-							<symbol>;</symbol>
-						</doStatement>
-						<letStatement>
-							<keyword>let</keyword>
-							<identifier>source</identifier>
-							<symbol>=</symbol>
+call Output.moveCursor 2
+pop temp 0
+call menu.show 0
+pop temp 0
 							<expression>
 								<term>
-									<identifier>menu</identifier>
-									<symbol>.</symbol>
-									<identifier>get_source</identifier>
-									<symbol>(</symbol>
-									<expressionList>
-									</expressionList>
-									<symbol>)</symbol>
+call menu.get_source 0
 								</term>
 							</expression>
-							<symbol>;</symbol>
-						</letStatement>
-						<letStatement>
-							<keyword>let</keyword>
-							<identifier>dest</identifier>
-							<symbol>=</symbol>
+pop local 2
 							<expression>
 								<term>
-									<identifier>menu</identifier>
-									<symbol>.</symbol>
-									<identifier>get_dest</identifier>
-									<symbol>(</symbol>
-									<expressionList>
-									</expressionList>
-									<symbol>)</symbol>
+call menu.get_dest 0
 								</term>
 							</expression>
-							<symbol>;</symbol>
-						</letStatement>
-						<doStatement>
-							<keyword>do</keyword>
-								<identifier>planner</identifier>
-								<symbol>.</symbol>
-								<identifier>Execute</identifier>
-								<symbol>(</symbol>
-								<expressionList>
+pop local 3
 									<expression>
 										<term>
-											<identifier>source</identifier>
+push local 2
 										</term>
 									</expression>
-								</expressionList>
-								<symbol>)</symbol>
-							<symbol>;</symbol>
-						</doStatement>
-						<letStatement>
-							<keyword>let</keyword>
-							<identifier>Distance</identifier>
-							<symbol>=</symbol>
+call planner.Execute 1
+pop temp 0
 							<expression>
 								<term>
-									<identifier>planner</identifier>
-									<symbol>.</symbol>
-									<identifier>get_distance</identifier>
-									<symbol>(</symbol>
-									<expressionList>
-									</expressionList>
-									<symbol>)</symbol>
+call planner.get_distance 0
 								</term>
 							</expression>
-							<symbol>;</symbol>
-						</letStatement>
-						<doStatement>
-							<keyword>do</keyword>
-								<identifier>Output</identifier>
-								<symbol>.</symbol>
-								<identifier>println</identifier>
-								<symbol>(</symbol>
-								<expressionList>
-								</expressionList>
-								<symbol>)</symbol>
-							<symbol>;</symbol>
-						</doStatement>
-						<doStatement>
-							<keyword>do</keyword>
-								<identifier>planner</identifier>
-								<symbol>.</symbol>
-								<identifier>printDistance</identifier>
-								<symbol>(</symbol>
-								<expressionList>
+pop local 6
+call Output.println 0
+pop temp 0
 									<expression>
 										<term>
-											<identifier>source</identifier>
+push local 2
 										</term>
 									</expression>
-									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>dest</identifier>
+push local 3
 										</term>
 									</expression>
-								</expressionList>
-								<symbol>)</symbol>
-							<symbol>;</symbol>
-						</doStatement>
-						<doStatement>
-							<keyword>do</keyword>
-								<identifier>planner</identifier>
-								<symbol>.</symbol>
-								<identifier>printPath</identifier>
-								<symbol>(</symbol>
-								<expressionList>
+call planner.printDistance 2
+pop temp 0
 									<expression>
 										<term>
-											<identifier>source</identifier>
+push local 2
 										</term>
 									</expression>
-									<symbol>,</symbol>
 									<expression>
 										<term>
-											<identifier>dest</identifier>
+push local 3
 										</term>
 									</expression>
-								</expressionList>
-								<symbol>)</symbol>
-							<symbol>;</symbol>
-						</doStatement>
-						<doStatement>
-							<keyword>do</keyword>
-								<identifier>Output</identifier>
-								<symbol>.</symbol>
-								<identifier>println</identifier>
-								<symbol>(</symbol>
-								<expressionList>
-								</expressionList>
-								<symbol>)</symbol>
-							<symbol>;</symbol>
-						</doStatement>
-						<doStatement>
-							<keyword>do</keyword>
-								<identifier>Output</identifier>
-								<symbol>.</symbol>
-								<identifier>println</identifier>
-								<symbol>(</symbol>
-								<expressionList>
-								</expressionList>
-								<symbol>)</symbol>
-							<symbol>;</symbol>
-						</doStatement>
-						<doStatement>
-							<keyword>do</keyword>
-								<identifier>menu</identifier>
-								<symbol>.</symbol>
-								<identifier>press_any_key</identifier>
-								<symbol>(</symbol>
-								<expressionList>
-								</expressionList>
-								<symbol>)</symbol>
-							<symbol>;</symbol>
-						</doStatement>
-						<letStatement>
-							<keyword>let</keyword>
-							<identifier>text</identifier>
-							<symbol>=</symbol>
+call planner.printPath 2
+pop temp 0
+call Output.println 0
+pop temp 0
+call Output.println 0
+pop temp 0
+call menu.press_any_key 0
+pop temp 0
 							<expression>
 								<term>
 									<stringConstant>gino malpartida</stringConstant>
 								</term>
 							</expression>
-							<symbol>;</symbol>
-						</letStatement>
-						<letStatement>
-							<keyword>let</keyword>
-							<identifier>text</identifier>
-							<symbol>=</symbol>
+pop local 7
 							<expression>
 								<term>
-									<identifier>text</identifier>
+push local 7
 								</term>
 							</expression>
-							<symbol>;</symbol>
-						</letStatement>
-						<letStatement>
-							<keyword>let</keyword>
-							<identifier>text</identifier>
-							<symbol>=</symbol>
+pop local 7
 							<expression>
 								<term>
 									<stringConstant>gino malpartida</stringConstant>
 								</term>
 							</expression>
-							<symbol>;</symbol>
-						</letStatement>
-						<doStatement>
-							<keyword>do</keyword>
-								<identifier>Output</identifier>
-								<symbol>.</symbol>
-								<identifier>printInt</identifier>
-								<symbol>(</symbol>
-								<expressionList>
+pop local 7
 									<expression>
 										<term>
-											<integerConstant>12345</integerConstant>
+push constant 12345
 										</term>
 									</expression>
-								</expressionList>
-								<symbol>)</symbol>
-							<symbol>;</symbol>
-						</doStatement>
-						<doStatement>
-							<keyword>do</keyword>
-								<identifier>Output</identifier>
-								<symbol>.</symbol>
-								<identifier>printInt</identifier>
-								<symbol>(</symbol>
-								<expressionList>
+call Output.printInt 1
+pop temp 0
 									<expression>
 										<term>
-											<integerConstant>54321</integerConstant>
+push constant 54321
 										</term>
 									</expression>
-								</expressionList>
-								<symbol>)</symbol>
-							<symbol>;</symbol>
-						</doStatement>
+call Output.printInt 1
+pop temp 0
 					</statements>
-					<symbol>}</symbol>
-				</whileStatement>
-				<doStatement>
-					<keyword>do</keyword>
-						<identifier>Cities</identifier>
-						<symbol>.</symbol>
-						<identifier>dispose</identifier>
-						<symbol>(</symbol>
-						<expressionList>
-						</expressionList>
-						<symbol>)</symbol>
-					<symbol>;</symbol>
-				</doStatement>
-				<doStatement>
-					<keyword>do</keyword>
-						<identifier>planner</identifier>
-						<symbol>.</symbol>
-						<identifier>dispose</identifier>
-						<symbol>(</symbol>
-						<expressionList>
-						</expressionList>
-						<symbol>)</symbol>
-					<symbol>;</symbol>
-				</doStatement>
-				<returnStatement>
-					<keyword>return</keyword>
-					<symbol>;</symbol>
-				</returnStatement>
+goto Label0
+label Label1
+call Cities.dispose 0
+pop temp 0
+call planner.dispose 0
+pop temp 0
+push constant 0
+return
 			</statements>
-			<symbol>}</symbol>
-		</subroutineBody>
-	</subroutineDec>
-	<symbol>}</symbol>
-</class>
