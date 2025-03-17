@@ -1,0 +1,5 @@
+bin
+test/
+*.o
+*.map
+*.xml
