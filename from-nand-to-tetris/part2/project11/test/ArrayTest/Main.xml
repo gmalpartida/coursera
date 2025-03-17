@@ -1,155 +1,183 @@
 function main 4
-			<statements>
-					<expression>
-						<term>
-								<expression>
-									<term>
-										<stringConstant>HOW MANY NUMBERS? </stringConstant>
-									</term>
-								</expression>
+push constant 18
+call String.new 1
+push 'H'
+call String.appendChar 2
+push 'O'
+call String.appendChar 2
+push 'W'
+call String.appendChar 2
+push ' '
+call String.appendChar 2
+push 'M'
+call String.appendChar 2
+push 'A'
+call String.appendChar 2
+push 'N'
+call String.appendChar 2
+push 'Y'
+call String.appendChar 2
+push ' '
+call String.appendChar 2
+push 'N'
+call String.appendChar 2
+push 'U'
+call String.appendChar 2
+push 'M'
+call String.appendChar 2
+push 'B'
+call String.appendChar 2
+push 'E'
+call String.appendChar 2
+push 'R'
+call String.appendChar 2
+push 'S'
+call String.appendChar 2
+push '?'
+call String.appendChar 2
+push ' '
+call String.appendChar 2
 call Keyboard.readInt 1
-						</term>
-					</expression>
 pop local 1
-					<expression>
-						<term>
-								<expression>
-									<term>
 push local 1
-									</term>
-								</expression>
 call Array.new 1
-						</term>
-					</expression>
 pop local 0
-					<expression>
-						<term>
 push constant 0
-						</term>
-					</expression>
 pop local 2
 label Label0
-					<expression>
-						<term>
 push local 2
-						</term>
-						<term>
 push local 1
-						</term>
 lt
-					</expression>
 not
-if-goto Label1					<statements>
-							<symbol>[</symbol>
-							<expression>
-								<term>
+if-goto Label1
+push local 0
 push local 2
-								</term>
-							</expression>
-							<symbol>]</symbol>
-							<expression>
-								<term>
-										<expression>
-											<term>
-												<stringConstant>ENTER THE NEXT NUMBER: </stringConstant>
-											</term>
-										</expression>
-call Keyboard.readInt 1
-								</term>
-							</expression>
-pop local 0
-							<expression>
-								<term>
-push local 2
-								</term>
-								<term>
-push constant 1
-								</term>
 add
-							</expression>
+push constant 23
+call String.new 1
+push 'E'
+call String.appendChar 2
+push 'N'
+call String.appendChar 2
+push 'T'
+call String.appendChar 2
+push 'E'
+call String.appendChar 2
+push 'R'
+call String.appendChar 2
+push ' '
+call String.appendChar 2
+push 'T'
+call String.appendChar 2
+push 'H'
+call String.appendChar 2
+push 'E'
+call String.appendChar 2
+push ' '
+call String.appendChar 2
+push 'N'
+call String.appendChar 2
+push 'E'
+call String.appendChar 2
+push 'X'
+call String.appendChar 2
+push 'T'
+call String.appendChar 2
+push ' '
+call String.appendChar 2
+push 'N'
+call String.appendChar 2
+push 'U'
+call String.appendChar 2
+push 'M'
+call String.appendChar 2
+push 'B'
+call String.appendChar 2
+push 'E'
+call String.appendChar 2
+push 'R'
+call String.appendChar 2
+push ':'
+call String.appendChar 2
+push ' '
+call String.appendChar 2
+call Keyboard.readInt 1
+pop that 0
+push local 2
+push constant 1
+add
 pop local 2
-					</statements>
 goto Label0
 label Label1
-					<expression>
-						<term>
 push constant 0
-						</term>
-					</expression>
 pop local 2
-					<expression>
-						<term>
 push constant 0
-						</term>
-					</expression>
 pop local 3
 label Label2
-					<expression>
-						<term>
 push local 2
-						</term>
-						<term>
 push local 1
-						</term>
 lt
-					</expression>
 not
-if-goto Label3					<statements>
-							<expression>
-								<term>
+if-goto Label3
 push local 3
-								</term>
-								<term>
-									<identifier>a</identifier>
-									<symbol>[</symbol>
-									<expression>
-										<term>
+push local 0
 push local 2
-										</term>
-									</expression>
-									<symbol>]</symbol>
-								</term>
 add
-							</expression>
+pop pointer 1
+push that 0
+add
 pop local 3
-							<expression>
-								<term>
 push local 2
-								</term>
-								<term>
 push constant 1
-								</term>
 add
-							</expression>
 pop local 2
-					</statements>
 goto Label2
 label Label3
-							<expression>
-								<term>
-									<stringConstant>THE AVERAGE IS: </stringConstant>
-								</term>
-							</expression>
+push constant 16
+call String.new 1
+push 'T'
+call String.appendChar 2
+push 'H'
+call String.appendChar 2
+push 'E'
+call String.appendChar 2
+push ' '
+call String.appendChar 2
+push 'A'
+call String.appendChar 2
+push 'V'
+call String.appendChar 2
+push 'E'
+call String.appendChar 2
+push 'R'
+call String.appendChar 2
+push 'A'
+call String.appendChar 2
+push 'G'
+call String.appendChar 2
+push 'E'
+call String.appendChar 2
+push ' '
+call String.appendChar 2
+push 'I'
+call String.appendChar 2
+push 'S'
+call String.appendChar 2
+push ':'
+call String.appendChar 2
+push ' '
+call String.appendChar 2
 call Output.printString 1
 pop temp 0
-							<expression>
-								<term>
 push local 3
-								</term>
-								<term>
 push local 1
-								</term>
 call Math.divide 2
-							</expression>
 call Output.printInt 1
 pop temp 0
 call Output.println 0
 pop temp 0
 push constant 0
 return
-			</statements>
 function Main.test 0
-			<statements>
 push constant 0
 return
-			</statements>

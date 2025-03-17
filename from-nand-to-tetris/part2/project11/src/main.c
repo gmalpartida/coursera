@@ -119,19 +119,19 @@ char * generate_output_filename(char * filename, bool is_dir)
 		p = strrchr(filename, '/');
 		if (p)
 		{
-			out_filename = (char*)malloc(sizeof(char) * (strlen(filename) + strlen(p) + 5));
+			out_filename = (char*)malloc(sizeof(char) * (strlen(filename) + strlen(p) + 4));
 			strcpy(out_filename, filename);
 			strcat(out_filename, "/");
 			strcpy(out_filename + strlen(out_filename), p + 1);
-			strcat(out_filename, ".xml");
+			strcat(out_filename, ".vm");
 		}
 		else
 		{
-			out_filename = (char*)malloc(sizeof(char) * 2 * strlen(filename) + 6);
+			out_filename = (char*)malloc(sizeof(char) * 2 * strlen(filename) + 5);
 			strcpy(out_filename, filename);
 			strcat(out_filename, "/");
 			strcat(out_filename, filename);
-			strcat(out_filename, ".xml");
+			strcat(out_filename, ".vm");
 		}
 	}
 	else
@@ -139,7 +139,7 @@ char * generate_output_filename(char * filename, bool is_dir)
 		out_filename = (char*)malloc(sizeof(char) * strlen(filename) + 1);
 		strcpy(out_filename, filename);
 		char *p = strrchr(out_filename, '.');
-		strcpy(p, ".xml");
+		strcpy(p, ".vm");
 
 	}
 	return out_filename;

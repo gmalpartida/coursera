@@ -1,12 +1,7 @@
-	<subroutineDec>
-		<keyword>constructor</keyword>
-		<identifier>new</identifier>
-		<symbol>(</symbol>
-		<parameterList>
-		</parameterList>
-		<symbol>)</symbol>
-		<subroutineBody>
-			<symbol>{</symbol>
+function SquareGame.new 0
+push constant 2
+call Memory.alloc 1
+pop pointer 0
 			<statements>
 					<expression>
 						<term>
@@ -27,57 +22,22 @@ push this 0
 					</expression>
 return
 			</statements>
-			<symbol>}</symbol>
-		</subroutineBody>
-	</subroutineDec>
-	<subroutineDec>
-		<keyword>method</keyword>
-		<keyword>void</keyword>
-		<identifier>dispose</identifier>
-		<symbol>(</symbol>
-		<parameterList>
-		</parameterList>
-		<symbol>)</symbol>
-		<subroutineBody>
-			<symbol>{</symbol>
+function SquareGame.dispose 0
 			<statements>
-						<identifier>square</identifier>
-						<symbol>.</symbol>
-						<identifier>dispose</identifier>
-						<symbol>(</symbol>
-						<expressionList>
-						</expressionList>
-						<symbol>)</symbol>
+push this 0
+call square.dispose 1
 pop temp 0
-						<identifier>Memory</identifier>
-						<symbol>.</symbol>
-						<identifier>deAlloc</identifier>
-						<symbol>(</symbol>
-						<expressionList>
 							<expression>
 								<term>
 push this 0
 								</term>
 							</expression>
-						</expressionList>
-						<symbol>)</symbol>
+call Memory.deAlloc 1
 pop temp 0
 push constant 0
 return
 			</statements>
-			<symbol>}</symbol>
-		</subroutineBody>
-	</subroutineDec>
-	<subroutineDec>
-		<keyword>method</keyword>
-		<keyword>void</keyword>
-		<identifier>moveSquare</identifier>
-		<symbol>(</symbol>
-		<parameterList>
-		</parameterList>
-		<symbol>)</symbol>
-		<subroutineBody>
-			<symbol>{</symbol>
+function SquareGame.moveSquare 0
 			<statements>
 					<expression>
 						<term>
@@ -85,109 +45,71 @@ push this 1
 						</term>
 					</expression>
 not
-if-goto Label2
+if-goto Label14
 					<statements>
-								<identifier>square</identifier>
-								<symbol>.</symbol>
-								<identifier>moveUp</identifier>
-								<symbol>(</symbol>
-								<expressionList>
-								</expressionList>
-								<symbol>)</symbol>
+push this 0
+call square.moveUp 1
 pop temp 0
 					</statements>
-goto Label3
-label Label2
-label Label3
+goto Label15
+label Label14
+label Label15
 					<expression>
 						<term>
 push this 1
 						</term>
 					</expression>
 not
-if-goto Label4
+if-goto Label16
 					<statements>
-								<identifier>square</identifier>
-								<symbol>.</symbol>
-								<identifier>moveDown</identifier>
-								<symbol>(</symbol>
-								<expressionList>
-								</expressionList>
-								<symbol>)</symbol>
+push this 0
+call square.moveDown 1
 pop temp 0
 					</statements>
-goto Label5
-label Label4
-label Label5
+goto Label17
+label Label16
+label Label17
 					<expression>
 						<term>
 push this 1
 						</term>
 					</expression>
 not
-if-goto Label6
+if-goto Label18
 					<statements>
-								<identifier>square</identifier>
-								<symbol>.</symbol>
-								<identifier>moveLeft</identifier>
-								<symbol>(</symbol>
-								<expressionList>
-								</expressionList>
-								<symbol>)</symbol>
+push this 0
+call square.moveLeft 1
 pop temp 0
 					</statements>
-goto Label7
-label Label6
-label Label7
+goto Label19
+label Label18
+label Label19
 					<expression>
 						<term>
 push this 1
 						</term>
 					</expression>
 not
-if-goto Label8
+if-goto Label20
 					<statements>
-								<identifier>square</identifier>
-								<symbol>.</symbol>
-								<identifier>moveRight</identifier>
-								<symbol>(</symbol>
-								<expressionList>
-								</expressionList>
-								<symbol>)</symbol>
+push this 0
+call square.moveRight 1
 pop temp 0
 					</statements>
-goto Label9
-label Label8
-label Label9
-						<identifier>Sys</identifier>
-						<symbol>.</symbol>
-						<identifier>wait</identifier>
-						<symbol>(</symbol>
-						<expressionList>
+goto Label21
+label Label20
+label Label21
 							<expression>
 								<term>
 push this 1
 								</term>
 							</expression>
-						</expressionList>
-						<symbol>)</symbol>
+call Sys.wait 1
 pop temp 0
 push constant 0
 return
 			</statements>
-			<symbol>}</symbol>
-		</subroutineBody>
-	</subroutineDec>
-	<subroutineDec>
-		<keyword>method</keyword>
-		<keyword>void</keyword>
-		<identifier>run</identifier>
-		<symbol>(</symbol>
-		<parameterList>
-		</parameterList>
-		<symbol>)</symbol>
-		<subroutineBody>
-			<symbol>{</symbol>
+function SquareGame.run 2
 			<statements>
 					<expression>
 						<term>
@@ -195,148 +117,32 @@ push local 0
 						</term>
 					</expression>
 pop local 1
-label Label10
+label Label22
 					<expression>
 						<term>
 push local 1
 						</term>
 					</expression>
 not
-if-goto Label11					<statements>
-label Label12
+if-goto Label23					<statements>
+label Label24
 							<expression>
 								<term>
 push local 0
 								</term>
 							</expression>
 not
-if-goto Label13							<statements>
+if-goto Label25							<statements>
 									<expression>
 										<term>
 push local 0
 										</term>
 									</expression>
 pop local 0
-										<identifier>moveSquare</identifier>
-										<symbol>(</symbol>
-										<expressionList>
-										</expressionList>
-										<symbol>)</symbol>
+call moveSquare 0
 pop temp 0
 							</statements>
-goto Label12
-label Label13
-							<expression>
-								<term>
-push local 0
-								</term>
-							</expression>
-not
-if-goto Label14
-							<statements>
-									<expression>
-										<term>
-push local 1
-										</term>
-									</expression>
-pop local 1
-							</statements>
-goto Label15
-label Label14
-label Label15
-							<expression>
-								<term>
-push local 0
-								</term>
-							</expression>
-not
-if-goto Label16
-							<statements>
-										<identifier>square</identifier>
-										<symbol>.</symbol>
-										<identifier>decSize</identifier>
-										<symbol>(</symbol>
-										<expressionList>
-										</expressionList>
-										<symbol>)</symbol>
-pop temp 0
-							</statements>
-goto Label17
-label Label16
-label Label17
-							<expression>
-								<term>
-push local 0
-								</term>
-							</expression>
-not
-if-goto Label18
-							<statements>
-										<identifier>square</identifier>
-										<symbol>.</symbol>
-										<identifier>incSize</identifier>
-										<symbol>(</symbol>
-										<expressionList>
-										</expressionList>
-										<symbol>)</symbol>
-pop temp 0
-							</statements>
-goto Label19
-label Label18
-label Label19
-							<expression>
-								<term>
-push local 0
-								</term>
-							</expression>
-not
-if-goto Label20
-							<statements>
-									<expression>
-										<term>
-push local 1
-										</term>
-									</expression>
-pop this 1
-							</statements>
-goto Label21
-label Label20
-label Label21
-							<expression>
-								<term>
-push local 0
-								</term>
-							</expression>
-not
-if-goto Label22
-							<statements>
-									<expression>
-										<term>
-push local 0
-										</term>
-									</expression>
-pop this 1
-							</statements>
-goto Label23
-label Label22
-label Label23
-							<expression>
-								<term>
-push local 0
-								</term>
-							</expression>
-not
-if-goto Label24
-							<statements>
-									<expression>
-										<term>
-push this 0
-										</term>
-									</expression>
-pop this 1
-							</statements>
-goto Label25
-label Label24
+goto Label24
 label Label25
 							<expression>
 								<term>
@@ -348,43 +154,138 @@ if-goto Label26
 							<statements>
 									<expression>
 										<term>
-push this 1
+push local 1
 										</term>
 									</expression>
-pop this 1
+pop local 1
 							</statements>
 goto Label27
 label Label26
 label Label27
-label Label28
 							<expression>
 								<term>
 push local 0
 								</term>
 							</expression>
 not
-if-goto Label29							<statements>
+if-goto Label28
+							<statements>
+push this 0
+call square.decSize 1
+pop temp 0
+							</statements>
+goto Label29
+label Label28
+label Label29
+							<expression>
+								<term>
+push local 0
+								</term>
+							</expression>
+not
+if-goto Label30
+							<statements>
+push this 0
+call square.incSize 1
+pop temp 0
+							</statements>
+goto Label31
+label Label30
+label Label31
+							<expression>
+								<term>
+push local 0
+								</term>
+							</expression>
+not
+if-goto Label32
+							<statements>
+									<expression>
+										<term>
+push local 1
+										</term>
+									</expression>
+pop this 1
+							</statements>
+goto Label33
+label Label32
+label Label33
+							<expression>
+								<term>
+push local 0
+								</term>
+							</expression>
+not
+if-goto Label34
+							<statements>
+									<expression>
+										<term>
+push local 0
+										</term>
+									</expression>
+pop this 1
+							</statements>
+goto Label35
+label Label34
+label Label35
+							<expression>
+								<term>
+push local 0
+								</term>
+							</expression>
+not
+if-goto Label36
+							<statements>
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+pop this 1
+							</statements>
+goto Label37
+label Label36
+label Label37
+							<expression>
+								<term>
+push local 0
+								</term>
+							</expression>
+not
+if-goto Label38
+							<statements>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+pop this 1
+							</statements>
+goto Label39
+label Label38
+label Label39
+label Label40
+							<expression>
+								<term>
+push local 0
+								</term>
+							</expression>
+not
+if-goto Label41							<statements>
 									<expression>
 										<term>
 push local 0
 										</term>
 									</expression>
 pop local 0
-										<identifier>moveSquare</identifier>
-										<symbol>(</symbol>
-										<expressionList>
-										</expressionList>
-										<symbol>)</symbol>
+call moveSquare 0
 pop temp 0
 							</statements>
-goto Label28
-label Label29
+goto Label40
+label Label41
 					</statements>
-goto Label10
-label Label11
+goto Label22
+label Label23
 push constant 0
 return
 			</statements>
-			<symbol>}</symbol>
-		</subroutineBody>
-	</subroutineDec>

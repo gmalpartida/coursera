@@ -1,13 +1,4 @@
-	<subroutineDec>
-		<keyword>function</keyword>
-		<keyword>void</keyword>
-		<identifier>main</identifier>
-		<symbol>(</symbol>
-		<parameterList>
-		</parameterList>
-		<symbol>)</symbol>
-		<subroutineBody>
-			<symbol>{</symbol>
+function main 1
 			<statements>
 					<expression>
 						<term>
@@ -15,38 +6,16 @@ push local 0
 						</term>
 					</expression>
 pop local 0
-						<identifier>game</identifier>
-						<symbol>.</symbol>
-						<identifier>run</identifier>
-						<symbol>(</symbol>
-						<expressionList>
-						</expressionList>
-						<symbol>)</symbol>
+push local 0
+call game.run 1
 pop temp 0
-						<identifier>game</identifier>
-						<symbol>.</symbol>
-						<identifier>dispose</identifier>
-						<symbol>(</symbol>
-						<expressionList>
-						</expressionList>
-						<symbol>)</symbol>
+push local 0
+call game.dispose 1
 pop temp 0
 push constant 0
 return
 			</statements>
-			<symbol>}</symbol>
-		</subroutineBody>
-	</subroutineDec>
-	<subroutineDec>
-		<keyword>function</keyword>
-		<keyword>void</keyword>
-		<identifier>more</identifier>
-		<symbol>(</symbol>
-		<parameterList>
-		</parameterList>
-		<symbol>)</symbol>
-		<subroutineBody>
-			<symbol>{</symbol>
+function more 1
 			<statements>
 					<expression>
 						<term>
@@ -54,17 +23,14 @@ push local 0
 						</term>
 					</expression>
 not
-if-goto Label0
+if-goto Label12
 					<statements>
 					</statements>
-goto Label1
-label Label0
+goto Label13
+label Label12
 					<statements>
 					</statements>
-label Label1
+label Label13
 push constant 0
 return
 			</statements>
-			<symbol>}</symbol>
-		</subroutineBody>
-	</subroutineDec>

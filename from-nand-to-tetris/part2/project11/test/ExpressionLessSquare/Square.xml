@@ -32,3 +32,459 @@ return
 			</statements>
 function Square.dispose 0
 			<statements>
+							<expression>
+								<term>
+push pointer 0
+								</term>
+							</expression>
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+			</statements>
+function Square.draw 0
+			<statements>
+							<expression>
+								<term>
+push this 0
+								</term>
+							</expression>
+call Screen.setColor 1
+pop temp 0
+							<expression>
+								<term>
+push this 0
+								</term>
+							</expression>
+							<expression>
+								<term>
+push this 1
+								</term>
+							</expression>
+							<expression>
+								<term>
+push this 0
+								</term>
+							</expression>
+							<expression>
+								<term>
+push this 1
+								</term>
+							</expression>
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+			</statements>
+function Square.erase 0
+			<statements>
+							<expression>
+								<term>
+push this 0
+								</term>
+							</expression>
+call Screen.setColor 1
+pop temp 0
+							<expression>
+								<term>
+push this 0
+								</term>
+							</expression>
+							<expression>
+								<term>
+push this 1
+								</term>
+							</expression>
+							<expression>
+								<term>
+push this 0
+								</term>
+							</expression>
+							<expression>
+								<term>
+push this 1
+								</term>
+							</expression>
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+			</statements>
+function Square.incSize 0
+			<statements>
+					<expression>
+						<term>
+push this 0
+						</term>
+					</expression>
+not
+if-goto Label0
+					<statements>
+call erase 0
+pop temp 0
+							<expression>
+								<term>
+push this 2
+								</term>
+							</expression>
+pop this 2
+call draw 0
+pop temp 0
+					</statements>
+goto Label1
+label Label0
+label Label1
+push constant 0
+return
+			</statements>
+function Square.decSize 0
+			<statements>
+					<expression>
+						<term>
+push this 2
+						</term>
+					</expression>
+not
+if-goto Label2
+					<statements>
+call erase 0
+pop temp 0
+							<expression>
+								<term>
+push this 2
+								</term>
+							</expression>
+pop this 2
+call draw 0
+pop temp 0
+					</statements>
+goto Label3
+label Label2
+label Label3
+push constant 0
+return
+			</statements>
+function Square.moveUp 0
+			<statements>
+					<expression>
+						<term>
+push this 1
+						</term>
+					</expression>
+not
+if-goto Label4
+					<statements>
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+call Screen.setColor 1
+pop temp 0
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+call Screen.drawRectangle 4
+pop temp 0
+							<expression>
+								<term>
+push this 1
+								</term>
+							</expression>
+pop this 1
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+call Screen.setColor 1
+pop temp 0
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+call Screen.drawRectangle 4
+pop temp 0
+					</statements>
+goto Label5
+label Label4
+label Label5
+push constant 0
+return
+			</statements>
+function Square.moveDown 0
+			<statements>
+					<expression>
+						<term>
+push this 1
+						</term>
+					</expression>
+not
+if-goto Label6
+					<statements>
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+call Screen.setColor 1
+pop temp 0
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+call Screen.drawRectangle 4
+pop temp 0
+							<expression>
+								<term>
+push this 1
+								</term>
+							</expression>
+pop this 1
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+call Screen.setColor 1
+pop temp 0
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+call Screen.drawRectangle 4
+pop temp 0
+					</statements>
+goto Label7
+label Label6
+label Label7
+push constant 0
+return
+			</statements>
+function Square.moveLeft 0
+			<statements>
+					<expression>
+						<term>
+push this 0
+						</term>
+					</expression>
+not
+if-goto Label8
+					<statements>
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+call Screen.setColor 1
+pop temp 0
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+call Screen.drawRectangle 4
+pop temp 0
+							<expression>
+								<term>
+push this 0
+								</term>
+							</expression>
+pop this 0
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+call Screen.setColor 1
+pop temp 0
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+call Screen.drawRectangle 4
+pop temp 0
+					</statements>
+goto Label9
+label Label8
+label Label9
+push constant 0
+return
+			</statements>
+function Square.moveRight 0
+			<statements>
+					<expression>
+						<term>
+push this 0
+						</term>
+					</expression>
+not
+if-goto Label10
+					<statements>
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+call Screen.setColor 1
+pop temp 0
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+call Screen.drawRectangle 4
+pop temp 0
+							<expression>
+								<term>
+push this 0
+								</term>
+							</expression>
+pop this 0
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+call Screen.setColor 1
+pop temp 0
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 0
+										</term>
+									</expression>
+									<expression>
+										<term>
+push this 1
+										</term>
+									</expression>
+call Screen.drawRectangle 4
+pop temp 0
+					</statements>
+goto Label11
+label Label10
+label Label11
+push constant 0
+return
+			</statements>
