@@ -242,12 +242,6 @@ void parser_term(PPARSER parser, uint8_t tab_count)
 		{
 			token = lexer_read(parser->lexer);
 			PSYMBOL_REC symbol_rec = parser_find_symbol(parser, token);
-			if (symbol_rec)
-			{
-				fprintf(parser->fptr, "push %s %d\n", symbol_kind_desc(symbol_rec->kind), symbol_rec->nbr);
-			}
-			else
-				parser_raiseError();
 			token_destroy(token);
 			//parser_identifier(parser, tab_count+1);
 
@@ -256,6 +250,13 @@ void parser_term(PPARSER parser, uint8_t tab_count)
 			//parser_symbol(parser, "[", tab_count+1);
 			
 			parser_expression(parser, tab_count+1);
+
+			if (symbol_rec)
+			{
+				fprintf(parser->fptr, "push %s %d\n", symbol_kind_desc(symbol_rec->kind), symbol_rec->nbr);
+			}
+			else
+				parser_raiseError();
 
 			fprintf(parser->fptr, "add\n");
 			fprintf(parser->fptr, "pop pointer 1\n");
@@ -536,9 +537,9 @@ void parser_letStatement(PPARSER parser, uint8_t tab_count)
 		token_destroy(token);
 		//parser_symbol(parser, "[", tab_count+1);
 		
-		fprintf(parser->fptr, "push %s %d\n", symbol_kind_desc(symbol_rec->kind), symbol_rec->nbr);
-		
 		parser_expression(parser, tab_count+1);
+		
+		fprintf(parser->fptr, "push %s %d\n", symbol_kind_desc(symbol_rec->kind), symbol_rec->nbr);
 
 		fprintf(parser->fptr, "add\n");
 
@@ -551,6 +552,12 @@ void parser_letStatement(PPARSER parser, uint8_t tab_count)
 		token_destroy(token);
 
 		parser_expression(parser, tab_count+1);
+
+		fprintf(parser->fptr, "pop temp 0\n");
+
+		fprintf(parser->fptr, "pop pointer 1\n");
+
+		fprintf(parser->fptr, "push temp 0\n");
 
 		fprintf(parser->fptr, "pop that 0\n");
 
@@ -1112,6 +1119,6 @@ void parser_execute(PPARSER parser, char * out_filename)
 		exit(EXIT_FAILURE);
 	}
 
-	parser_print(parser);
+	//parser_print(parser);
 }
 

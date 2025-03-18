@@ -188,7 +188,7 @@ PTOKEN lexer_read(PLEXER lexer)
         }
 		else if ('"' == c)
 		{
-			char text[20];
+			char text[256];
 			uint8_t i = 0;
 			// consume character
 			scanner_get_next(lexer->scanner);

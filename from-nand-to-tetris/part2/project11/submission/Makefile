@@ -4,7 +4,7 @@ INCLUDES =
 CC = gcc
 CFLAGS = -g -Wall
 SRC = *.c
-BIN = JackAnalyzer
+BIN = JackCompiler
 LIBS = 
 
 all: $(BIN)
