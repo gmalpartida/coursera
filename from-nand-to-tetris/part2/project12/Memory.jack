@@ -18,6 +18,7 @@ class Memory {
 		let ram = 0;
 		let heap = 2048;
 		let freeList = heap;			// address
+		let freeList[0] = 0;
 		let freeList[1] = 16384 - 2048;	// size 
     }
 
@@ -41,12 +42,16 @@ class Memory {
 
 		let cur = freeList;
 
-		while (cur[0] > -1)
+		while (cur[0] > 0)
 		{
 			if (cur[1] >= size + 2)
-			{
-				let block = cur + 2;
-				let done = true;
+			{				
+				let cur[0] = cur + 2 + size;
+				let cur[cur + 2 + size] = 0;
+				let cur[cur + 2 + size + 1] = cur[1] - size - 2;
+				let cur[1] = size;
+				let freeList = cur + 2 + size;
+				return cur + 2;
 			}
 			let cur = cur[0];
 		}
@@ -55,7 +60,12 @@ class Memory {
     /** De-allocates the given object (cast as an array) by making
      *  it available for future allocations. */
     function void deAlloc(Array o) {
-    }    
+		let o = o - 2;
+		o[0] = freeList;
+		freeList = o;
+	}    
 
 	
 }
+
+
