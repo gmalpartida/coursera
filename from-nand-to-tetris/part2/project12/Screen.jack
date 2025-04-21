@@ -9,34 +9,106 @@
  * the screen is indexed (0,0).
  */
 class Screen {
-
+	field boolean color;
+	field Array mask;
+	
     /** Initializes the Screen. */
     function void init() {
+		let color = true;
+		let mask = Array.new(16);
+		let mask = {1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768, 65536};
+
+		return;
     }
 
     /** Erases the entire screen. */
     function void clearScreen() {
+		let color = !color;
+		do drawRectangle(0, 0, 511, 255;
+		let color = !color;
+		return;
     }
 
     /** Sets the current color, to be used for all subsequent drawXXX commands.
      *  Black is represented by true, white by false. */
     function void setColor(boolean b) {
+		let color = b;
+		return;
     }
 
     /** Draws the (x,y) pixel, using the current color. */
     function void drawPixel(int x, int y) {
+		var int addr, value;
+		
+		let addr = 32 * y + x/16;
+		let value = Memory.peek(16384 + addr);
+		
+		while (x > 16)
+		{
+			let x = x - 16;
+		}
+
+		let value = value | mask[x];
+
+		do Memory.poke(16384 + addr, value);
+
+		return;
     }
 
     /** Draws a line from pixel (x1,y1) to pixel (x2,y2), using the current color. */
     function void drawLine(int x1, int y1, int x2, int y2) {
+		var int x, y, dx, dy, a, b, diff;
+		let a = 0;
+		let b = 0;
+		let diff = 0;
+
+		while ((a <= dex) & (b <= dy))
+		{
+			do drawPixel(x + a, y + b);
+			if (diff < 0)
+			{
+				let a = a + 1;
+				let diff = diff + dy;
+			}
+			else
+			{
+				let b = b + 1;
+				let diff = diff - dx;
+			}
+		}
+		return;
     }
+
 
     /** Draws a filled rectangle whose top left corner is (x1, y1)
      *  and bottom right corner is (x2,y2), using the current color. */
     function void drawRectangle(int x1, int y1, int x2, int y2) {
+
+		do drawLine(x1, y1, x2, y1);
+		do drawLine(x1, y2, x2, y2);
+		do drawLine(x1, y1, x1, y2);
+		do drawLine(x2, y1, x2, y2);
+
+
     }
 
     /** Draws a filled circle of radius r<=181 around (x,y), using the current color. */
     function void drawCircle(int x, int y, int r) {
+		var int dy;
+
+		if (r > 181)
+		{
+			let r = 181;
+		}
+
+		let dy = 0 - r;
+
+		while ( dy <= r)
+		{
+			do drawLine( x - sqrt((r * r) - (dy * dy)), y + dy, x + sqrt((r*r) - (dy*dy), y + dy));
+
+		}		
+		return;
     }
 }
+

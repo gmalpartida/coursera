@@ -35,27 +35,40 @@ class Memory {
     /** Finds an available RAM block of the given size and returns
      *  a reference to its base address. */
     function int alloc(int size) {
-		var int block;
-		var boolean done;
-		var Array cur;
-		let done = false;
+	   	var Array prev, cur;
+	   	var int next, cur_size;
 
+		let next = 0;
+		let cur_size = 1;
+
+		let prev = 0;
 		let cur = freeList;
 
-		while (cur[0] > 0)
+		while(cur[cur_size] < size + 2)
 		{
-			if (cur[1] >= size + 2)
-			{				
-				let cur[0] = cur + 2 + size;
-				let cur[cur + 2 + size] = 0;
-				let cur[cur + 2 + size + 1] = cur[1] - size - 2;
-				let cur[1] = size;
-				let freeList = cur + 2 + size;
-				return cur + 2;
+			
+			let prev = cur;
+			let cur = cur[next];
+			if (cur == 0)
+			{
+				return -1;
 			}
-			let cur = cur[0];
 		}
-    }
+
+		if (prev = 0)
+		{
+			let freeList[cur_size] = freeList[cur_size] - size - 2;
+			let freeList = freeList[next];
+			
+		}
+		else
+		{
+			let prev[next] = cur[next];
+			let cur[cur_size] = size;
+		}
+		
+		return cur + 2;
+   }
 
     /** De-allocates the given object (cast as an array) by making
      *  it available for future allocations. */
